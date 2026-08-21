@@ -1,0 +1,9 @@
+{
+  "$note": "Four visual-density levels for the (cast) farm. Level 1 (minimal) uses flat colour grounds from tokens with NO generated backgrounds; higher levels add generated art. imagesPerPost is guidance for an 8-slide deck.",
+  "levels": [
+    { "level": 1, "id": "minimal",  "name": "Minimal",     "imagesPerPost": "0 (product screenshots optional)", "art": false, "ground": "flat token colours", "tone": "clean, direct, product",  "rubrics": ["feature-drop","one-workflow","plan-picker","before-after"] },
+    { "level": 2, "id": "light",    "name": "1–2 images",   "imagesPerPost": "1–2 (cover + splash)",             "art": "cover+splash only", "ground": "flat between", "tone": "balanced", "rubrics": ["how-to","myth-vs-fact"] },
+    { "level": 3, "id": "half",     "name": "50/50",          "imagesPerPost": "~4 of 8, alternating",             "art": "every other slide", "ground": "flat on the rest", "tone": "rhythmic", "rubrics": ["mistakes","hot-takes"] },
+    { "level": 4, "id": "full",     "name": "100% images",  "imagesPerPost": "8 of 8",                           "art": true, "ground": "art everywhere", "tone": "maximal mood", "rubrics": ["inspiration","unnecessary-censorship"] }
+  ]
+}

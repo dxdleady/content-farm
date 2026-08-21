@@ -1,0 +1,129 @@
+{
+  "$note": "Content rubrics for the (cast) farm. Each rubric = a repeatable content format with a promise, a tone, which refs/decks fit it, and how it maps to product facts in product.json. bucket: bright | product | guide | plus new ones.",
+  "rubrics": [
+    {
+      "id": "hot-takes",
+      "bucket": "bright",
+      "name": "Hot Takes",
+      "promise": "One opinionated line about podcasting that stops the scroll.",
+      "tone": "Loud, contrarian, editorial. No product until the last card.",
+      "shape": "photo hook → stat → statement → tags → steps → poster rule → features → splash",
+      "refs": ["y2k-flash-scribble", "xerox-punk", "chrome-poster"],
+      "example": "Nobody stays for the warm-up. / Your title is why nobody clicked.",
+      "productTie": "soft — features slide + splash only",
+      "existingDecks": ["cold-open", "titles", "trailer"]
+    },
+    {
+      "id": "inspiration",
+      "bucket": "bright",
+      "name": "Inspiration",
+      "promise": "Motivate the creator to make and ship the thing — mindset over features.",
+      "tone": "Warm, encouraging, a little defiant. Speaks to the person, not the product.",
+      "shape": "you-have-something hook → truth → the fear/excuses → reframe → quote → nudge → soft product bridge → splash",
+      "purpose": "Top-of-funnel brand affinity: meet creators who 'have something worth saying' but are stuck on production, remove the fear, and position Cast as the thing that finishes it — product only as the enabler at the end.",
+      "refs": ["sticker-sunshine", "y2k-flash-scribble", "painted-collage"],
+      "example": "You have something worth saying. / Done beats perfect. / Nobody starts good.",
+      "productTie": "soft — brand affinity; product appears only as the enabler on the last two cards",
+      "existingDecks": []
+    },
+    {
+      "id": "feature-drop",
+      "bucket": "product",
+      "name": "Feature Drop",
+      "promise": "One feature, shown as the fix to one concrete pain.",
+      "tone": "Direct, confident, benefit-first. Names the feature.",
+      "shape": "pain hook → how it works (steps) → feature grid → CTA splash",
+      "refs": ["chrome-poster", "paper-screenprint"],
+      "featurePool": ["transcript-editing", "filler-removal", "silence-removal", "voice-cleanup", "censor", "chapters", "auto-duck", "loudness", "stems"],
+      "example": "Censoring should be part of editing — not another job after it.",
+      "productTie": "hard — one named feature is the subject",
+      "existingDecks": ["cheap"],
+      "sourceCampaign": "CAST-CENSOR-01"
+    },
+    {
+      "id": "one-workflow",
+      "bucket": "product",
+      "name": "One Workflow",
+      "promise": "Show the whole record→export pipeline living in one place vs a mess of tools.",
+      "tone": "Calm, systemic. The hero is the pipeline, not a single feature.",
+      "shape": "before (tool chaos) → the six steps as a grid → after → splash",
+      "refs": ["paper-screenprint", "chrome-poster"],
+      "example": "Transcript → cleanup → censor → chapters → music → export. One place.",
+      "productTie": "hard — the workflow itself",
+      "existingDecks": []
+    },
+    {
+      "id": "plan-picker",
+      "bucket": "product",
+      "name": "Plan Picker",
+      "promise": "Which plan fits which creator — Free/Lite/Plus/Max at a glance.",
+      "tone": "Plain, honest, no hype. Always verify live pricing.",
+      "shape": "who-are-you hook → plan tiles → what-you-get → CTA",
+      "refs": ["paper-screenprint"],
+      "productTie": "hard — plans/pricing",
+      "warning": "Verify pricing page before publish; prices in product.json may drift.",
+      "existingDecks": []
+    },
+    {
+      "id": "how-to",
+      "bucket": "guide",
+      "name": "How-To",
+      "promise": "A concrete 3-step method a creator can act on today — with or without Cast.",
+      "tone": "Helpful, specific, teacher voice. Product is the shortcut, not the gate.",
+      "shape": "problem → 3 numbered steps → rule → features → splash",
+      "refs": ["paper-screenprint", "xerox-punk"],
+      "example": "Move your best line to the top: find it in the transcript, cut it, paste at 0:00.",
+      "productTie": "medium — steps map to features",
+      "existingDecks": ["cold-open"]
+    },
+    {
+      "id": "mistakes",
+      "bucket": "guide",
+      "name": "Mistakes",
+      "promise": "A list of things creators get wrong, named fast, then the fix.",
+      "tone": "Blunt but useful. The tag wall is the payload.",
+      "shape": "verdict hook → stat → the-truth → tag wall of mistakes → fix steps → splash",
+      "refs": ["xerox-punk", "y2k-flash-scribble"],
+      "example": "Openings die of: hellos, mic checks, the weather, housekeeping…",
+      "productTie": "soft",
+      "existingDecks": ["guest", "length", "schedule"]
+    },
+    {
+      "id": "myth-vs-fact",
+      "bucket": "guide",
+      "name": "Myth vs Fact",
+      "promise": "Kill one persistent belief about podcast production with a fact.",
+      "tone": "Corrective, credible. Leans on real product boundaries.",
+      "shape": "myth card → fact card → why → feature → splash",
+      "refs": ["chrome-poster", "painted-collage"],
+      "example": "Myth: you need a better mic. Fact: listeners hear the room, not the mic.",
+      "productTie": "medium",
+      "existingDecks": ["cheap"]
+    },
+    {
+      "id": "before-after",
+      "bucket": "product",
+      "name": "Before / After",
+      "promise": "Raw recording vs finished episode — the transformation Cast delivers.",
+      "tone": "Satisfying, tangible. Two states, hard contrast.",
+      "shape": "before (raw, messy) → the pass → after (clean) → splash",
+      "refs": ["ps1-render", "paper-screenprint"],
+      "example": "Um, uh, like → gone. Dead air → gone. Room hum → gone.",
+      "productTie": "hard — cleanup features",
+      "existingDecks": []
+    },
+    {
+      "id": "unnecessary-censorship",
+      "bucket": "bright",
+      "name": "Unnecessary Censorship",
+      "promise": "Comedy format — bleep ordinary words for effect, powered by custom censoring.",
+      "tone": "Playful, absurd, meme-adjacent. The joke sells the feature.",
+      "shape": "setup → over-bleeped punchline → 'yes you can do this in Cast' → splash",
+      "refs": ["y2k-flash-scribble", "xerox-punk"],
+      "example": "Bleep your co-host's name every time. Bleep the word 'algorithm.'",
+      "productTie": "hard — custom censoring, replacement sounds",
+      "existingDecks": [],
+      "sourceCampaign": "CAST-CENSOR-01"
+    }
+  ]
+}

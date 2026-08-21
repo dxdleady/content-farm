@@ -1,0 +1,112 @@
+{
+  "deck": "min-guide",
+  "handle": "mubert.com/tools/cast",
+  "minimal": true,
+  "slides": [
+    {
+      "layout": "statement",
+      "kicker": "Guide",
+      "accent": "accent-lime",
+      "title": "It is not your *microphone*",
+      "minimal": true,
+      "ground": "carrot"
+    },
+    {
+      "layout": "stat",
+      "kicker": "Listeners hear",
+      "value": "80",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "minimal": true,
+      "ground": "mainorange"
+    },
+    {
+      "layout": "list",
+      "kicker": "The tells",
+      "accent": "accent-purple",
+      "title": "What *cheap* sounds like",
+      "bullet": "check",
+      "items": [
+        "Room hum under everything",
+        "Chair creak and mic bumps",
+        "Plosives on every P",
+        "Reverb tail in a bare room",
+        "Clipping when they laugh"
+      ],
+      "minimal": true,
+      "ground": "pink"
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Fix the room, then the *file*",
+      "items": [
+        "Kill the hard surfaces",
+        "Get the mic closer",
+        "Let cleanup do the rest"
+      ],
+      "minimal": true,
+      "ground": "violet65"
+    },
+    {
+      "layout": "quote",
+      "accent": "accent-green",
+      "title": "Listeners hear the *room*, not the mic.",
+      "author": "Field note",
+      "role": "(cast)",
+      "dot": "var(--c-accent-green)",
+      "minimal": true,
+      "ground": "blue67"
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "minimal": true,
+      "ground": null
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Cheap is a *room*, not a budget",
+      "minimal": true,
+      "ground": "superlime"
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Sound like the room you wish you had",
+      "minimal": true,
+      "ground": "purpleblue"
+    }
+  ]
+}

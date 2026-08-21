@@ -1,0 +1,143 @@
+{
+  "deck": "cold-open-diorama",
+  "refAnalysis": "38e5ad8d22c43d25e5adeb9c72fc4ea5.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cold open",
+      "accent": "accent-lime",
+      "title": "The first *30 seconds* decide the other thirty minutes",
+      "replace": [
+        "SUBJECT: a doll-like figure crouching, mouth open, surrounded by walls and a floor built entirely from stacked cassette cases.",
+        "COMPOSITION: the figure looms upper right; the lower-left is bare stacked cases.",
+        "COLOUR: magenta dominant."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Drop-off",
+      "value": "73",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a doll-like figure walking away down a corridor whose walls are stacked cassette cases.",
+        "COMPOSITION: the figure is small and far, high in the frame; the corridor floor fills the rest.",
+        "COLOUR: orange-red dominant."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "Warm-up",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "replace": [
+        "SUBJECT: a doll-like figure sitting with hands over its mouth among stacked cases.",
+        "COMPOSITION: the figure is upper right; stacked cases fill the lower left.",
+        "COLOUR: blue-violet dominant."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Long intro",
+        "Recap",
+        "Apologies",
+        "Tech problems",
+        "Small talk",
+        "Throat clearing",
+        "Where were we"
+      ],
+      "replace": [
+        "SUBJECT: a wall of stacked cassette cases with no figure at all, a few cases fallen forward.",
+        "COMPOSITION: the wall fills the frame; a darker pocket in the lower left.",
+        "COLOUR: near-black with one dim saturated hue."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Move your best line to the *top*",
+      "items": [
+        "Find it in the transcript",
+        "Cut it loose",
+        "Paste it at 0:00"
+      ],
+      "replace": [
+        "SUBJECT: a doll-like figure prising one case out of the wall with both hands.",
+        "COMPOSITION: hands and case upper right; stacked cases below.",
+        "COLOUR: acid lime yellow-green dominant."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "replace": [
+        "SUBJECT: a single case standing upright on a floor of hundreds of others.",
+        "COMPOSITION: the standing case sits in the right third; the floor recedes to the left.",
+        "COLOUR: hot pink dominant."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "replace": [
+        "SUBJECT: stacked cassette cases seen from directly overhead as a flat tiled mosaic floor, no figure.",
+        "COMPOSITION: the mosaic fills the frame evenly; the lower left falls into shadow.",
+        "COLOUR: near-black with one dim saturated hue."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "replace": [
+        "SUBJECT: a doll-like figure standing straight, arms at its sides, in the middle of the case-built room.",
+        "COMPOSITION: the figure is centred and looming; cases fill everything behind.",
+        "COLOUR: acid lime yellow-green dominant."
+      ]
+    }
+  ]
+}

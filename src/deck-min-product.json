@@ -1,0 +1,135 @@
+{
+  "deck": "min-product",
+  "handle": "mubert.com/tools/cast",
+  "minimal": true,
+  "slides": [
+    {
+      "layout": "statement",
+      "kicker": "Product",
+      "accent": "accent-lime",
+      "title": "Record to *published*, one place",
+      "minimal": true,
+      "ground": "mainorange"
+    },
+    {
+      "layout": "index",
+      "kicker": "The flow",
+      "accent": "accent-carrot",
+      "title": "Six steps, *one* export",
+      "items": [
+        {
+          "title": "Upload the recording"
+        },
+        {
+          "title": "Clean up the voice"
+        },
+        {
+          "title": "Edit the transcript"
+        },
+        {
+          "title": "Add chapters"
+        },
+        {
+          "title": "Score and duck the music"
+        },
+        {
+          "title": "Set loudness, export"
+        }
+      ],
+      "minimal": true,
+      "ground": "carrot"
+    },
+    {
+      "layout": "stat",
+      "kicker": "Tools replaced",
+      "value": "7",
+      "unit": "→1",
+      "accent": "accent-purple",
+      "minimal": true,
+      "ground": "superlime"
+    },
+    {
+      "layout": "tags",
+      "kicker": "Inside",
+      "accent": "accent-lime",
+      "items": [
+        "Transcript editing",
+        "Filler removal",
+        "Silence removal",
+        "Voice cleanup",
+        "Censoring",
+        "Chapters",
+        "Adaptive music",
+        "Auto-ducking",
+        "Loudness",
+        "Stems"
+      ],
+      "minimal": true,
+      "ground": null
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "minimal": true,
+      "ground": null
+    },
+    {
+      "layout": "list",
+      "kicker": "What goes",
+      "accent": "accent-green",
+      "title": "Cleanup you never *touch*",
+      "bullet": "check",
+      "items": [
+        "Um, uh, like — gone",
+        "Dead air — gone",
+        "Room hum — gone",
+        "Long pauses — tightened"
+      ],
+      "minimal": true,
+      "ground": "purpleblue"
+    },
+    {
+      "layout": "poster",
+      "kicker": "Why",
+      "accent": "accent-purple",
+      "title": "Built for creators, not *engineers*",
+      "minimal": true,
+      "ground": "violet65"
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "From recorded to ready",
+      "minimal": true,
+      "ground": "blue67"
+    }
+  ]
+}

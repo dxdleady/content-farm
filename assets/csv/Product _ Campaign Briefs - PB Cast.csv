@@ -1,0 +1,244 @@
+,,
+,,
+,Product Brief,MUBERT CAST
+,,
+,1. Product in a nutshell,
+,Description,"Mubert Cast is an audio-first editing and finishing tool for podcasts and other spoken-word content.
+
+It helps creators turn a raw recording into a polished, ready-to-publish audio file without building a complex production workflow across multiple tools.
+
+A user can upload a recording, edit the audio through its transcript, clean up speech, remove filler words and unwanted silences, censor explicit language, create chapters, add music and sound design, set appropriate loudness, and export the finished audio.
+
+Input: a recorded audio file.
+Output: a finished audio file or, on supported plans, separate stems + transcript
+
+Cast is focused on audio production. It does not currently edit video or publish directly to podcast platforms."
+,Product Link,https://mubert.com/tools/cast
+,Feature overview,https://mubert.com/tools/cast/features
+,,
+,2. Who it is for,
+,Core customer context,"Cast is designed for people and small teams who create audio-first spoken-word content and want it to sound polished without becoming audio engineers themselves.
+
+Quality matters to them, but so do speed, simplicity, and the ability to complete the entire production workflow without manually working through a traditional DAW.
+
+A useful way to think about the core Cast user is:
+They have something worth saying, teaching, discussing, or promoting. Producing the audio is necessary, but audio production itself is not the goal."
+,Typical users,"Independent podcasters
+Solo hosts or small teams producing interview, conversational, educational, or narrative podcasts on a recurring basis. They often handle much of the editing and finishing themselves.
+
+Experts, founders, consultants, and personal-brand creators
+People using podcasts and long-form spoken content to share expertise, build authority, develop an audience, or support their business. For them, podcasting is primarily a communication and distribution channel rather than an audio-production hobby.
+
+Educators and knowledge creators
+People producing lectures, courses, interviews, lessons, and other long-form spoken content that needs to be cleaned up, structured, and prepared for listening.
+
+Lean content teams and producers
+Small marketing, media, or content teams producing spoken-word material regularly without assigning a dedicated audio engineer to every project."
+,Typical production mindset,"The user generally wants to go from:
+Record → edit → clean up → structure → add music + sfx → finish → export
+
+with as little repetitive manual production work as possible."
+,Less suitable for,"Cast is not primarily designed for:
+– video-first podcast productions where YouTube or video editing is the main output;
+– high-end studio productions with dedicated audio engineers;
+– workflows requiring deep DAW-level multitrack editing, mixing, mastering, or plugin control;
+– users whose main goal is detailed manual sound engineering rather than fast content production."
+,,
+,3. Problems it solves,
+,,"Editing spoken audio takes too much time
+Traditional audio editing often requires repeatedly listening through a recording, finding unwanted sections on a waveform, cutting them manually, and checking every edit.
+Cast allows much of this work to happen through the transcript instead.
+
+Raw speech needs cleanup before it sounds publishable
+Recordings often contain filler words, unnecessary pauses, background noise, inconsistent pacing, and other imperfections that make the result feel unfinished.
+Cast provides dedicated tools for cleaning and tightening spoken audio.
+
+Long recordings need structure
+Podcasts, lectures, and other long recordings are easier to consume when they are divided into meaningful sections.
+Cast can create podcast chapters from the content.
+
+Explicit language can require a second version of the episode
+Finding and censoring profanity manually is repetitive and time-consuming.
+Cast detects explicit language and lets the user censor or bleep it directly in the editing workflow.
+
+Music adds another production workflow
+
+Creating intros, outros, transitions, background beds, and other musical elements usually means finding suitable music elsewhere, licensing it, importing it, editing it to fit, and mixing it underneath speech.
+Cast integrates music generation directly into the production workflow.
+
+Finishing audio requires technical knowledge
+Creators should not need to understand professional loudness standards, manual ducking, or mastering workflows just to prepare an episode for release.
+Cast provides automatic ducking, loudness presets, and ready-to-use export options."
+,,
+,4. How it works & core capabilities,
+,Step 1,"1. Upload
+The user uploads an existing audio recording.
+Cast is currently audio-only; video files and video editing are not supported."
+,Step 2,"2. Clean up the voice
+Cast helps improve the quality and clarity of recorded speech.
+
+Key capability:
+– Voice cleanup & enchancement
+– Noise removal"
+,Step 3,"3. Work through the transcript
+Cast transcribes the recording and allows the user to work with spoken content through text rather than relying only on a waveform.
+
+Key capabilities include:
+– Transcript editing
+– Filler-word removal
+– Silence removal
+- Shorten pauses 
+– Podcast censoring and bleeping"
+,Step 4,"4. Structure the content
+Cast can generate chapters for long-form spoken content, making episodes easier to navigate and consume.
+
+Key capability:
+– Podcast chapters"
+,Step 5,"5. Add music and sound design
+Users can generate music directly inside the Cast workflow for uses such as:
+– intros;
+– outros;
+– background music;
+– transitions;
+– sound effect
+– other podcast audio needs.
+
+Music can automatically duck underneath speech rather than requiring the user to manually automate its volume.
+
+Key capabilities:
+– Podcast music
+– Royalty-free music for podcasts, lectures, and audiobooks
+– Auto-ducking
+– Sound FX"
+,Step 6,"6. Finish and export
+Cast can prepare the finished project using appropriate loudness settings and export the resulting audio.
+Depending on the subscription plan, available export options include high-quality audio, lossless formats, broadcast-grade output, and stems.
+
+Key capabilities:
+– Loudness presets
+– Stems export
+
+Cast currently provides file export only. It does not publish episodes directly to Spotify, Apple Podcasts, YouTube, podcast hosts, or other distribution platforms."
+,,
+,5. Why Cast,
+,,"Spoken-word editing without a traditional audio-production workflow
+Cast moves much of the editing process from waveform manipulation to transcript-based editing.
+This makes common podcast editing tasks accessible to creators who care about the content and final result but do not want to become proficient audio engineers.
+
+Editing and finishing in one place
+Cast combines tasks that would otherwise commonly require several separate steps or tools:
+transcription → content editing → speech cleanup → censoring → chapters → music → ducking → loudness → export
+The value is not one isolated feature, but the ability to take a recording through the full audio-production workflow in one place.
+
+Music is part of the product rather than an external stock library
+Cast is part of the Mubert ecosystem and integrates generative music directly into the workflow.
+Mubert-generated music is not a static asset library — it is adaptive and editable within the production pipeline. A creator can take a single generated track and continuously reshape it depending on the context of the episode: extend or shorten it, restructure its sections, adjust its stems, and reconfigure its arrangement for different use cases.
+This means the same musical idea can be reused across the entire episode while still feeling contextually different — for example, functioning as an intro, outro, transition, or background bed, while preserving a consistent sonic identity.
+Mubert-generated music uses only source samples whose rights are fully owned by Mubert. Eligible subscription plans include commercial licensing for generated music.
+This allows creators to produce music specifically for their content instead of searching through a traditional stock catalogue and manually adapting a pre-existing track.
+
+More information:
+https://mubert.com/tools/cast/features/commercial-license
+
+Built for creators rather than audio engineers
+Cast prioritizes automation, speed, and an understandable workflow over the detailed manual control of a professional DAW.
+The product is intended to reduce the amount of production expertise and repetitive work required between “I recorded something” and “this is ready to publish.”"
+,,
+,6. Boundaries & claims,
+,,"What Cast does not currently do
+– Cast does not edit video.
+– Cast does not publish directly to podcast or video platforms.
+– Cast is not a full professional DAW and should not be positioned as a replacement for every advanced mixing or mastering workflow.
+– Cast does not provide commercial rights to third-party music uploaded by the user.
+
+Music and copyright claims
+Mubert-generated music is created using source samples whose rights are fully owned by Mubert, and commercial licensing is available on eligible plans.
+However, advertising should not promise that a user can never receive an automated copyright claim on a third-party platform.
+
+Preferred claims include:
+– Commercially licensed music
+– Music generated from Mubert's fully controlled sample library
+– Royalty-free music for podcasts and spoken-word content
+
+Avoid absolute claims such as:
+– “Guaranteed zero copyright claims”
+– “Impossible to receive a copyright strike”
+– “Copyright-proof”
+
+Content censoring
+Cast includes a built-in multilingual profanity dictionary that automatically detects and flags explicit language across different languages.
+
+In addition to the default dictionary, users can add their own custom words or phrases for censorship. This is not limited to profanity — it can include:
+– personal names (for privacy or narrative reasons);
+– competitor or brand mentions;
+– sensitive terms in editorial or compliance contexts;
+– or even neutral words used intentionally for comedic effect.
+
+This enables “unnecessary censorship” styles, where ordinary words are intentionally muted or bleeped to create humor, emphasis, or a specific storytelling tone.
+Users can also customize how censored words are replaced. Instead of a standard beep, they can choose or design alternative replacement sounds, allowing for different creative or stylistic effects in the final audio.
+Cast can detect and censor explicit language, but this should not be presented as a guarantee that a resulting episode will automatically satisfy every advertiser, platform, or brand-safety policy."
+,,
+,7. Commercial basics,
+,,"Cast currently uses the same subscription and credit system as Mubert Fuse. It is separate from the current Mubert Render subscription system.
+
+Current monthly plans:
+
+Plan   Price          Key characteristics
+Free   $0/month       100 credits, up to 60 min of uploads/month, standard-quality MP3 export
+Lite   $9.99/month    700 credits, up to 10 hours of uploads/month, HQ MP3 export
+Plus   $29.74/month   2,750 credits, up to 25 hours of uploads/month, lossless export, commercial music license
+Max    $59.99/month   6,500 credits, unlimited uploads, broadcast-grade export, commercial music license, stems export
+
+Credits are primarily used for generated content such as music and sound effects rather than ordinary editing operations.
+
+When advertising a specific plan, offer, price, export format, or credit allowance, always verify the current pricing page before publication."
+,,
+,8. Media pack,
+,,"Anyone producing advertising, editorial coverage, influencer content, or other external communications should receive this Product Brief together with a compact media pack."
+,Product links,"Cast:
+https://mubert.com/tools/cast
+
+Features overview:
+https://mubert.com/tools/cast/features"
+,Feature references,"Commercial music licensing
+https://mubert.com/tools/cast/features/commercial-license
+
+Transcript editing
+https://mubert.com/tools/cast/features/transcript-editing
+
+Filler-word removal
+https://mubert.com/tools/cast/features/filler-word-removal
+
+Silence removal
+https://mubert.com/tools/cast/features/remove-silence
+
+Shorten pauses
+https://mubert.com/tools/cast/docs/remove-pauses
+ 
+Voice cleanup
+https://mubert.com/tools/cast/features/voice-cleanup
+
+Podcast music
+https://mubert.com/tools/cast/features/podcast-music
+
+Auto-ducking
+https://mubert.com/tools/cast/features/auto-duck-podcast
+
+Podcast chapters
+https://mubert.com/tools/cast/features/podcast-chapters
+
+Loudness presets
+https://mubert.com/tools/cast/features/loudness-presets
+
+Stems export
+https://mubert.com/tools/cast/features/podcast-stems
+
+Podcast censoring & bleeping
+https://mubert.com/tools/cast/features/censor-podcast
+
+Royalty-free music for podcasts, lectures, and audiobooks
+https://mubert.com/tools/cast/features/royalty-free-podcast-music
+
+Sounding professional
+https://mubert.com/tools/cast/features/sound-professional"
+,Recommended media assets,TBD

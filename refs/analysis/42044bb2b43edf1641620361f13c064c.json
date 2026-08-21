@@ -1,0 +1,16 @@
+{
+  "ref": "42044bb2b43edf1641620361f13c064c.jpg",
+  "name": "ps1-render",
+  "note": "Read by eye. keep = how it is made (copied verbatim); replace is set per slide.",
+  "keep": [
+    "KEEP — the making of the image, copy exactly:",
+    "· MEDIUM: a frame captured from a late-1990s PlayStation-1 real-time 3D game. Not concept art, not a modern render. Low internal resolution upscaled — everything is soft and slightly blurry, with visible pixel structure.",
+    "· GEOMETRY: aggressively low polygon count. Flat-shaded facets, visible triangle seams, hard angular silhouettes. Hair and foliage are FLAT INTERSECTING PLANES with alpha-cut edges, not strands.",
+    "· ARTEFACTS: at least one visible shading glitch — a hard dark triangle where the normals break. Texture seams misaligned at polygon edges. No cast shadows, no reflections, no ambient occlusion.",
+    "· TEXTURES: low-resolution blurry bitmaps stretched over the geometry, muddy detail.",
+    "· LIGHTING: flat vertex lighting, no falloff. Background light sources are simple bright emissive blobs and lit rectangles, blown out and bloomy.",
+    "· POST: heavy monochrome grain over everything, soft bloom on bright areas, dark vignette in the corners, CRT softness.",
+    "· COLOUR CAST: one sickly saturated hue floods the entire frame including the shadows.",
+    "· No readable text, no letters, no numerals, no logo, no watermark anywhere."
+  ]
+}

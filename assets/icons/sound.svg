@@ -1,0 +1,45 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="32" height="32" fill="#1E1E1E"/>
+<g id="mucast-landing-page" clip-path="url(#clip0_0_1)">
+<rect width="1920" height="23314" transform="translate(-945 -6434.45)" fill="#0A0A0A"/>
+<g id="Frame 1948764320">
+<g id="How It Works - Dark Bento Editorial">
+<g id="Frame 1948764354">
+<g id="Frame 1948764352">
+<g id="Frame 1948764396">
+<g id="card-04" filter="url(#filter0_d_0_1)">
+<g id="Frame 1948764505">
+<g id="Frame 1948764508">
+<g id="Frame 1948764494">
+<g id="Frame 1948764338">
+<g id="sound">
+<path id="Vector" d="M16.1959 3.70605V28.7079M10.3531 8.95905V23.4549M4.50781 13.9172V18.4966M27.8814 13.9172V18.4966M22.0411 8.95905V23.4549" stroke="#FE7A7C" stroke-width="3" stroke-linecap="round"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_1" x="-928" y="-109" width="1816" height="346" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="12" operator="erode" in="SourceAlpha" result="effect1_dropShadow_0_1"/>
+<feOffset dy="18"/>
+<feGaussianBlur stdDeviation="20"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25098 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
+</filter>
+<clipPath id="clip0_0_1">
+<rect width="1920" height="23314" fill="white" transform="translate(-945 -6434.45)"/>
+</clipPath>
+</defs>
+</svg>

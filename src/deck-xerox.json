@@ -1,0 +1,143 @@
+{
+  "deck": "cold-open-xerox",
+  "refAnalysis": "5a22341176df5d0cf25223913eae732f.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cold open",
+      "accent": "accent-lime",
+      "title": "The first *30 seconds* decide the other thirty minutes",
+      "replace": [
+        "SUBJECT: a screaming mouth wide open, teeth blown to pure white.",
+        "COMPOSITION: the mouth fills the upper right; the lower-left third is solid black.",
+        "COLOUR: the starburst overlay is hot magenta."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Drop-off",
+      "value": "73",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a lone figure walking away, tiny, seen from behind.",
+        "COMPOSITION: the figure sits small and high; a vast black field fills the lower two thirds.",
+        "COLOUR: the starburst overlay is deep orange-red."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "Warm-up",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "replace": [
+        "SUBJECT: a mouth pressed shut, lips tight, jaw clenched.",
+        "COMPOSITION: the mouth crosses the upper half; the bottom-left is solid black.",
+        "COLOUR: the starburst overlay is electric blue-violet."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Long intro",
+        "Recap",
+        "Apologies",
+        "Tech problems",
+        "Small talk",
+        "Throat clearing",
+        "Where were we"
+      ],
+      "replace": [
+        "SUBJECT: a hand clamped over an ear.",
+        "COMPOSITION: the hand fills the top-right corner; the rest is blown to white paper.",
+        "COLOUR: the starburst overlay is acid lime yellow-green."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Move your best line to the *top*",
+      "items": [
+        "Find it in the transcript",
+        "Cut it loose",
+        "Paste it at 0:00"
+      ],
+      "replace": [
+        "SUBJECT: two fingers holding a thin blade against a strip of tape.",
+        "COMPOSITION: the fingers enter from the top-right; the lower-left is empty black.",
+        "COLOUR: the starburst overlay is acid lime yellow-green."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "replace": [
+        "SUBJECT: a throat and jaw tipped back, tendons standing out.",
+        "COMPOSITION: the throat runs down the right third; the left two thirds are blown white.",
+        "COLOUR: the starburst overlay is hot pink."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "replace": [
+        "SUBJECT: a close crop of heavily crumpled paper filling the frame, photocopied down to pure black and white.",
+        "COMPOSITION: the crumple catches light in the upper right; the lower two thirds fall away to near-solid black.",
+        "COLOUR: the starburst overlay is small, in the top-right corner only."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "replace": [
+        "SUBJECT: an eye held wide open, lashes breaking into dots.",
+        "COMPOSITION: the eye sits high and right; the lower half is solid black.",
+        "COLOUR: the starburst overlay is acid lime yellow-green."
+      ]
+    }
+  ]
+}

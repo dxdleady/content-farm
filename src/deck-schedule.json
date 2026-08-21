@@ -1,0 +1,140 @@
+{
+  "deck": "schedule",
+  "refAnalysis": "38e5ad8d22c43d25e5adeb9c72fc4ea5.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Schedule",
+      "accent": "accent-lime",
+      "title": "Shipping weekly beats shipping *perfect*",
+      "replace": [
+        "SUBJECT: a person carrying a stack of finished tapes taller than they are.",
+        "COMPOSITION: the subject sits high and right, cropped by the top edge; the lower-left third stays quiet and empty.",
+        "COLOUR: hot pink dominant."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Quit before",
+      "value": "21",
+      "unit": "eps",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: someone standing alone in front of an unfinished wall of work.",
+        "COMPOSITION: the subject is small and pushed into the upper right; most of the frame is empty ground.",
+        "COLOUR: hot magenta dominant."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "The trap",
+      "accent": "accent-lime",
+      "title": "Polish is where podcasts go to *die*",
+      "replace": [
+        "SUBJECT: a face mid-excuse, eyes sliding away.",
+        "COMPOSITION: the subject crosses the upper half diagonally; the bottom-left stays empty.",
+        "COLOUR: acid lime yellow-green dominant."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Excuses",
+      "accent": "accent-lime",
+      "items": [
+        "Needs one more pass",
+        "Waiting on the guest",
+        "New mic first",
+        "Rebranding",
+        "Batch it later",
+        "Not happy with it",
+        "No good hook yet",
+        "Waiting for the season",
+        "Artwork not ready",
+        "Need a schedule",
+        "Too busy this week",
+        "Next month for sure"
+      ],
+      "replace": [
+        "SUBJECT: a crowd of people all holding one unfinished piece each.",
+        "COMPOSITION: elements scatter, dense in the upper right, thinning to nothing towards the lower left.",
+        "COLOUR: near-black with a warm red cast dominant."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Publish on the *day*, not on the mood",
+      "items": [
+        "Pick one weekday",
+        "Cap the edit at two hours",
+        "Ship it anyway"
+      ],
+      "replace": [
+        "SUBJECT: hands placing one finished object onto a full shelf.",
+        "COMPOSITION: the subject enters from the top-right corner; the lower-left is empty.",
+        "COLOUR: electric blue-violet dominant."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "A published episode beats a *perfect* draft",
+      "replace": [
+        "SUBJECT: a person shipping something, arm extended, letting go.",
+        "COMPOSITION: the subject stands tall in the right third, cropped by the top edge; the left two thirds are empty.",
+        "COLOUR: burnt orange dominant."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "c",
+      "replace": [
+        "SUBJECT: a room of people working at identical desks.",
+        "COMPOSITION: the motif fills the frame evenly and quietly; the lower left falls into shadow.",
+        "COLOUR: near-black with a green cast dominant."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Same day, every week",
+      "replace": [
+        "SUBJECT: one person setting the last piece into place.",
+        "COMPOSITION: centred and cropped, the lower half is empty ground.",
+        "COLOUR: deep violet dominant."
+      ]
+    }
+  ]
+}

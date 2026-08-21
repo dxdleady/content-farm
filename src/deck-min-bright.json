@@ -1,0 +1,84 @@
+{
+  "deck": "min-bright",
+  "handle": "mubert.com/tools/cast",
+  "minimal": true,
+  "slides": [
+    {
+      "layout": "poster",
+      "kicker": "Hot take",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "minimal": true,
+      "ground": "purpleblue"
+    },
+    {
+      "layout": "stat",
+      "kicker": "Gone by",
+      "value": "30",
+      "unit": "s",
+      "accent": "accent-carrot",
+      "minimal": true,
+      "ground": "pink"
+    },
+    {
+      "layout": "poster",
+      "kicker": "Take",
+      "accent": "accent-purple",
+      "title": "Your title is why nobody *clicked*",
+      "minimal": true,
+      "ground": "blue67"
+    },
+    {
+      "layout": "quote",
+      "accent": "accent-pink",
+      "title": "We stopped scrubbing waveforms. We just *delete the sentence*.",
+      "author": "Dana Reyes",
+      "role": "Host, Signal & Noise",
+      "dot": "var(--c-accent-pink)",
+      "minimal": true,
+      "ground": "green"
+    },
+    {
+      "layout": "statement",
+      "kicker": "Truth",
+      "accent": "accent-lime",
+      "title": "Long is not the same as *deep*",
+      "minimal": true,
+      "ground": "mainorange"
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings die of",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Recap",
+        "Apologies"
+      ],
+      "minimal": true,
+      "ground": null
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "minimal": true,
+      "ground": "superlime"
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "minimal": true,
+      "ground": "carrot"
+    }
+  ]
+}

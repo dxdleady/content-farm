@@ -1,0 +1,14 @@
+{
+  "ref": "3ca2c7f05bdc0c5a06482097ec357086.jpg",
+  "name": "paper-screenprint",
+  "note": "Read by eye. keep = how it is made (copied verbatim); replace is set per slide.",
+  "keep": [
+    "KEEP — the making of the image, copy exactly:",
+    "· MEDIUM: hand-pulled silkscreen on heavy cream paper. Untouched paper margin on all four edges, ~4% of the frame, slightly uneven, with a faint plate impression.",
+    "· GROUND: one mottled, sponged, blotchy ink field — uneven density, lighter in the centre, denser at the edges, paper tooth showing through. NOT a flat digital fill, NOT a gradient.",
+    "· SHAPES: flat cut-and-torn paper shapes with angular hand-cut edges, small facets and nicks. Inside them: pure blank unprinted paper — zero shading, zero detail, zero rendering.",
+    "· FRAGMENTS: only small collaged pieces are photographic — coarse grainy high-contrast black-and-white halftone from an old print.",
+    "· REGISTRATION: a thin 1-2px yellow and cyan halo along part of each boundary where the screens missed.",
+    "· No text, no signature, no numbers, no logo anywhere."
+  ]
+}

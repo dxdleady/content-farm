@@ -1,0 +1,116 @@
+{
+  "deck": "min-guide-test",
+  "handle": "mubert.com/tools/cast",
+  "minimal": true,
+  "slides": [
+    {
+      "layout": "statement",
+      "kicker": "Guide",
+      "accent": "accent-lime",
+      "title": "It is not your *microphone*",
+      "minimal": true
+    },
+    {
+      "layout": "claim",
+      "kicker": "The real cause",
+      "accent": "accent-carrot",
+      "title": "You hear the *room*, bounced back into the mic",
+      "minimal": true
+    },
+    {
+      "layout": "checklist",
+      "kicker": "Diagnose",
+      "accent": "accent-green",
+      "title": "How *cheap* actually sounds",
+      "items": [
+        "Room hum sitting under everything",
+        "Plosives popping on every P and B",
+        "A reverb tail in a bare, empty room",
+        "Boxy, hollow tone — the voice sounds far",
+        "Clipping crackle when they get loud"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "steps",
+      "kicker": "Fix 1 · placement",
+      "accent": "accent-carrot",
+      "title": "Get the mic *close*",
+      "items": [
+        "A fist or two away — about 10–20 cm",
+        "Aim it just off the side of your mouth",
+        "Add a pop filter, or a sock over the grille"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "steps",
+      "kicker": "Fix 2 · the room",
+      "accent": "accent-lime",
+      "title": "Make the room *smaller & softer*",
+      "items": [
+        "Record in the smallest room you have",
+        "Never sit facing a bare, hard wall",
+        "A closet of hanging clothes beats a big studio"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "list",
+      "kicker": "Fix 3 · levels",
+      "accent": "accent-pink",
+      "title": "Set the gain *once*, right",
+      "bullet": "check",
+      "items": [
+        "Peaks around −12 dBFS — never touch 0",
+        "Clipping is permanent; always leave headroom",
+        "High-pass at ~80 Hz to drop rumble and hum"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "dontList",
+      "kicker": "Skip these",
+      "accent": "accent-carrot",
+      "title": "What *won't* fix it",
+      "items": [
+        "A more expensive microphone",
+        "Plugins before placement",
+        "A bigger, emptier room",
+        "“We'll fix it in post”"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "comparison",
+      "kicker": "Same voice",
+      "accent": "accent-lime",
+      "aTitle": "Bare room",
+      "a": ["Boxy and hollow", "Long echo tail", "Distant, thin"],
+      "bTitle": "Soft room",
+      "b": ["Dry and close", "No tail", "Present, full"],
+      "minimal": true
+    },
+    {
+      "layout": "callout",
+      "kicker": "The order",
+      "accent": "accent-carrot",
+      "title": "Room → distance → mic → *software*",
+      "note": "You can't EQ a bad room out. Work top to bottom and stop as soon as it sounds right.",
+      "minimal": true
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-lime",
+      "title": "Cheap is a *room*, not a budget",
+      "minimal": true
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Treat the room. Let *cleanup* do the last 10%.",
+      "minimal": true
+    }
+  ]
+}

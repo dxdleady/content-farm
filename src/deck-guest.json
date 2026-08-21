@@ -1,0 +1,140 @@
+{
+  "deck": "guest",
+  "refAnalysis": "b2918c3332ca976882f7ddbf4798250f.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "The guest",
+      "accent": "accent-lime",
+      "title": "Your guest gave you *nothing*. That was your fault",
+      "replace": [
+        "SUBJECT: two people across a table, one leaning in hungry, the other pulled back and closed.",
+        "COMPOSITION: the subject sits high and right, cropped by the top edge; the lower-left third stays quiet and empty.",
+        "COLOUR: deep violet dominant."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Wasted",
+      "value": "41",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a guest sitting alone with arms folded, looking at the floor.",
+        "COMPOSITION: the subject is small and pushed into the upper right; most of the frame is empty ground.",
+        "COLOUR: electric green dominant."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "The trap",
+      "accent": "accent-lime",
+      "title": "Yes-or-no questions get *yes-or-no* answers",
+      "replace": [
+        "SUBJECT: a mouth in profile answering with one syllable, lips barely parted.",
+        "COMPOSITION: the subject crosses the upper half diagonally; the bottom-left stays empty.",
+        "COLOUR: electric blue-violet dominant."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Killers",
+      "accent": "accent-lime",
+      "items": [
+        "So tell us about yourself",
+        "Any final thoughts?",
+        "How did you get started",
+        "Reading the bio aloud",
+        "Interrupting the pause",
+        "Three questions at once",
+        "Agreeing with everything",
+        "Sticking to the list",
+        "Asking what you know",
+        "Watching the clock",
+        "Talking over the answer",
+        "Ending on logistics"
+      ],
+      "replace": [
+        "SUBJECT: a crowd of talking heads all speaking at once.",
+        "COMPOSITION: elements scatter, dense in the upper right, thinning to nothing towards the lower left.",
+        "COLOUR: near-black charcoal dominant."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Ask one thing, then *shut up*",
+      "items": [
+        "Ask a story, not a fact",
+        "Let the silence run",
+        "Follow the flinch"
+      ],
+      "replace": [
+        "SUBJECT: one hand raised palm-out, asking the other person to stop.",
+        "COMPOSITION: the subject enters from the top-right corner; the lower-left is empty.",
+        "COLOUR: burnt orange dominant."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "The best answer comes *after* the pause",
+      "replace": [
+        "SUBJECT: a face caught in the second before it finally speaks.",
+        "COMPOSITION: the subject stands tall in the right third, cropped by the top edge; the left two thirds are empty.",
+        "COLOUR: deep orange-red dominant."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "replace": [
+        "SUBJECT: a circle of people leaning in to listen to one of them.",
+        "COMPOSITION: the motif fills the frame evenly and quietly; the lower left falls into shadow.",
+        "COLOUR: near-black charcoal dominant."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Cut the question, keep the answer",
+      "replace": [
+        "SUBJECT: two people from behind, close together, one listening hard.",
+        "COMPOSITION: centred and cropped, the lower half is empty ground.",
+        "COLOUR: hot magenta dominant."
+      ]
+    }
+  ]
+}

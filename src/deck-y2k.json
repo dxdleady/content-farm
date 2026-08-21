@@ -1,0 +1,143 @@
+{
+  "deck": "cold-open-y2k",
+  "refAnalysis": "95ae8841b79d4cdbeab0c8a12c33503a.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cold open",
+      "accent": "accent-lime",
+      "title": "The first *30 seconds* decide the other thirty minutes",
+      "replace": [
+        "SUBJECT: a macro crop of a single human EAR with a chrome stud through it, filling the frame, cut by the top and right edges.",
+        "COMPOSITION: the ear occupies the right two thirds; the lower-left third stays a quiet flat painted field with nothing on it.",
+        "COLOUR: hot magenta replaces the fire-engine red; blue blobs and green scribbles stay."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Drop-off",
+      "value": "73",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a macro crop of an open mouth mid-word, gem-set teeth, wet lips catching the flash.",
+        "COMPOSITION: the mouth is pushed to the top-right and cut by both edges; the bottom-left half is a flat blue painted field left empty.",
+        "COLOUR: deep orange-red dominant, blue blobs, green scribbles."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "Warm-up",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "replace": [
+        "SUBJECT: a macro crop of an eye squeezed shut behind mirrored wraparound eyewear.",
+        "COMPOSITION: the eyewear crosses the upper half diagonally; the lower-left stays a flat quiet field.",
+        "COLOUR: electric blue-violet dominant, magenta blobs, green scribbles."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Long intro",
+        "Recap",
+        "Apologies",
+        "Tech problems",
+        "Small talk",
+        "Throat clearing",
+        "Where were we"
+      ],
+      "replace": [
+        "SUBJECT: a macro crop of a gloved hand clamped over a mouth, chrome rings on the fingers.",
+        "COMPOSITION: the hand fills the top-right; the bottom-left third is crushed black and empty.",
+        "COLOUR: near-black with acid green scribbles and a few blue blobs only."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Move your best line to the *top*",
+      "items": [
+        "Find it in the transcript",
+        "Cut it loose",
+        "Paste it at 0:00"
+      ],
+      "replace": [
+        "SUBJECT: a macro crop of two fingers pinching a thin cable, chrome nails, flash glare on the wire.",
+        "COMPOSITION: the fingers enter from the top-right corner; the rest of the frame is a flat painted field.",
+        "COLOUR: acid lime yellow-green dominant, ultramarine blobs, magenta scribbles."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "replace": [
+        "SUBJECT: a macro crop of a jaw and throat tipped back, chrome chain across the neck.",
+        "COMPOSITION: the throat runs down the right third, cut by the top edge; the left two thirds are a flat field.",
+        "COLOUR: hot pink dominant, ultramarine blobs, acid green scribbles."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "c",
+      "replace": [
+        "SUBJECT: a macro crop of black leather and chrome hardware — buckles, rings and studs filling the frame, no skin.",
+        "COMPOSITION: hardware fills the whole frame edge to edge, no single focal point.",
+        "COLOUR: near-black leather with a few ultramarine blobs and acid green scribbles only."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "replace": [
+        "SUBJECT: a macro crop of a smile with gem-set teeth, one chrome stud on the lip.",
+        "COMPOSITION: the smile sits high and right, cut by the top edge; the bottom half is a flat quiet field.",
+        "COLOUR: acid lime yellow-green dominant, blue blobs, magenta scribbles."
+      ]
+    }
+  ]
+}

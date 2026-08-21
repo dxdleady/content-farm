@@ -1,0 +1,18 @@
+{
+  "campaigns": [
+    {
+      "id": "CAST-CENSOR-01",
+      "name": "Automatic Podcast Censoring",
+      "objective": "Acquire Cast users by positioning built-in automatic censoring as a faster alternative to manually finding and bleeping explicit language.",
+      "audience": "Independent podcasters / small teams whose episodes contain explicit language and who do their own post; monetize or want a cleaner version for wider distribution; unscripted formats (comedy, interview, commentary).",
+      "problem": "Manually censoring is slow and repetitive — every occurrence found, edited, timed, checked.",
+      "solution": ["Auto-detect explicit language", "Flag it in the transcript", "Censor without hunting the waveform", "Custom words & phrases", "Replace with sounds, not just a beep"],
+      "angle": "Censoring should be part of podcast editing — not another job after it. 'Another production step' → 'Already handled inside Cast.'",
+      "coreMessage": "What if podcast censoring was automatic?",
+      "feature": "censor",
+      "cta": "Try Mubert Cast",
+      "ctaUrl": "https://mubert.com/tools/cast/features/censor-podcast",
+      "extra": "Custom censoring beyond profanity — names, brands, sensitive terms, or 'unnecessary censorship' comedy where ordinary words get bleeped for effect. Multilingual profanity dictionary built in."
+    }
+  ]
+}

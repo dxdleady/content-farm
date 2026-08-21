@@ -1,0 +1,143 @@
+{
+  "deck": "cold-open-melt",
+  "refAnalysis": "32b0d3aebd632b6147cae81e574eba54.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cold open",
+      "accent": "accent-lime",
+      "title": "The first *30 seconds* decide the other thirty minutes",
+      "replace": [
+        "SUBJECT: a head thrown back mid-shout, the left half dragged into long taffy streaks.",
+        "COMPOSITION: the sharp half sits upper right; the melt runs off to the lower left across white.",
+        "COLOUR: everything tinted hot magenta."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Drop-off",
+      "value": "73",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a small figure whose legs dissolve into drips running off the bottom of the frame.",
+        "COMPOSITION: the figure is small and high right; white emptiness below.",
+        "COLOUR: everything tinted deep orange-red."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "Warm-up",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "replace": [
+        "SUBJECT: a closed mouth whose lower lip stretches sideways into a single long drip.",
+        "COMPOSITION: the mouth sits upper right; the drip crosses to the lower left.",
+        "COLOUR: everything tinted electric blue-violet."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Long intro",
+        "Recap",
+        "Apologies",
+        "Tech problems",
+        "Small talk",
+        "Throat clearing",
+        "Where were we"
+      ],
+      "replace": [
+        "SUBJECT: an ear pulled into a dozen thin horizontal streaks.",
+        "COMPOSITION: the ear is top right; streaks fan out left across white.",
+        "COLOUR: everything tinted acid lime yellow-green."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Move your best line to the *top*",
+      "items": [
+        "Find it in the transcript",
+        "Cut it loose",
+        "Paste it at 0:00"
+      ],
+      "replace": [
+        "SUBJECT: a hand holding scissors, the blades smeared into liquid points.",
+        "COMPOSITION: the hand enters top right; the smear runs down-left.",
+        "COLOUR: everything tinted acid lime yellow-green."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "replace": [
+        "SUBJECT: a microphone whose head melts downward into a single fat drip.",
+        "COMPOSITION: the microphone stands in the right third; white to the left.",
+        "COLOUR: everything tinted hot pink."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "replace": [
+        "SUBJECT: a curtain of long thin drips hanging down from the top edge across pure white, no figure at all.",
+        "COMPOSITION: the drips are dense at the top and thin out to nothing by the middle; the lower half is clean white.",
+        "COLOUR: everything tinted electric blue-violet."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "replace": [
+        "SUBJECT: a face split — one half sharp, the other pulled into a wide fan of streaks.",
+        "COMPOSITION: sharp half upper right, fan across the lower left.",
+        "COLOUR: everything tinted acid lime yellow-green."
+      ]
+    }
+  ]
+}

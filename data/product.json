@@ -1,0 +1,56 @@
+{
+  "name": "Mubert Cast",
+  "url": "https://mubert.com/tools/cast",
+  "features_url": "https://mubert.com/tools/cast/features",
+  "oneLiner": "Audio-first editing and finishing tool for podcasts and spoken-word content — raw recording to publish-ready audio, without a DAW.",
+  "io": { "input": "a recorded audio file", "output": "finished audio file; on supported plans, stems + transcript" },
+  "audioOnly": true,
+  "notVideo": true,
+  "doesNotPublish": true,
+  "workflow": ["Upload", "Clean up the voice", "Work through the transcript", "Structure the content", "Add music & sound design", "Finish & export"],
+  "audience": {
+    "core": "People and small teams making audio-first spoken-word content who want it polished without becoming audio engineers. They have something worth saying; audio production is necessary but not the goal.",
+    "types": [
+      "Independent podcasters — solo hosts / small teams, interview, conversational, educational, narrative; edit it themselves",
+      "Experts, founders, consultants, personal-brand creators — podcasting to share expertise and build authority",
+      "Educators & knowledge creators — lectures, courses, lessons, long-form spoken content",
+      "Lean content teams — marketing/media producing spoken-word regularly without a dedicated engineer"
+    ],
+    "lessSuitable": ["video-first productions", "high-end studios with dedicated engineers", "deep DAW multitrack/mixing/mastering", "users who want manual sound engineering, not fast production"]
+  },
+  "features": [
+    { "key": "transcript-editing", "name": "Transcript editing", "url": "https://mubert.com/tools/cast/features/transcript-editing", "group": "transcript" },
+    { "key": "filler-removal", "name": "Filler-word removal", "url": "https://mubert.com/tools/cast/features/filler-word-removal", "group": "transcript" },
+    { "key": "silence-removal", "name": "Silence removal", "url": "https://mubert.com/tools/cast/features/remove-silence", "group": "transcript" },
+    { "key": "shorten-pauses", "name": "Shorten pauses", "url": "https://mubert.com/tools/cast/docs/remove-pauses", "group": "transcript" },
+    { "key": "voice-cleanup", "name": "Voice cleanup & noise removal", "url": "https://mubert.com/tools/cast/features/voice-cleanup", "group": "cleanup" },
+    { "key": "censor", "name": "Censoring & bleeping", "url": "https://mubert.com/tools/cast/features/censor-podcast", "group": "transcript" },
+    { "key": "chapters", "name": "Podcast chapters", "url": "https://mubert.com/tools/cast/features/podcast-chapters", "group": "structure" },
+    { "key": "music", "name": "Podcast music", "url": "https://mubert.com/tools/cast/features/podcast-music", "group": "music" },
+    { "key": "royalty-free", "name": "Royalty-free music for podcasts, lectures, audiobooks", "url": "https://mubert.com/tools/cast/features/royalty-free-podcast-music", "group": "music" },
+    { "key": "auto-duck", "name": "Auto-ducking", "url": "https://mubert.com/tools/cast/features/auto-duck-podcast", "group": "music" },
+    { "key": "commercial-license", "name": "Commercial music licensing", "url": "https://mubert.com/tools/cast/features/commercial-license", "group": "music" },
+    { "key": "loudness", "name": "Loudness presets", "url": "https://mubert.com/tools/cast/features/loudness-presets", "group": "export" },
+    { "key": "stems", "name": "Stems export", "url": "https://mubert.com/tools/cast/features/podcast-stems", "group": "export" },
+    { "key": "sound-professional", "name": "Sounding professional", "url": "https://mubert.com/tools/cast/features/sound-professional", "group": "meta" }
+  ],
+  "differentiators": [
+    "Transcript-based editing instead of waveform manipulation",
+    "Whole workflow in one place: transcript → content edit → cleanup → censoring → chapters → music → ducking → loudness → export",
+    "Music is generative and part of the product, not a stock library — one track reshaped into intro/outro/transition/bed, adaptive and editable",
+    "Music uses samples whose rights Mubert fully owns; commercial licensing on eligible plans",
+    "Built for creators, not audio engineers — automation and speed over manual DAW control"
+  ],
+  "plans": [
+    { "name": "Free", "price": "$0/mo", "credits": 100, "uploads": "up to 60 min/mo", "export": "standard MP3" },
+    { "name": "Lite", "price": "$9.99/mo", "credits": 700, "uploads": "up to 10 h/mo", "export": "HQ MP3" },
+    { "name": "Plus", "price": "$29.74/mo", "credits": 2750, "uploads": "up to 25 h/mo", "export": "lossless + commercial license" },
+    { "name": "Max", "price": "$59.99/mo", "credits": 6500, "uploads": "unlimited", "export": "broadcast-grade + commercial license + stems" }
+  ],
+  "creditsNote": "Credits are mostly for generated content (music, SFX), not ordinary editing. Verify the live pricing page before publishing any price/plan/offer.",
+  "voice": {
+    "prefer": ["Automatic profanity detection & censoring", "Create a clean version faster", "Built into your podcast editing workflow", "Commercially licensed music", "Royalty-free music for podcasts and spoken-word", "Music from Mubert's fully controlled sample library"],
+    "avoid": ["Makes your podcast ad-safe", "Guaranteed brand-safe", "Unlocks advertising", "Automatic ad-friendly optimization", "Guaranteed zero copyright claims", "Impossible to receive a copyright strike", "Copyright-proof"]
+  },
+  "boundaries": ["No video editing", "No direct publishing to Spotify/Apple/YouTube/hosts", "Not a full pro DAW", "No commercial rights to third-party music the user uploads"]
+}

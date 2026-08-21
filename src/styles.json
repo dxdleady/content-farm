@@ -1,0 +1,142 @@
+{
+  "$meta": "Style presets for background generation. base = shared frame, palette = colour rule (a preset may override), treatments[].lines = the artistic layer. A slide selects via \"bgStyle\". References: shared in refs/style/, per-preset in refs/style/<preset>/ (if that folder exists, only those are used).",
+  "default": "ps1",
+  "base": [
+    "Vertical 4:5 poster art for (cast) — an audio/podcast editing brand. Full-bleed, edge to edge.",
+    "NO readable text, letterforms, numerals, logos or watermarks anywhere in the image.",
+    "Composition leaves the LOWER-LEFT third calmer and less busy so headline type can sit there. The subject sits high and right.",
+    "People are INVENTED and non-identifiable — never a real, famous or recognisable person.",
+    "Cast whoever the SUBJECT line describes. When it does not specify, vary age, gender, ethnicity and body type across generations instead of defaulting to one look."
+  ],
+  "treatments": {
+    "y2k-punk": {
+      "lines": [
+        "Y2K post-modern punk poster. Hard direct-flash studio portrait of an invented person mid-expression — shouting, squinting, laughing, caught off guard.",
+        "Duotone lighting: skin lit by two clashing gels from opposite sides. Crushed blacks, blown speculars, visible film grain.",
+        "Cut-and-paste collage energy: torn paper edges, marker scribbles, spiky starburst cut-outs, sticker shapes, registration-misprint colour fringing.",
+        "Feels like a 2001 club flyer photocopied twice. Chaotic but composed."
+      ]
+    },
+    "chrome": {
+      "lines": [
+        "Y2K liquid chrome and inflated 3D forms. Mirror-polished metal blobs, bevelled shapes, star and sparkle geometry, iridescent oil-slick reflections picking up the accent colours.",
+        "Studio HDRI reflections against deep black. Glossy, expensive, slightly absurd.",
+        "No faces required — pure object poster."
+      ]
+    },
+    "melt": {
+      "lines": [
+        "Digital liquify/warp abuse. A flash-lit invented face or figure smeared, stretched and pulled sideways into long taffy streaks, datamosh smearing, pixel-drag trails.",
+        "One or two accent colours flood the whole frame. Extreme contrast, grotesque and funny rather than horror."
+      ]
+    },
+    "collage": {
+      "lines": [
+        "Xerox punk collage. Halftone-dotted photographic fragments cut out with scissors, layered over flat blocks of a single screaming accent colour.",
+        "Hand-drawn marker scribbles, arrows, spikes, tape, staples, torn edges, ink bleed and overprint misregistration.",
+        "Mostly flat and graphic, almost no depth."
+      ]
+    },
+    "flash-portrait": {
+      "lines": [
+        "Editorial hard-flash portrait of an invented person, tight crop, shot on a compact camera with direct on-camera flash.",
+        "Sharp harsh shadow behind the subject on a flat single-colour backdrop in one of the accent colours. Skin texture kept real, grain heavy.",
+        "Confident magazine-cover framing, subject high and to the right."
+      ]
+    },
+    "ps1": {
+      "palette": "TWO colours only: one saturated accent plus black. The background is a FLAT SOLID field of that accent, edge to edge, no scenery, no floor, no horizon, no gradient. The subject is the black/dark shape against it, or vice versa. NO third hue anywhere.",
+      "lines": [
+        "A SCREENSHOT FROM A REAL PLAYSTATION 1 GAME, captured off composite video. Not concept art, not a modern low-poly render, not Blender, not stylised illustration. 1997 in-game graphics.",
+        "CROP: extreme close-up. The subject FILLS THE FRAME and is cut off by the edges. No full-body wide shots, no empty margins, no tiny figure in a void.",
+        "RESOLUTION: the whole image is 320x240 blown up huge. Every edge is a hard pixel staircase. NO anti-aliasing. Chunky visible pixels everywhere.",
+        "COLOUR DEPTH: 15-bit colour with heavy ordered dithering — visible cross-hatch dither in every shade. Banding, never smooth falloff.",
+        "TEXTURES: blurry 64x64 bitmaps warping across the polygons, seams misaligned at polygon edges.",
+        "GEOMETRY: brutally low polygon count. A face is a faceted box with a flat painted texture, not modelled features. Visible triangle seams, gaps between parts. No smooth shading, no bevels, no reflections, no cast shadows.",
+        "CRT: scanlines, phosphor bloom, colour bleed, mild barrel distortion.",
+        "It must look CHEAP, JAGGED and DATED. The charm is entirely in the artefacts."
+      ]
+    },
+    "post-fashion": {
+      "palette": "TWO colours carry the frame: one saturated accent as a FLAT SEAMLESS STUDIO BACKDROP filling the whole background, plus the subject's skin. Optionally one second accent as the light or the makeup. No third hue, no props, no set dressing, no gradient sky.",
+      "lines": [
+        "Post-fashion editorial beauty portrait. Hard direct on-camera flash, tight crop, subject cut off by the frame edges.",
+        "Skin is the material: glossy highlights, visible pores and texture, sweat sheen, blown speculars where the flash hits, hard-edged shadow thrown onto the backdrop behind.",
+        "Styling is extreme and graphic — painted face graphics, sharp geometric makeup, piercings, grillz, wet slicked hair, latex or vinyl.",
+        "The pose is confident and frontal, chin up or head tilted, looking straight down the lens. Magazine-cover framing.",
+        "Grain is fine and filmic, contrast is high, colour is clean and punchy — expensive, not scrappy.",
+        "NO collage, no scribbles, no torn paper, no stickers. This one is polished."
+      ]
+    },
+    "punk-poster": {
+      "palette": "Two colours maximum: black plus ONE screaming accent, or one accent over a bleached white/paper ground. Flat fields, no gradients. The photographic parts are reduced to harsh 1-bit black-and-white halftone. No third hue.",
+      "lines": [
+        "Xerox punk gig-poster. Looks photocopied three times: crushed 1-bit halftone, blown-out whites, clogged blacks, dust, toner streaks, paper texture.",
+        "A screaming or grimacing face, cut out with scissors and pasted onto a flat field of one accent colour. Torn paper edges, visible tape and staples.",
+        "Hand-drawn marker on top: scribbles, arrows, spikes, crossed-out strokes, starburst and spike cut-outs framing the head.",
+        "Registration is off — the colour layer is misprinted a few millimetres from the black layer.",
+        "Flat and graphic, almost no depth. Aggressive, cheap, urgent.",
+        "NO glossy 3D, no clean studio lighting, no polish."
+      ]
+    },
+    "sweep": {
+      "palette": "Take the colour entirely from the attached reference — its hues, its saturation, its contrast.",
+      "lines": [
+        "Take your ENTIRE visual language from the attached reference image: its medium, lighting, grain, colour, post-processing, level of polish and framing. Copy the LOOK exactly.",
+        "Do NOT copy its subject, pose, objects, background scene or any person from it — only the style.",
+        "Extreme close-up, subject cropped by the frame edges, minimal staging."
+      ]
+    }
+  },
+  "topicHints": {
+    "$note": "Topical hooks so the image is about the product, not pure abstraction.",
+    "voice": "microphones, headphones, mouths, throats, sound",
+    "editing": "cut, scissors, tape, splice, waveform ridges",
+    "music": "speakers, resonance, rhythm, vibration",
+    "people": "hosts, guests, talking, listening"
+  },
+  "palette": "Palette is loud and pushed: matte black #0A0A0A grounds it, and the image commits hard to accents from #6E75FF #FE4F8D #FE7A7C #EEFF04 #23EE78 #FF3400 #995CED #555DFF. Two or three of them, at full saturation. No muddy mid-tones, no pastel wash, no beige.",
+  "hard": [
+    "Vertical 4:5, full-bleed.",
+    "No readable text, letterforms, numerals, logos or watermarks anywhere.",
+    "Any person is invented and non-identifiable — never a real or recognisable person."
+  ],
+  "wildcards": {
+    "$note": "Pools for prompt post-processing. Each generation deterministically picks one item per pool (seed = hash of subject + variant) so frames differ while the cache stays valid.",
+    "angle": [
+      "shot from the floor looking almost straight up, the subject looming over the lens",
+      "straight overhead, bird's eye, the subject flattened against the ground",
+      "hard dutch tilt, horizon rolled past 40 degrees",
+      "from directly behind the subject's shoulder, their head blocking most of the frame",
+      "the lens pressed almost against the subject, inches away",
+      "seen through a doorway / gap / between two objects in the foreground",
+      "reflected in a mirror, screen or puddle, the real subject only partly visible",
+      "from below and behind, the subject three-quarters turned away"
+    ],
+    "crop": [
+      "the subject is cut hard by the frame edge — half the head is outside the picture",
+      "extreme close-up, a single feature fills the entire frame",
+      "the subject is tiny and pushed into one corner of a vast empty field",
+      "cropped at the chin so the eyes own the top edge",
+      "the subject sits dead against the bottom edge with emptiness above",
+      "two thirds of the frame is one flat colour, the subject squeezed into the rest"
+    ],
+    "lens": [
+      "14mm fisheye, heavy barrel distortion, edges bending",
+      "long telephoto compression, background collapsed flat onto the subject",
+      "cheap disposable camera with a dirty lens and vignetting",
+      "security-camera frame grab, wrong white balance",
+      "shot through scratched plastic / smeared glass",
+      "wide angle held too close so proportions go wrong"
+    ],
+    "break": [
+      "something intrudes into the frame from off-screen — a hand, a cable, an object edge",
+      "one element is at obviously the wrong scale next to the others",
+      "the subject is caught mid-motion, blurred while everything else is frozen",
+      "a second exposure ghosts over the first, misaligned",
+      "part of the image is a different treatment entirely, as if two frames were spliced",
+      "the light source is inside the frame and blowing out a corner"
+    ]
+  },
+  "misbehave": "Refuse the safe version. No centred symmetrical portrait, no neutral eye-level framing, no tidy composition. If the obvious shot suggests itself, do the opposite. Be strange on purpose."
+}

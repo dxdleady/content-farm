@@ -1,0 +1,140 @@
+{
+  "deck": "cheap",
+  "refAnalysis": "fe07b718cbda6181c1f8ba9442a40433.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cheap",
+      "accent": "accent-lime",
+      "title": "It is not your *microphone*",
+      "replace": [
+        "SUBJECT: a person recording in a bare echoing room, arms out, dwarfed by the walls.",
+        "COMPOSITION: the subject sits high and right, cropped by the top edge; the lower-left third stays quiet and empty.",
+        "COLOUR: acid lime yellow-green dominant."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Room tone",
+      "value": "80",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: someone wincing at their own playback, one hand on the headphone cup.",
+        "COMPOSITION: the subject is small and pushed into the upper right; most of the frame is empty ground.",
+        "COLOUR: electric green dominant."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "The truth",
+      "accent": "accent-lime",
+      "title": "Listeners hear the *room*, not the mic",
+      "replace": [
+        "SUBJECT: an ear pressed flat against a hard wall, listening through it.",
+        "COMPOSITION: the subject crosses the upper half diagonally; the bottom-left stays empty.",
+        "COLOUR: hot magenta dominant."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Tells",
+      "accent": "accent-lime",
+      "items": [
+        "Room hum",
+        "Chair creak",
+        "Fridge next door",
+        "Plosive on every P",
+        "Sibilance",
+        "Traffic bleed",
+        "Clipping on laughs",
+        "Uneven levels",
+        "Reverb tail",
+        "Keyboard clatter",
+        "Breath on the capsule",
+        "Mic bumps"
+      ],
+      "replace": [
+        "SUBJECT: a crowd of people covering their ears.",
+        "COMPOSITION: elements scatter, dense in the upper right, thinning to nothing towards the lower left.",
+        "COLOUR: near-black with a cold blue cast dominant."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Fix the room, then the *file*",
+      "items": [
+        "Kill the hard surfaces",
+        "Get the mic closer",
+        "Let cleanup do the rest"
+      ],
+      "replace": [
+        "SUBJECT: hands draping heavy fabric over a hard bare surface.",
+        "COMPOSITION: the subject enters from the top-right corner; the lower-left is empty.",
+        "COLOUR: deep orange-red dominant."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Cheap is a *room*, not a budget",
+      "replace": [
+        "SUBJECT: a person leaning right into the microphone, almost touching it.",
+        "COMPOSITION: the subject stands tall in the right third, cropped by the top edge; the left two thirds are empty.",
+        "COLOUR: electric blue-violet dominant."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "c",
+      "replace": [
+        "SUBJECT: a room of people recording in soft cluttered spaces.",
+        "COMPOSITION: the motif fills the frame evenly and quietly; the lower left falls into shadow.",
+        "COLOUR: near-black charcoal dominant."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Sound like the room you wish you had",
+      "replace": [
+        "SUBJECT: one person in a soft warm room, eyes closed, listening.",
+        "COMPOSITION: centred and cropped, the lower half is empty ground.",
+        "COLOUR: hot pink dominant."
+      ]
+    }
+  ]
+}

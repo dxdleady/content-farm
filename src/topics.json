@@ -1,0 +1,378 @@
+[
+  {
+    "deck": "cold-open",
+    "ref": "3ca2c7f05bdc0c5a06482097ec357086.json",
+    "variant": "c",
+    "hookKicker": "Cold open",
+    "hook": "The first *30 seconds* decide the other thirty minutes",
+    "statKicker": "Drop-off",
+    "stat": [
+      "73",
+      "%"
+    ],
+    "trapKicker": "Warm-up",
+    "trap": "Nobody stays for the *warm-up*",
+    "tagsKicker": "Openings",
+    "tags": [
+      "Hellos",
+      "Mic check",
+      "The weather",
+      "Housekeeping",
+      "Dead air",
+      "So anyway…",
+      "Sponsor read",
+      "Nervous laugh",
+      "Long intro",
+      "Recap",
+      "Apologies",
+      "Where were we"
+    ],
+    "fixTitle": "Move your best line to the *top*",
+    "steps": [
+      "Find it in the transcript",
+      "Cut it loose",
+      "Paste it at 0:00"
+    ],
+    "rule": "Start at the *punchline*",
+    "splashLine": "Your cold open, found for you",
+    "subjects": [
+      "a host mid-shout into an oversized microphone, head thrown back",
+      "a listener walking out of frame, pulling one earbud loose, seen from behind",
+      "a face with the mouth clamped shut, jaw tight, eyes to the side",
+      "a crowd of faces all turning away at once",
+      "two hands cutting a strip of tape with a blade",
+      "a figure caught mid-leap, arms flung out",
+      "a room of people all wearing headphones, seen from above",
+      "one person alone at a microphone, calm, looking straight out"
+    ]
+  },
+  {
+    "deck": "guest",
+    "ref": "b2918c3332ca976882f7ddbf4798250f.json",
+    "variant": "k",
+    "hookKicker": "The guest",
+    "hook": "Your guest gave you *nothing*. That was your fault",
+    "statKicker": "Wasted",
+    "stat": [
+      "41",
+      "%"
+    ],
+    "trapKicker": "The trap",
+    "trap": "Yes-or-no questions get *yes-or-no* answers",
+    "tagsKicker": "Killers",
+    "tags": [
+      "So tell us about yourself",
+      "Any final thoughts?",
+      "How did you get started",
+      "Reading the bio aloud",
+      "Interrupting the pause",
+      "Three questions at once",
+      "Agreeing with everything",
+      "Sticking to the list",
+      "Asking what you know",
+      "Watching the clock",
+      "Talking over the answer",
+      "Ending on logistics"
+    ],
+    "fixTitle": "Ask one thing, then *shut up*",
+    "steps": [
+      "Ask a story, not a fact",
+      "Let the silence run",
+      "Follow the flinch"
+    ],
+    "rule": "The best answer comes *after* the pause",
+    "splashLine": "Cut the question, keep the answer",
+    "subjects": [
+      "two people across a table, one leaning in hungry, the other pulled back and closed",
+      "a guest sitting alone with arms folded, looking at the floor",
+      "a mouth in profile answering with one syllable, lips barely parted",
+      "a crowd of talking heads all speaking at once",
+      "one hand raised palm-out, asking the other person to stop",
+      "a face caught in the second before it finally speaks",
+      "a circle of people leaning in to listen to one of them",
+      "two people from behind, close together, one listening hard"
+    ]
+  },
+  {
+    "deck": "cheap",
+    "ref": "fe07b718cbda6181c1f8ba9442a40433.json",
+    "variant": "c",
+    "hookKicker": "Cheap",
+    "hook": "It is not your *microphone*",
+    "statKicker": "Room tone",
+    "stat": [
+      "80",
+      "%"
+    ],
+    "trapKicker": "The truth",
+    "trap": "Listeners hear the *room*, not the mic",
+    "tagsKicker": "Tells",
+    "tags": [
+      "Room hum",
+      "Chair creak",
+      "Fridge next door",
+      "Plosive on every P",
+      "Sibilance",
+      "Traffic bleed",
+      "Clipping on laughs",
+      "Uneven levels",
+      "Reverb tail",
+      "Keyboard clatter",
+      "Breath on the capsule",
+      "Mic bumps"
+    ],
+    "fixTitle": "Fix the room, then the *file*",
+    "steps": [
+      "Kill the hard surfaces",
+      "Get the mic closer",
+      "Let cleanup do the rest"
+    ],
+    "rule": "Cheap is a *room*, not a budget",
+    "splashLine": "Sound like the room you wish you had",
+    "subjects": [
+      "a person recording in a bare echoing room, arms out, dwarfed by the walls",
+      "someone wincing at their own playback, one hand on the headphone cup",
+      "an ear pressed flat against a hard wall, listening through it",
+      "a crowd of people covering their ears",
+      "hands draping heavy fabric over a hard bare surface",
+      "a person leaning right into the microphone, almost touching it",
+      "a room of people recording in soft cluttered spaces",
+      "one person in a soft warm room, eyes closed, listening"
+    ]
+  },
+  {
+    "deck": "trailer",
+    "ref": "95ae8841b79d4cdbeab0c8a12c33503a.json",
+    "variant": "k",
+    "hookKicker": "Trailer",
+    "hook": "Nobody finishes your *trailer*",
+    "statKicker": "Skipped",
+    "stat": [
+      "9",
+      "s"
+    ],
+    "trapKicker": "The trap",
+    "trap": "A trailer is not a *summary*",
+    "tagsKicker": "Skipped",
+    "tags": [
+      "Welcome to the show",
+      "Every week we",
+      "My name is",
+      "A podcast about",
+      "Available everywhere",
+      "Subscribe now",
+      "Theme music intro",
+      "Listing the guests",
+      "Explaining the format",
+      "Thanking the sponsor",
+      "Describing yourself",
+      "Saying podcast twice"
+    ],
+    "fixTitle": "Open with the *best* ten seconds",
+    "steps": [
+      "Lead with the loudest moment",
+      "Say who it is for",
+      "Stop at thirty seconds"
+    ],
+    "rule": "Show the show, do not *describe* it",
+    "splashLine": "A trailer worth finishing",
+    "subjects": [
+      "a face caught on the very first word, mouth just opening",
+      "a thumb coming down to skip, the face behind it already bored",
+      "a person mid-sentence being cut off, hand still raised",
+      "a crowd of faces looking away at their phones",
+      "a hand pulling one bright strip out of a tangle of others",
+      "a face leaning in hard, demanding attention",
+      "a wall of small portraits, all mid-speech",
+      "one face mid-laugh, caught wide open"
+    ]
+  },
+  {
+    "deck": "titles",
+    "ref": "5a22341176df5d0cf25223913eae732f.json",
+    "variant": "c",
+    "hookKicker": "Titles",
+    "hook": "Your *title* is why nobody clicked",
+    "statKicker": "Decided in",
+    "stat": [
+      "2",
+      "s"
+    ],
+    "trapKicker": "The trap",
+    "trap": "Clever titles age into *nothing*",
+    "tagsKicker": "Dead titles",
+    "tags": [
+      "Episode 47",
+      "Chat with a friend",
+      "Part two",
+      "Random thoughts",
+      "Untitled",
+      "Weekly roundup",
+      "A conversation",
+      "Catching up",
+      "Season finale",
+      "Bonus episode",
+      "My take",
+      "Live from home"
+    ],
+    "fixTitle": "Name the *promise*, not the episode",
+    "steps": [
+      "Lead with the payoff",
+      "Keep it under six words",
+      "Cut the episode number"
+    ],
+    "rule": "Curiosity beats *cleverness*",
+    "splashLine": "Titles people actually click",
+    "subjects": [
+      "a person squinting at something just off-frame, unimpressed",
+      "a hand scrolling past a face without stopping",
+      "someone holding a blank card up in front of their own face",
+      "a crowd of people all holding identical blank cards",
+      "a hand striking one line through with a marker",
+      "a face lit by curiosity, leaning towards the light",
+      "a wall of people holding cards over their faces",
+      "one person lowering a card to reveal their face"
+    ]
+  },
+  {
+    "deck": "length",
+    "ref": "42044bb2b43edf1641620361f13c064c.json",
+    "variant": "k",
+    "hookKicker": "Length",
+    "hook": "Your episode is *twice* as long as it should be",
+    "statKicker": "Never reached",
+    "stat": [
+      "62",
+      "%"
+    ],
+    "trapKicker": "The trap",
+    "trap": "Long is not the same as *deep*",
+    "tagsKicker": "Padding",
+    "tags": [
+      "Catching up",
+      "Re-explaining",
+      "Reading the news",
+      "Tangent about lunch",
+      "Re-introducing the guest",
+      "Second recap",
+      "Waiting for the point",
+      "Repeating the question",
+      "Housekeeping again",
+      "Plugging twice",
+      "Small talk",
+      "Sign-off number three"
+    ],
+    "fixTitle": "Cut until it *hurts*, then cut once more",
+    "steps": [
+      "Drop the first five minutes",
+      "Keep one tangent, not four",
+      "End on the last strong line"
+    ],
+    "rule": "Nobody ever wished it were *longer*",
+    "splashLine": "Half the length, twice the show",
+    "subjects": [
+      "a person slumped in a chair mid-recording, exhausted, hours in",
+      "a listener walking away down a very long corridor",
+      "a mouth still talking while the eyes have gone dead",
+      "a crowd of people checking their watches at once",
+      "two hands cutting a long strip in half",
+      "a person standing up mid-sentence and walking out",
+      "a room of people sitting through something too long",
+      "one person finishing on a strong line and stopping"
+    ]
+  },
+  {
+    "deck": "music",
+    "ref": "32b0d3aebd632b6147cae81e574eba54.json",
+    "variant": "k",
+    "hookKicker": "Music",
+    "hook": "Music decides what they *feel* before you speak",
+    "statKicker": "Felt in",
+    "stat": [
+      "400",
+      "ms"
+    ],
+    "trapKicker": "The trap",
+    "trap": "Stock beds make every show sound *the same*",
+    "tagsKicker": "Dead beds",
+    "tags": [
+      "Corporate uplift",
+      "Ukulele whistle",
+      "Generic lo-fi",
+      "Cinematic riser",
+      "Podcast piano",
+      "Trap hat loop",
+      "Ambient pad",
+      "News sting",
+      "Royalty-free rock",
+      "Motivational build",
+      "Sad piano",
+      "Same intro as everyone"
+    ],
+    "fixTitle": "Score the *cut*, not the runtime",
+    "steps": [
+      "Let the bed follow the edit",
+      "Duck under the voice",
+      "Export with rights attached"
+    ],
+    "rule": "The bed carries the *feeling*",
+    "splashLine": "Scored like a show, not a slideshow",
+    "subjects": [
+      "a face reacting to the first note, eyes closing",
+      "a lone dancer moving in an empty room",
+      "a mouth singing while the whole face dissolves into motion",
+      "a crowd of faces all feeling the same beat",
+      "a hand sliding a single fader",
+      "a person standing inside a speaker stack, head tipped back",
+      "a room of people moving together",
+      "one face lit by sound, calm and open"
+    ]
+  },
+  {
+    "deck": "schedule",
+    "ref": "38e5ad8d22c43d25e5adeb9c72fc4ea5.json",
+    "variant": "c",
+    "hookKicker": "Schedule",
+    "hook": "Shipping weekly beats shipping *perfect*",
+    "statKicker": "Quit before",
+    "stat": [
+      "21",
+      "eps"
+    ],
+    "trapKicker": "The trap",
+    "trap": "Polish is where podcasts go to *die*",
+    "tagsKicker": "Excuses",
+    "tags": [
+      "Needs one more pass",
+      "Waiting on the guest",
+      "New mic first",
+      "Rebranding",
+      "Batch it later",
+      "Not happy with it",
+      "No good hook yet",
+      "Waiting for the season",
+      "Artwork not ready",
+      "Need a schedule",
+      "Too busy this week",
+      "Next month for sure"
+    ],
+    "fixTitle": "Publish on the *day*, not on the mood",
+    "steps": [
+      "Pick one weekday",
+      "Cap the edit at two hours",
+      "Ship it anyway"
+    ],
+    "rule": "A published episode beats a *perfect* draft",
+    "splashLine": "Same day, every week",
+    "subjects": [
+      "a person carrying a stack of finished tapes taller than they are",
+      "someone standing alone in front of an unfinished wall of work",
+      "a face mid-excuse, eyes sliding away",
+      "a crowd of people all holding one unfinished piece each",
+      "hands placing one finished object onto a full shelf",
+      "a person shipping something, arm extended, letting go",
+      "a room of people working at identical desks",
+      "one person setting the last piece into place"
+    ]
+  }
+]

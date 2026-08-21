@@ -1,0 +1,143 @@
+{
+  "deck": "cold-open-ps1",
+  "refAnalysis": "42044bb2b43edf1641620361f13c064c.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cold open",
+      "accent": "accent-lime",
+      "title": "The first *30 seconds* decide the other thirty minutes",
+      "replace": [
+        "SUBJECT: a low-poly character leaning into an oversized angular microphone, head tipped back mid-shout.",
+        "COMPOSITION: the character is high and right, cropped at the chest; the lower-left is dark empty geometry.",
+        "COLOUR CAST: hot magenta floods the frame."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Drop-off",
+      "value": "73",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a lone low-poly figure walking away down an empty game corridor, seen from behind, very small.",
+        "COMPOSITION: the figure sits tiny in the upper right; a vast blocky floor fills the rest.",
+        "COLOUR CAST: deep orange-red floods the frame."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "Warm-up",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "replace": [
+        "SUBJECT: a low-poly head in three-quarter view with the mouth closed, eyes half shut, blocky hair planes.",
+        "COMPOSITION: the head is high and right, cropped by the top edge; the lower-left is unlit flat geometry.",
+        "COLOUR CAST: electric blue-violet floods the frame."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Long intro",
+        "Recap",
+        "Apologies",
+        "Tech problems",
+        "Small talk",
+        "Throat clearing",
+        "Where were we"
+      ],
+      "replace": [
+        "SUBJECT: a wall of low-poly speaker cabinets stacked to the ceiling of a game room, no characters at all.",
+        "COMPOSITION: the stack recedes to the upper right; the lower-left corner is near-black.",
+        "COLOUR CAST: near-black charcoal with one dim emissive hue."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Move your best line to the *top*",
+      "items": [
+        "Find it in the transcript",
+        "Cut it loose",
+        "Paste it at 0:00"
+      ],
+      "replace": [
+        "SUBJECT: a low-poly mixing desk seen close, faders as untextured emissive blocks, no characters.",
+        "COMPOSITION: the desk runs diagonally through the upper right; the lower-left is dark empty floor.",
+        "COLOUR CAST: acid lime yellow-green floods the frame."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "replace": [
+        "SUBJECT: a single angular low-poly microphone on a stand, alone in an empty game room.",
+        "COMPOSITION: the microphone stands tall in the right third, cropped by the top edge; the left two thirds are flat dark wall.",
+        "COLOUR CAST: hot pink floods the frame."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "c",
+      "replace": [
+        "SUBJECT: a dark low-poly server room, racks of blank untextured boxes receding into fog, no characters.",
+        "COMPOSITION: the racks fill the frame symmetrically, vanishing point in the centre.",
+        "COLOUR CAST: near-black charcoal with one dim emissive hue."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "replace": [
+        "SUBJECT: a low-poly character standing stiffly on a character-select podium wearing blocky headphones, arms at their sides.",
+        "COMPOSITION: the character is centred high, cropped at the waist; the lower half is the empty glowing podium.",
+        "COLOUR CAST: acid lime yellow-green floods the frame."
+      ]
+    }
+  ]
+}

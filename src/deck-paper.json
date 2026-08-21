@@ -1,0 +1,143 @@
+{
+  "deck": "cold-open-paper",
+  "refAnalysis": "3ca2c7f05bdc0c5a06482097ec357086.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Cold open",
+      "accent": "accent-lime",
+      "title": "The first *30 seconds* decide the other thirty minutes",
+      "replace": [
+        "SUBJECT: a giant human EAR alone, built as one blank torn-paper shape. Only the inner whorl is a grainy black-and-white photographic fragment.",
+        "COMPOSITION: the ear is huge and cropped by the right edge. Vast empty ink field across the left two thirds.",
+        "COLOUR: the ink field is hot magenta pink."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Drop-off",
+      "value": "73",
+      "unit": "%",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: one tiny torn-paper figure walking away, seen from behind, no face, no detail inside the shape.",
+        "COMPOSITION: the figure is very small and pushed into the bottom-right corner. Almost the entire sheet is empty ink.",
+        "COLOUR: the ink field is deep orange-red."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "Warm-up",
+      "accent": "accent-lime",
+      "title": "Nobody stays for the *warm-up*",
+      "replace": [
+        "SUBJECT: a large closed MOUTH shape cut from blank paper, lips pressed shut, no teeth, no interior detail.",
+        "COMPOSITION: the mouth sits low and left, cropped by the bottom edge. Empty ink above it.",
+        "COLOUR: the ink field is electric blue-violet."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Openings",
+      "accent": "accent-lime",
+      "items": [
+        "Hellos",
+        "Mic check",
+        "The weather",
+        "Housekeeping",
+        "Dead air",
+        "So anyway…",
+        "Sponsor read",
+        "Nervous laugh",
+        "Long intro",
+        "Recap",
+        "Apologies",
+        "Tech problems",
+        "Small talk",
+        "Throat clearing",
+        "Where were we"
+      ],
+      "replace": [
+        "SUBJECT: a scatter of two dozen small blank torn-paper scraps of different sizes, drifting apart.",
+        "COMPOSITION: the scraps cluster in the top-right and thin out towards the bottom-left, which stays empty.",
+        "COLOUR: the ink field is near-black charcoal."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Move your best line to the *top*",
+      "items": [
+        "Find it in the transcript",
+        "Cut it loose",
+        "Paste it at 0:00"
+      ],
+      "replace": [
+        "SUBJECT: a pair of open scissors as one blank torn-paper silhouette, with a single narrow paper strip falling away beneath them.",
+        "COMPOSITION: scissors high and right, the falling strip trailing towards the bottom-left. Empty ink elsewhere.",
+        "COLOUR: the ink field is acid lime yellow-green."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Start at the *punchline*",
+      "replace": [
+        "SUBJECT: one bold blank torn-paper exclamation stroke — a thick vertical slash with a separate square below it.",
+        "COMPOSITION: the stroke stands tall in the right third, cropped by the top edge. The left two thirds are empty ink.",
+        "COLOUR: the ink field is hot pink."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "c",
+      "replace": [
+        "SUBJECT: six blank torn-paper rectangles of equal size laid out in a loose grid, nothing inside them.",
+        "COMPOSITION: the grid drifts across the whole sheet, slightly rotated, edges cropped by the frame.",
+        "COLOUR: the ink field is deep charcoal, almost black."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Your cold open, found for you",
+      "replace": [
+        "SUBJECT: a large blank torn-paper triangle pointing right, like a play button, with one grainy black-and-white photographic fragment set into its lower corner.",
+        "COMPOSITION: the triangle is centred high, cropped by the top edge, empty ink filling the lower half.",
+        "COLOUR: the ink field is acid lime yellow-green."
+      ]
+    }
+  ]
+}

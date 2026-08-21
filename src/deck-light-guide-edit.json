@@ -1,0 +1,136 @@
+{
+  "deck": "light-guide-edit",
+  "refAnalysis": "3ca2c7f05bdc0c5a06482097ec357086.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "minimal": true,
+  "slides": [
+    {
+      "layout": "statement",
+      "theme": "light",
+      "kicker": "Guide",
+      "accent": "accent-purple",
+      "title": "Your first cut is *twice* too long",
+      "minimal": true,
+      "replace": [
+        "SUBJECT: an open pair of scissors mid-cut through a long ragged strip of torn paper.",
+        "COMPOSITION: the scissors sit high in the right third, the cut strip trailing left; the lower-left third stays blank cream paper.",
+        "COLOUR: pale cream ground, shapes cut from one bold cobalt-blue ink."
+      ]
+    },
+    {
+      "layout": "claim",
+      "theme": "light",
+      "kicker": "The craft",
+      "accent": "accent-carrot",
+      "title": "Editing is *deleting*, not decorating",
+      "minimal": true
+    },
+    {
+      "layout": "checklist",
+      "theme": "light",
+      "kicker": "Cut first",
+      "accent": "accent-green",
+      "title": "Go after these *first*",
+      "items": [
+        "Filler — um, uh, like, you know",
+        "False starts and restarts",
+        "The long hello and housekeeping",
+        "Tangents that never resolve",
+        "Dead air longer than a beat"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "steps",
+      "theme": "light",
+      "kicker": "Work in passes",
+      "accent": "accent-carrot",
+      "title": "Cut in *four* passes",
+      "items": [
+        "Structure — drop whole weak segments",
+        "Sentences — cut the rambles",
+        "Words — tighten every line",
+        "Breaths — close the dead gaps"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "callout",
+      "theme": "light",
+      "kicker": "Rule of thumb",
+      "accent": "accent-purple",
+      "title": "If it doesn't move the story, it *goes*",
+      "note": "Every line should earn its place — advance the point, land a laugh, or leave.",
+      "minimal": true
+    },
+    {
+      "layout": "dontList",
+      "theme": "light",
+      "kicker": "Leave in",
+      "accent": "accent-carrot",
+      "title": "Don't cut *these*",
+      "items": [
+        "Every breath — it turns robotic",
+        "The tangents that actually land",
+        "All the personality",
+        "Mid-word or mid-laugh"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "stat",
+      "theme": "light",
+      "kicker": "Hook or lose them",
+      "value": "30",
+      "unit": "s",
+      "accent": "accent-carrot",
+      "minimal": true
+    },
+    {
+      "layout": "list",
+      "theme": "light",
+      "kicker": "The 3 checks",
+      "accent": "accent-pink",
+      "title": "Before you *export*",
+      "bullet": "check",
+      "items": [
+        "Would a stranger stay past 0:30?",
+        "Any dead air longer than a beat?",
+        "Does every minute earn itself?"
+      ],
+      "minimal": true
+    },
+    {
+      "layout": "comparison",
+      "theme": "light",
+      "kicker": "Same take",
+      "accent": "accent-purple",
+      "aTitle": "Loose cut",
+      "a": ["45 minutes", "Three tangents", "Slow warm-up"],
+      "bTitle": "Tight cut",
+      "b": ["22 minutes", "One thread", "Cold open"],
+      "minimal": true
+    },
+    {
+      "layout": "poster",
+      "theme": "light",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Length is a *choice*, not a default",
+      "minimal": true,
+      "replace": [
+        "SUBJECT: a large stopwatch built from hand-cut torn-paper shapes, its dial a blank paper circle.",
+        "COMPOSITION: the stopwatch fills the upper-right and is cropped by the top edge; the lower-left third stays blank cream paper.",
+        "COLOUR: pale cream ground, shapes cut from one warm vermilion-red ink."
+      ]
+    },
+    {
+      "layout": "splash",
+      "theme": "light",
+      "accent": "accent-purple",
+      "title": "Cut the *words*, not the waveform.",
+      "minimal": true
+    }
+  ]
+}

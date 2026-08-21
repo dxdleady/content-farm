@@ -1,0 +1,122 @@
+,,
+,,
+,,
+,,
+,1. Campaign setup,
+,Product,Mubert Cast
+,Campaign,Automatic Podcast Censoring
+,Campaign ID,CAST-CENSOR-01
+,Objective,Acquire new Cast users by positioning built-in automatic censoring as a faster alternative to manually finding and bleeping explicit language.
+,Primary business goal,"Paid subscription / new paying user
+Secondary goal: Product activation among users entering through the censoring use case"
+,Budget,TBD
+,Start Date,
+,End Date,
+,,
+,2. Target audience,
+,Primary audience,"Independent podcasters and small podcast teams whose episodes occasionally or regularly contain explicit language and who handle at least part of post-production themselves.
+
+They care about producing a polished version of an episode, but do not want to spend time manually locating every explicit word and placing bleeps or edits one by one.
+
+Particularly relevant to creators who:
+– monetize or intend to monetize their content through advertising or sponsorships;
+– want the option to produce a cleaner version of an episode for wider distribution;
+– regularly publish conversational, comedy, interview, commentary, or other unscripted formats where explicit language naturally occurs;
+– do not have a dedicated audio engineer handling every episode."
+,Their current situation,"Creators who need a clean version of an episode currently have several options:
+
+record episode → identify explicit language → censor it manually or with an existing editing/censoring tool → review the result → export
+
+Some creators handle this manually in their editor. Others use professional editing software with censoring capabilities, a dedicated profanity-censoring tool, or outsource the work.
+
+The common friction is not necessarily the absence of censoring technology — it is adding another editing task, tool, or workflow to podcast production."
+,Why the problem matters,"The problem is not simply that profanity exists.
+
+The pain is the production work required to create a clean version when the creator decides one is needed.
+
+For creators concerned with sponsors, advertisers, broader distribution, or simply having multiple versions of an episode available, this can become repetitive work on every release."
+,,
+,3. Problem & proposition,
+,Problem,"Manually censoring explicit language is slow and repetitive.
+Every occurrence has to be found, edited, timed correctly, and checked. On conversational content, this can mean repeating the same mechanical task throughout a long recording."
+,Current alternatives,"The user can currently:
+– manually find and censor explicit language in an audio editor;
+– use professional editing software that supports automated or bulk censoring (i.e. Adobe Premiere);
+– use a dedicated profanity-censoring service;
+– outsource creation of a clean version;
+– or skip producing a clean version altogether."
+,Product solution,"Cast makes censoring part of the same workflow used to edit and finish the podcast.
+
+It can:
+– automatically detect explicit language;
+– flag occurrences directly in the transcript;
+– censor detected words without manually locating them on a waveform;
+– support custom words and phrases;
+– replace censored speech with different sounds rather than only a standard beep."
+,Value proposition,"Create a clean version without turning censoring into a separate production workflow.
+The advantage is not that automatic censoring exists nowhere else. The advantage is that it is built into the same environment where the creator can edit the transcript, clean the voice, remove fillers and silences, add chapters and music, and export the finished episode."
+,Campaign angle,"Censoring should be part of podcast editing — not another job after it.
+
+The emotional contrast is:
+“Another production step” → “Already handled inside Cast.”"
+,Core campaign message,"What if podcast censoring was automatic?
+
+Supporting idea:
+Detect explicit language, censor it in the transcript, and keep producing your episode in the same workflow."
+,,
+,4. Distribution,
+,Creative format,"Vertical short-form video, designed for feed-based discovery."
+,Actual media channels,TBD
+,Targeting hypothesis,"The campaign should reach people who are already involved in podcast creation rather than a broad audience interested in podcasts as listeners.
+
+Potential targeting signals include:
+– podcast creation / podcast editing;
+– audio editing and creator tools;
+– podcast hosting and recording platforms;
+– creator / content-production interests;
+– contextual placements around podcast-production education;
+– search or intent signals around censoring, bleeping, explicit-language editing, and podcast editing.
+
+Exact targeting should be defined per media channel."
+,,
+,5. Creative direction,
+,What the viewer should understand,"By the end of the creative, the viewer should understand three things:
+1. Cast can automatically identify language they may want to censor.
+2. They do not have to manually place every bleep themselves.
+3. Censoring is built into a broader podcast-production tool rather than requiring another standalone app."
+,CTA,"Try Mubert Cast
+
+https://mubert.com/tools/cast/features/censor-podcast"
+,,
+,6. Claims & creative corrections,
+,Preferred language,"– Automatic profanity detection & censoring
+– Create a clean version faster
+– Built into your podcast editing workflow"
+,Avoid,"– Makes your podcast ad-safe
+– Guaranteed brand-safe
+– Unlocks advertising
+– Automatic ad-friendly optimization"
+,,
+,7. Measurement,
+,Primary conversion,Paid Cast subscription
+,Product activation event,"For traffic coming from this campaign, a meaningful activation should demonstrate that the user actually experienced the advertised value.
+
+Suggested activation:
+User uploads audio and successfully uses the censoring feature.
+
+A stronger downstream activation could be:
+Upload → censoring action → export"
+,Diagnostic funnel,Impression → video engagement → click → Cast visit → upload → censoring used → export → paid
+,Primary KPI,CAC / cost per paying subscriber
+,Supporting metrics,"– Video hold / completion rate
+– CTR
+– CPC
+– Landing page → upload conversion
+– Upload → censoring activation
+– Censoring activation → export
+– Activation → paid conversion"
+,Decision criteria,"– Scale: audience converts into activated and paid users at acceptable CAC.
+– Iterate: creative generates attention/clicks but weak product activation or payment.
+– Stop: sufficient delivery produces neither meaningful engagement nor downstream product use.
+
+Exact CAC, spend threshold, and minimum sample size: TBD before launch."

@@ -1,0 +1,113 @@
+#!/usr/bin/env node
+// Mock an Instagram profile grid — 3 columns × 4 rows of post COVERS (first slide),
+// each a different rubric / design / ref, so we can see how the feed reads.
+//   node tools/feed.mjs
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { MODELS } from '../src/providers.mjs';
+import { pool } from '../src/pool.mjs';
+import { Chrome } from '../src/chrome.mjs';
+import { renderSlide } from '../src/layouts.mjs';
+import { RUBRICS, refAnalysisFile, composePrompt } from '../src/plan.mjs';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+try { process.loadEnvFile(join(ROOT, '.env')); } catch {}
+const W = 1080, H = 1350, HANDLE = 'mubert.com/tools/cast', model = 'gpt-image-2';
+const GA = { carrot: 'accent-purple', purpleblue: 'accent-lime', pink: 'accent-lime', green: 'accent-purple', violet65: 'accent-lime', mainorange: 'accent-purple', blue67: 'accent-lime', superlime: 'accent-purple', lightpink: 'accent-purple' };
+
+// 12 covers, ALL dark theme. Grid fills row-major (3 cols); balanced so every row
+// has 2 image covers + 1 flat dark type cover, images scattered across the grid.
+// (A = generated art photo · F = flat dark type-only)
+const POSTS = [
+  { r: 'hot-takes',              ref: 3,  art: true },  //  0  A
+  { r: 'myth-vs-fact'                              },  //  1  F  (big question)
+  { r: 'feature-drop',           ref: 12, art: true },  //  2  A
+  { r: 'inspiration',            ref: 4,  art: true },  //  3  A
+  { r: 'unnecessary-censorship', ref: 27, art: true },  //  4  A
+  { r: 'plan-picker'                              },  //  5  F  (big question)
+  { r: 'before-after'                             },  //  6  F  (statement, no art)
+  { r: 'how-to',                 ref: 19, art: true },  //  7  A
+  { r: 'mistakes',               ref: 5,  art: true },  //  8  A
+  { r: 'one-workflow',           ref: 2,  art: true },  //  9  A
+  { r: 'inspiration'                              },  // 10  F  (statement, no art)
+  { r: 'before-after',           ref: 23, art: true },  // 11  A
+];
+
+const CACHE = join(ROOT, 'assets/generated'); mkdirSync(CACHE, { recursive: true });
+const OUT = join(ROOT, 'out/runs/feed'); mkdirSync(join(OUT, 'covers'), { recursive: true });
+
+// build each cover slide (slide 0 of its rubric) with theme applied
+for (const p of POSTS) {
+  const sl = RUBRICS[p.r].slides[0];
+  const { art, theme: _t, ...copy } = sl;
+  const s = { ...copy, minimal: true, handle: HANDLE, index: 1, total: 1 };   // dark theme = default (near-black, light type)
+  if (p.art && art) {
+    s.replace = [`SUBJECT: ${art.s}.`, `COMPOSITION: ${art.c}.`, `COLOUR: true to the reference's own bright, saturated, poppy palette.`];
+    p.analysis = JSON.parse(readFileSync(join(ROOT, 'refs/analysis', refAnalysisFile(p.ref)), 'utf8'));
+    p.refFile = join(ROOT, 'refs/style', p.analysis.ref);
+    p.refBytes = readFileSync(p.refFile);
+  }
+  p.s = s;
+}
+
+// generate the art covers (cached)
+let spent = 0;
+const artPosts = POSTS.filter(p => p.s.replace);
+console.log(`generating ${artPosts.length} art covers…`);
+await pool(artPosts, 4, async (p) => {
+  const prompt = composePrompt(p.analysis.keep, p.s.replace);
+  const cache = join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}`).update(p.refBytes).digest('hex').slice(0, 16)}.png`);
+  const bg = join(OUT, 'covers', `${p.r}-${p.ref}.bg.png`);
+  if (existsSync(cache)) { copyFileSync(cache, bg); p.s.bgFile = bg; delete p.s.replace; return; }
+  for (let a = 1; a <= 2; a++) {
+    try { const buf = await MODELS[model].call({ prompt, refs: [p.refFile] }); writeFileSync(cache, buf); writeFileSync(bg, buf); p.s.bgFile = bg; delete p.s.replace; spent += MODELS[model].price; console.log(`  ✓ ${p.r} r${p.ref}`); return; }
+    catch (e) { if (a === 2) console.log(`  ✗ ${p.r} r${p.ref}: ${e.message.slice(0, 80)}`); else await new Promise(r => setTimeout(r, 4000)); }
+  }
+});
+
+// render covers
+const fonts = readFileSync(join(ROOT, 'assets/fonts/fonts.css'), 'utf8').replace(/url\((woff2\/[^)]+)\)/g, (_, r) => `url(data:font/woff2;base64,${readFileSync(join(ROOT, 'assets/fonts', r)).toString('base64')})`);
+const tokens = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
+const sheet = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
+const wordmark = readFileSync(join(ROOT, 'assets/logos/cast-wordmark.svg'), 'utf8');
+const page = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
+const enc = p => 'file://' + encodeURI(p).replace(/#/g, '%23');
+
+const chrome = await Chrome.launch();
+try {
+  const rp = await chrome.newPage(W, H);
+  for (const p of POSTS) {
+    p.cover = join(OUT, 'covers', `${POSTS.indexOf(p)}.png`);
+    writeFileSync(join(OUT, '_c.html'), page(renderSlide(p.s)));
+    writeFileSync(p.cover, await chrome.shoot(rp, `file://${join(OUT, '_c.html')}`, W, H));
+  }
+  await chrome.close(rp);
+
+  // instagram-style profile grid (portrait 4:5 tiles, 3 cols)
+  const TILE = 420, tH = Math.round(TILE * H / W), GAPX = 4, PAD = 26;
+  const cols = 3, gridW = cols * TILE + (cols - 1) * GAPX;
+  const pageW = gridW + PAD * 2;
+  const rows = Math.ceil(POSTS.length / cols);
+  const headerH = 150;
+  const pageH = PAD + headerH + rows * tH + (rows - 1) * GAPX + PAD;
+  const tiles = POSTS.map(p => `<img src="${enc(p.cover)}" style="width:${TILE}px;height:${tH}px;object-fit:cover;display:block">`).join('');
+  const header = `<div style="display:flex;align-items:center;gap:26px;height:${headerH}px;padding:0 6px">
+    <div class="av" style="width:104px;height:104px;border-radius:50%;background:#e8ff59;display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden;color:#111">${wordmark}</div>
+    <div>
+      <div style="font:700 30px Inter;color:#fff">cast.tools</div>
+      <div style="display:flex;gap:26px;margin-top:10px;color:#ddd;font:400 19px Inter">
+        <span><b style="color:#fff">248</b> posts</span><span><b style="color:#fff">31.4k</b> followers</span><span><b style="color:#fff">12</b> following</span></div>
+      <div style="margin-top:10px;color:#9a9a9a;font:400 18px Inter">Audio-first podcast editing — record to publish-ready. mubert.com/tools/cast</div>
+    </div></div>`;
+  const html = `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}
+    .grid{display:grid;grid-template-columns:repeat(${cols},${TILE}px);gap:${GAPX}px}
+    .av svg{width:62px;height:auto;display:block}</style></head>
+    <body style="margin:0;background:#000;padding:${PAD}px;width:${pageW}px;font-family:Inter">
+    ${header}<div style="height:8px"></div><div class="grid">${tiles}</div></body></html>`;
+  writeFileSync(join(OUT, 'feed.html'), html);
+  const sp = await chrome.newPage(pageW, pageH);
+  writeFileSync(join(OUT, 'feed.png'), await chrome.shoot(sp, `file://${join(OUT, 'feed.html')}`, pageW, pageH));
+} finally { chrome.kill(); }
+console.log(`\nfeed -> ${OUT}/feed.png   ~$${spent.toFixed(2)}`);

@@ -1,0 +1,177 @@
+{
+  "deck": "test-deck-01",
+  "meta": "(cast) by Mubert",
+  "handle": "mubert.com/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "theme": "photo",
+      "bg": "a low-poly game character screaming into an oversized chunky microphone on a character-select podium, flooded in electric lime and magenta light, glowing emissive floor panels",
+      "kicker": "Episode notes",
+      "title": "Edit the *words*, not the waveform",
+      "lede": "Transcript-first editing for audio people who never wanted a video timeline.",
+      "meta": "01 — Cover",
+      "accent": "accent-lime",
+      "bgStyle": "ps1"
+    },
+    {
+      "layout": "tags",
+      "kicker": "Everything it strips out",
+      "accent": "accent-lime",
+      "title": "Noise has a *long* guest list",
+      "items": [
+        "Room tone",
+        "Filler words",
+        "Dead air",
+        "Mouth clicks",
+        "False starts",
+        "Plosives",
+        "Hum",
+        "Repeats",
+        "Sirens",
+        "Keyboard",
+        "Breaths",
+        "Echo"
+      ],
+      "lede": "Twelve categories of mess, detected before you ever press play.",
+      "meta": "02 — Voice cleanup",
+      "bg": "a low-poly head with a wide open mouth, textures swimming across the polygons, floating in a bright orange void with glowing green wireframe debris around it",
+      "bgStyle": "ps1"
+    },
+    {
+      "layout": "poster",
+      "theme": "lime",
+      "accent": "accent-purple",
+      "num": "03",
+      "kicker": "Chapter",
+      "title": "Cut a *sentence*, not a selection",
+      "lede": "Delete a line of transcript and the audio goes with it — crossfade included.",
+      "meta": "03 — Transcript editing"
+    },
+    {
+      "layout": "bento",
+      "kicker": "In the box",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "icon": "eraser",
+          "title": "Voice cleanup",
+          "sub": "Noise, hum, clicks",
+          "accent": "superlime"
+        },
+        {
+          "icon": "scissors",
+          "title": "Word-level cuts",
+          "sub": "Edit the transcript",
+          "accent": "pink"
+        },
+        {
+          "icon": "sound",
+          "title": "Adaptive music",
+          "sub": "Beds that fit the cut",
+          "accent": "green"
+        },
+        {
+          "icon": "sliders",
+          "title": "Auto-ducking",
+          "sub": "Voice always on top",
+          "accent": "carrot"
+        },
+        {
+          "icon": "gem",
+          "title": "Cleared licence — every export ships with commercial rights",
+          "wide": true,
+          "dark": true,
+          "accent": "purpleblue"
+        }
+      ],
+      "meta": "04 — Feature set"
+    },
+    {
+      "layout": "stat",
+      "kicker": "Time back per episode",
+      "value": "68",
+      "unit": "%",
+      "accent": "accent-lime",
+      "glow": "rgba(238,255,4,.18)",
+      "lede": "Average editing time removed when cleanup runs before a human ever opens the file.",
+      "meta": "05 — Numbers",
+      "bg": "a huge faceted low-poly speaker cone filling the frame on a flat electric lime background, flat-shaded triangles in hot yellow and hot magenta, everything brightly lit, no fog, no dark corners",
+      "bgStyle": "ps1"
+    },
+    {
+      "layout": "index",
+      "kicker": "How it works",
+      "accent": "accent-carrot",
+      "title": "Raw file to *published*, in five",
+      "items": [
+        {
+          "title": "Drop in the recording",
+          "meta": "upload"
+        },
+        {
+          "title": "Clean the voice",
+          "meta": "auto"
+        },
+        {
+          "title": "Cut words, not waveforms",
+          "meta": "transcript"
+        },
+        {
+          "title": "Score it with adaptive music",
+          "meta": "mubert"
+        },
+        {
+          "title": "Export with rights cleared",
+          "meta": "licence"
+        }
+      ],
+      "meta": "06 — Workflow",
+      "bg": "a low-poly mixing desk in a brightly lit game level, glowing untextured emissive faders in lime and magenta, walls flooded with electric blue and orange light, bright throughout, no dark fog",
+      "bgStyle": "ps1"
+    },
+    {
+      "layout": "statement",
+      "kicker": "Music ♭♭♭",
+      "accent": "accent-pink",
+      "waveColor": "var(--c-accent-pink)",
+      "glow": "rgba(254,79,141,.26)",
+      "bg": "a stiff low-poly band on a game stage under blazing stage lights, the whole frame flooded with hot magenta and electric lime, bright saturated flat-shaded polygons, no shadows, no murk",
+      "title": "Score it like a *show*, not a slideshow",
+      "lede": "Adaptive beds stretch to your cut. Auto-ducking keeps the voice on top.",
+      "meta": "07 — Music",
+      "bgStyle": "ps1"
+    },
+    {
+      "layout": "photo",
+      "kicker": "Who it's for",
+      "accent": "accent-green",
+      "title": "Built for people who *talk* for a living",
+      "meta": "08 — Audience",
+      "bg": "a low-poly character wearing enormous blocky headphones on a character-select screen, bright green backdrop, hard per-vertex lighting, chunky pixel textures",
+      "theme": "photo",
+      "bgStyle": "ps1",
+      "lede": "Interview shows, solo hosts, lecturers, audiobook readers, newsrooms."
+    },
+    {
+      "layout": "quote",
+      "theme": "light",
+      "accent": "accent-pink",
+      "dot": "var(--c-accent-pink)",
+      "title": "We cut the excess so only the *point* is left.",
+      "author": "Product team",
+      "role": "Mubert Cast",
+      "meta": "09 — Manifesto (RU)"
+    },
+    {
+      "layout": "cta",
+      "theme": "lime",
+      "accent": "accent-purple",
+      "title": "Start editing your next *episode* today",
+      "lede": "Free while in early access. No video timeline, no stock-music rabbit hole.",
+      "button": "Start editing",
+      "meta": "10 — CTA"
+    }
+  ]
+}

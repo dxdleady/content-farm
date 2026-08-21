@@ -1,0 +1,140 @@
+{
+  "deck": "trailer",
+  "refAnalysis": "95ae8841b79d4cdbeab0c8a12c33503a.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "kicker": "Trailer",
+      "accent": "accent-lime",
+      "title": "Nobody finishes your *trailer*",
+      "replace": [
+        "SUBJECT: a face caught on the very first word, mouth just opening.",
+        "COMPOSITION: the subject sits high and right, cropped by the top edge; the lower-left third stays quiet and empty.",
+        "COLOUR: deep violet dominant."
+      ]
+    },
+    {
+      "layout": "stat",
+      "kicker": "Skipped",
+      "value": "9",
+      "unit": "s",
+      "accent": "accent-carrot",
+      "replace": [
+        "SUBJECT: a thumb coming down to skip, the face behind it already bored.",
+        "COMPOSITION: the subject is small and pushed into the upper right; most of the frame is empty ground.",
+        "COLOUR: acid lime yellow-green dominant."
+      ]
+    },
+    {
+      "layout": "statement",
+      "kicker": "The trap",
+      "accent": "accent-lime",
+      "title": "A trailer is not a *summary*",
+      "replace": [
+        "SUBJECT: a person mid-sentence being cut off, hand still raised.",
+        "COMPOSITION: the subject crosses the upper half diagonally; the bottom-left stays empty.",
+        "COLOUR: deep orange-red dominant."
+      ]
+    },
+    {
+      "layout": "tags",
+      "kicker": "Skipped",
+      "accent": "accent-lime",
+      "items": [
+        "Welcome to the show",
+        "Every week we",
+        "My name is",
+        "A podcast about",
+        "Available everywhere",
+        "Subscribe now",
+        "Theme music intro",
+        "Listing the guests",
+        "Explaining the format",
+        "Thanking the sponsor",
+        "Describing yourself",
+        "Saying podcast twice"
+      ],
+      "replace": [
+        "SUBJECT: a crowd of faces looking away at their phones.",
+        "COMPOSITION: elements scatter, dense in the upper right, thinning to nothing towards the lower left.",
+        "COLOUR: near-black charcoal dominant."
+      ]
+    },
+    {
+      "layout": "steps",
+      "kicker": "The fix",
+      "accent": "accent-carrot",
+      "title": "Open with the *best* ten seconds",
+      "items": [
+        "Lead with the loudest moment",
+        "Say who it is for",
+        "Stop at thirty seconds"
+      ],
+      "replace": [
+        "SUBJECT: a hand pulling one bright strip out of a tangle of others.",
+        "COMPOSITION: the subject enters from the top-right corner; the lower-left is empty.",
+        "COLOUR: electric green dominant."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Rule",
+      "accent": "accent-purple",
+      "title": "Show the show, do not *describe* it",
+      "replace": [
+        "SUBJECT: a face leaning in hard, demanding attention.",
+        "COMPOSITION: the subject stands tall in the right third, cropped by the top edge; the left two thirds are empty.",
+        "COLOUR: hot magenta dominant."
+      ]
+    },
+    {
+      "layout": "bento",
+      "accent": "accent-pink",
+      "title": "Six tools, *one* pass",
+      "items": [
+        {
+          "title": "Voice cleanup",
+          "icon": "eraser"
+        },
+        {
+          "title": "Word cuts",
+          "icon": "scissors"
+        },
+        {
+          "title": "Adaptive music",
+          "icon": "sound"
+        },
+        {
+          "title": "Auto-ducking",
+          "icon": "sliders"
+        },
+        {
+          "title": "Chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Cleared licence",
+          "icon": "gem"
+        }
+      ],
+      "variant": "k",
+      "replace": [
+        "SUBJECT: a wall of small portraits, all mid-speech.",
+        "COMPOSITION: the motif fills the frame evenly and quietly; the lower left falls into shadow.",
+        "COLOUR: near-black with a cold blue cast dominant."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "A trailer worth finishing",
+      "replace": [
+        "SUBJECT: one face mid-laugh, caught wide open.",
+        "COMPOSITION: centred and cropped, the lower half is empty ground.",
+        "COLOUR: electric blue-violet dominant."
+      ]
+    }
+  ]
+}

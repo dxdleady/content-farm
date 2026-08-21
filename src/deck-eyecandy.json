@@ -1,0 +1,39 @@
+{
+  "deck": "eyecandy",
+  "refAnalysis": "a19a7c9947600b3975aa0aa9c839369c.json",
+  "model": "gpt-image-2",
+  "handle": "mubert.com/tools/cast",
+  "slides": [
+    {
+      "layout": "photo",
+      "accent": "accent-lime",
+      "title": "Sound in *colour*",
+      "replace": [
+        "SUBJECT: a young person beaming with pure joy, head tilted back, face dotted with glossy smiley and daisy stickers.",
+        "COMPOSITION: the face fills the upper two-thirds against open blue sky; the lower third stays quieter sky for the type.",
+        "COLOUR: candy pink and mint accents over warm skin and bright blue sky."
+      ]
+    },
+    {
+      "layout": "poster",
+      "kicker": "Mood",
+      "accent": "accent-pink",
+      "title": "Pure *good days*",
+      "replace": [
+        "SUBJECT: two friends cheek to cheek mid-laugh, sunglasses pushed up, faces covered in flower and star stickers, sharing one pair of earbuds.",
+        "COMPOSITION: the pair sits high and to the right against the sky; the lower-left stays open sky for the headline.",
+        "COLOUR: lilac and yellow accents over vivid blue sky."
+      ]
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "title": "Scored like a *show*.",
+      "replace": [
+        "SUBJECT: a single hand thrown up toward the sky, wrist stacked with beaded bracelets, a smiley sticker on the thumb.",
+        "COMPOSITION: the hand reaches in from the bottom edge; most of the frame is open blue sky with lots of calm space up top.",
+        "COLOUR: baby blue and pink, mostly sky."
+      ]
+    }
+  ]
+}
