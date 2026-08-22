@@ -15,6 +15,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { MODELS } from './providers.ts';
+import type { Ratio, Styles, Tokens } from './types.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = join(ROOT, 'assets/generated');
@@ -28,29 +29,32 @@ export const apiKey = () => process.env.GEMINI_API_KEY || process.env.GOOGLE_API
 /* ------------------------------------------------------------------ style lock */
 // The brand frame lives in tokens; the art direction lives in src/styles.json so it
 // can be swapped per slide without touching code.
-const T = JSON.parse(readFileSync(join(ROOT, 'tokens/tokens.json'), 'utf8'));
-const S = JSON.parse(readFileSync(join(ROOT, 'src/styles.json'), 'utf8'));
+// Read but never referenced. Kept because the read itself is module-scope behaviour;
+// dropping it would remove a filesystem access at import time.
+const T = JSON.parse(readFileSync(join(ROOT, 'tokens/tokens.json'), 'utf8')) as Tokens;
+void T;
+const S = JSON.parse(readFileSync(join(ROOT, 'src/styles.json'), 'utf8')) as Styles;
 
-export const PRESETS = Object.keys(S.treatments);
-export const DEFAULT_PRESET = S.default;
+export const PRESETS: string[] = Object.keys(S.treatments);
+export const DEFAULT_PRESET: string = S.default;
 
-export function styleLock(preset = S.default) {
+export function styleLock(preset: string = S.default): string {
   const t = S.treatments[preset];
   if (!t) throw new Error(`unknown bgStyle "${preset}" — have: ${PRESETS.join(', ')}`);
   return [
     'STYLE LOCK — follow exactly:',
-    ...S.base.map(l => `· ${l}`),
+    ...S.base.map((l: string) => `· ${l}`),
     `· ${t.palette ?? S.palette}`,
     '',
     `TREATMENT — ${preset}:`,
-    ...t.lines.map(l => `· ${l}`),
+    ...t.lines.map((l: string) => `· ${l}`),
   ].join('\n');
 }
 
 // Kept exported for anything that just wants the default frame.
 export const STYLE_LOCK = styleLock();
 
-const MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' };
+const MIME: Record<string, string | undefined> = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' };
 // Sending the whole board averages every generation into the same mush, and burns
 // tokens. A small deterministic sample per subject keeps each frame committed to a
 // few references instead of the mean of all of them.
@@ -61,28 +65,31 @@ const REF_SAMPLE = Number(process.env.REF_SAMPLE || 5);
  * refs/style/<preset>/ wins when it exists, otherwise the flat refs/style/ set is used,
  * so a preset like ps1 isn't dragged back towards photography by unrelated refs.
  */
-export function refFile(path) {
+/** A reference image, packaged the way the Gemini inlineData part expects. */
+export type RefImage = { name: string; mimeType: string | undefined; data: string; hash: string };
+
+export function refFile(path: string): RefImage {
   const bytes = readFileSync(path);
-  const ext = path.split('.').pop().toLowerCase();
+  const ext = path.split('.').pop()!.toLowerCase();
   return {
-    name: path.split('/').pop(),
+    name: path.split('/').pop()!,
     mimeType: MIME[ext],
     data: bytes.toString('base64'),
     hash: createHash('sha256').update(bytes).digest('hex').slice(0, 12),
   };
 }
 
-export function refs(preset, seed = null) {
+export function refs(preset: string | null, seed: string | null = null): RefImage[] {
   const scoped = preset ? join(REFS, preset) : null;
   const dir = scoped && existsSync(scoped) ? scoped : REFS;
   if (!existsSync(dir)) return [];
-  let files = readdirSync(dir).filter(f => MIME[f.split('.').pop().toLowerCase()]).sort();
+  let files = readdirSync(dir).filter(f => MIME[f.split('.').pop()!.toLowerCase()]).sort();
   if (seed !== null) {
     // deterministic Fisher-Yates keyed on the subject, so a re-render reuses the cache
     const h = createHash('sha256').update(String(seed)).digest();
     for (let i = files.length - 1; i > 0; i--) {
-      const j = ((h[i % h.length] << 8 | h[(i * 7 + 3) % h.length]) >>> 0) % (i + 1);
-      [files[i], files[j]] = [files[j], files[i]];
+      const j = ((h[i % h.length]! << 8 | h[(i * 7 + 3) % h.length]!) >>> 0) % (i + 1);
+      [files[i], files[j]] = [files[j]!, files[i]!];
     }
   }
   return files
@@ -91,7 +98,7 @@ export function refs(preset, seed = null) {
       const bytes = readFileSync(join(dir, f));
       return {
         name: f,
-        mimeType: MIME[f.split('.').pop().toLowerCase()],
+        mimeType: MIME[f.split('.').pop()!.toLowerCase()],
         data: bytes.toString('base64'),
         hash: createHash('sha256').update(bytes).digest('hex').slice(0, 12),
       };
@@ -115,14 +122,14 @@ a different style, do not clean it up, do not make it tasteful.`.trim();
  * diverge hard — which is what stops every frame being the same safe portrait.
  * Bump `variant` to re-roll a slide without touching its text.
  */
-function wildcards(subject, variant = 0) {
+function wildcards(subject: string, variant = 0): string {
   const pools = S.wildcards ?? {};
   const seed = createHash('sha256').update(`${subject}|${variant}`).digest();
   const picks = [];
   let i = 0;
   for (const [name, list] of Object.entries(pools)) {
     if (name.startsWith('$') || !Array.isArray(list)) continue;
-    picks.push(`· ${list[seed[i % seed.length] % list.length]}`);
+    picks.push(`· ${list[seed[i % seed.length]! % list.length]}`);
     i += 3;
   }
   return picks.length
@@ -135,7 +142,10 @@ function wildcards(subject, variant = 0) {
  * the prompt only has to name what changes. Text-to-image can never hold a look
  * this way — that was the whole problem with the earlier generations.
  */
-function editPrompt({ subject, framing, colorName, color }) {
+/** The three axes a solo generation deliberately moves off its reference. */
+export type SoloSpec = { subject: string; framing: string; color: string; colorName: string };
+
+function editPrompt({ subject, framing, colorName, color }: SoloSpec): string {
   return [
     'Keep this image\'s exact rendering style: the same medium, engine, texture, grain,',
     'contrast, edge quality and level of polish. Do not clean it up or modernise it.',
@@ -150,7 +160,7 @@ function editPrompt({ subject, framing, colorName, color }) {
   ].join('\n');
 }
 
-export const EDIT_MODELS = Object.keys(MODELS);
+export const EDIT_MODELS: string[] = Object.keys(MODELS);
 
 /**
  * Solo-ref prompt. One reference image is the whole art direction; the text only
@@ -170,7 +180,7 @@ const SOLO_TAIL = `
 Everything not listed above stays as close to the reference as you can get it.
 Do not make it cleaner, safer, calmer or more tasteful than the reference.`.trim();
 
-function soloPrompt({ subject, framing, color, colorName }) {
+function soloPrompt({ subject, framing, color, colorName }: SoloSpec): string {
   return [
     SOLO_NOTE,
     `· SUBJECT -> ${subject}`,
@@ -180,25 +190,25 @@ function soloPrompt({ subject, framing, color, colorName }) {
     SOLO_TAIL,
     '',
     'NON-NEGOTIABLE:',
-    ...S.hard.map(l => `· ${l}`),
+    ...S.hard.map((l: string) => `· ${l}`),
   ].join('\n');
 }
 
 // Two modes. With refs the prose shrinks to the non-negotiables so it cannot
 // out-shout the images; without refs the full written lock does the work.
-const promptFor = (subject, nRefs = 0, preset = S.default, colors = null, variant = 0) => {
+const promptFor = (subject: string, nRefs = 0, preset: string = S.default, colors: string[] | null = null, variant = 0): string => {
   const pin = colors?.length
     ? `\n\nCOLOUR: lean on ${colors.join(' and ')}, but the references decide the palette if they disagree.`
     : '';
   const head = nRefs
-    ? `${REF_NOTE}\n\nNON-NEGOTIABLE:\n${S.hard.map(l => `· ${l}`).join('\n')}`
+    ? `${REF_NOTE}\n\nNON-NEGOTIABLE:\n${S.hard.map((l: string) => `· ${l}`).join('\n')}`
     : styleLock(preset);
   return `${head}${pin}\n\nDEPICT: ${subject}${wildcards(subject, variant)}`;
 };
 
 /* ------------------------------------------------------------------ generation */
-function cachePath(subject, aspect, refList, preset, colors, variant) {
-  const sig = `${MODEL}|${aspect}|${promptFor(subject, refList.length, preset, colors, variant)}|${refList.map(r => r.hash).join(',')}`;
+function cachePath(subject: string, aspect: string, refList: RefImage[], preset: string, colors: string[] | null, variant: number): string {
+  const sig = `${MODEL}|${aspect}|${promptFor(subject, refList.length, preset, colors, variant)}|${refList.map((r: RefImage) => r.hash).join(',')}`;
   const h = createHash('sha256').update(sig).digest('hex').slice(0, 16);
   return join(CACHE, `bg-${h}.png`);
 }
@@ -207,24 +217,30 @@ function cachePath(subject, aspect, refList, preset, colors, variant) {
  * Returns an absolute path to a background PNG, or null when generation is
  * unavailable (no key / API error) so the caller can fall back to CSS.
  */
-export async function background(subject, { aspect = '4:5', force = false, preset = S.default, colors = null, refPaths = null, variant = 0, solo = null, model = null, size = '512*640' } = {}) {
+export type BackgroundOptions = {
+  aspect?: Ratio | string; force?: boolean; preset?: string; colors?: string[] | null;
+  refPaths?: string[] | null; variant?: number; solo?: SoloSpec | null;
+  model?: string | null; size?: string;
+};
+
+export async function background(subject: string, { aspect = '4:5', force = false, preset = S.default, colors = null, refPaths = null, variant = 0, solo = null, model = null, size = '512*640' }: BackgroundOptions = {}): Promise<string | null> {
   if (!subject && !solo) return null;
 
   // Preferred path: an edit model, with the reference as the real input image.
   const editModel = model ?? (solo && refPaths?.length && process.env.WAVESPEED_API_KEY
     ? (process.env.EDIT_MODEL || 'qwen-edit') : null);
   if (editModel && refPaths?.length) {
-    const text = editPrompt(solo);
+    const text = editPrompt(solo!);
     const sig = `${editModel}|${size}|${text}|${refPaths.map(p => createHash('sha256').update(readFileSync(p)).digest('hex').slice(0, 12)).join(',')}`;
     const out = join(CACHE, `bg-${createHash('sha256').update(sig).digest('hex').slice(0, 16)}.png`);
     if (!force && existsSync(out)) return out;
     mkdirSync(CACHE, { recursive: true });
     try {
-      const buf = await MODELS[editModel].call({ prompt: text, refs: refPaths, size });
+      const buf = await MODELS[editModel as keyof typeof MODELS].call({ prompt: text, refs: refPaths, size });
       writeFileSync(out, buf);
       return out;
     } catch (e) {
-      console.warn(`  ! ${editModel} failed: ${e.message.slice(0, 140)} — falling back to ${MODEL}`);
+      console.warn(`  ! ${editModel} failed: ${(e as Error).message.slice(0, 140)} — falling back to ${MODEL}`);
     }
   }
   const refList = refPaths ? refPaths.map(refFile) : refs(preset, `${subject}|${variant}`);
@@ -250,7 +266,7 @@ export async function background(subject, { aspect = '4:5', force = false, prese
     generationConfig: { responseModalities: ['IMAGE'], imageConfig: { aspectRatio: aspect } },
   };
 
-  let lastErr;
+  let lastErr: Error | undefined;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       const res = await fetch(url, {
@@ -259,28 +275,31 @@ export async function background(subject, { aspect = '4:5', force = false, prese
         body: JSON.stringify(body),
       });
       if (!res.ok) throw new Error(`${res.status} ${(await res.text()).slice(0, 300)}`);
-      const json = await res.json();
-      const part = json.candidates?.[0]?.content?.parts?.find(p => p.inlineData?.data);
+      // The vendor response is untyped JSON. Narrow it here, at the single parse
+      // boundary, rather than letting `any` leak into the rest of the module.
+      type GeminiPart = { inlineData?: { data?: string } };
+      const json = await res.json() as { candidates?: Array<{ content?: { parts?: GeminiPart[] } }> };
+      const part = json.candidates?.[0]?.content?.parts?.find((p: GeminiPart) => p.inlineData?.data);
       if (!part) throw new Error(`no image in response: ${JSON.stringify(json).slice(0, 300)}`);
-      writeFileSync(out, Buffer.from(part.inlineData.data, 'base64'));
+      writeFileSync(out, Buffer.from(part.inlineData!.data!, 'base64'));
       return out;
     } catch (e) {
-      lastErr = e;
+      lastErr = e as Error;
       await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
     }
   }
-  console.warn(`  ! background generation failed (${subject.slice(0, 40)}…): ${lastErr.message}`);
+  console.warn(`  ! background generation failed (${subject.slice(0, 40)}…): ${lastErr?.message}`);
   return null;
 }
 
 /* ------------------------------------------------------------------ diagnostics */
-export function status() {
+export function status(): string {
   const key = apiKey();
   if (!key) {
     return `background stage: OFF — no GEMINI_API_KEY. Add it to .env at the project root ` +
            `(see .env.example); slides fall back to CSS gradients.`;
   }
-  const all = existsSync(REFS) ? readdirSync(REFS).filter(f => MIME[f.split('.').pop().toLowerCase()]).length : 0;
+  const all = existsSync(REFS) ? readdirSync(REFS).filter(f => MIME[f.split('.').pop()!.toLowerCase()]).length : 0;
   const scoped = PRESETS.filter(p => existsSync(join(REFS, p)));
   const refLine = (all ? `${all} refs, ${REF_SAMPLE} sampled per image` : 'no refs')
     + (scoped.length ? ` (+scoped: ${scoped.join(', ')})` : '');

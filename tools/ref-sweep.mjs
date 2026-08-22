@@ -9,7 +9,7 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { background, status } from '../src/bgen.mjs';
+import { background, status } from '../src/bgen.ts';
 import { Chrome } from '../src/chrome.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');

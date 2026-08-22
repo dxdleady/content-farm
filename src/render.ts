@@ -6,23 +6,24 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderSlide } from './layouts.ts';
 import { Chrome } from './chrome.ts';
-import { background, status } from './bgen.mjs';
+import { background, status } from './bgen.ts';
 import { formatFromArgv, formatCss } from './formats.ts';
+import type { Deck, RenderSlide } from './types.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FMT = formatFromArgv();
 const W = FMT.w, H = FMT.h;
 
 /* ---- inline every webfont so a render never depends on installed system fonts ---- */
-function fontCss() {
+function fontCss(): string {
   const dir = join(ROOT, 'assets/fonts');
   return readFileSync(join(dir, 'fonts.css'), 'utf8')
-    .replace(/url\((woff2\/[^)]+)\)/g, (_, rel) =>
+    .replace(/url\((woff2\/[^)]+)\)/g, (_: string, rel: string) =>
       `url(data:font/woff2;base64,${readFileSync(join(dir, rel)).toString('base64')})`);
 }
 
 /* ---- deterministic grain tile, so flat fills don't band ---- */
-function grainDataUri(seed = 7) {
+function grainDataUri(seed = 7): string {
   let s = seed;
   const rnd = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
   const dots = Array.from({ length: 900 }, () =>
@@ -36,7 +37,7 @@ const TOKENS = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@i
 const SHEET = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
 const GRAIN = grainDataUri();
 
-const page = body => `<!doctype html><html><head><meta charset="utf-8">
+const page = (body: string) => `<!doctype html><html><head><meta charset="utf-8">
 <style>${FONTS}</style><style>${TOKENS}</style><style>${SHEET}</style>
 <style>${formatCss(FMT)}</style>
 <style>html,body{margin:0;background:#000}:root{--grain:${GRAIN}}</style>
@@ -48,7 +49,10 @@ const styleArg = process.argv.slice(2).find(a => a.startsWith('--style='))?.spli
 
 const contentPath = resolve(argv[0] ?? join(ROOT, 'src/content.json'));
 const baseDir = resolve(argv[1] ?? join(ROOT, 'out'));
-const content = JSON.parse(readFileSync(contentPath, 'utf8'));
+// The deck is read straight off disk with no validation, exactly as before. A checked
+// parseDeck() would turn a later TypeError into an earlier, clearer one — which is a
+// behaviour change, so it belongs to Phase 4, not to the port.
+const content = JSON.parse(readFileSync(contentPath, 'utf8')) as Deck;
 
 // Every run lands in its own immutable version folder; `out/<deck>/latest` points at
 // the newest one. Nothing is ever overwritten, so decks can be compared side by side.
@@ -60,7 +64,7 @@ if (styleArg) {
 const deckDir = join(baseDir, content.deck ?? 'deck');
 mkdirSync(deckDir, { recursive: true });
 const prev = readdirSync(deckDir).filter(d => /^v\d{3}$/.test(d)).sort();
-const version = `v${String(prev.length ? Number(prev.at(-1).slice(1)) + 1 : 1).padStart(3, '0')}`;
+const version = `v${String(prev.length ? Number(prev.at(-1)!.slice(1)) + 1 : 1).padStart(3, '0')}`;
 const outDir = join(deckDir, version);
 const buildDir = join(outDir, '.html');
 mkdirSync(buildDir, { recursive: true });
@@ -82,7 +86,7 @@ try {
   const total = content.slides.length;
 
   for (const [i, raw] of content.slides.entries()) {
-    const s = { meta: content.meta, handle: content.handle, ...raw, index: i + 1, total };
+    const s = { meta: content.meta, handle: content.handle, ...raw, index: i + 1, total } as RenderSlide;
     const name = `${String(i + 1).padStart(2, '0')}-${s.layout}`;
     const htmlPath = join(buildDir, `${name}.html`);
     writeFileSync(htmlPath, page(renderSlide(s)));

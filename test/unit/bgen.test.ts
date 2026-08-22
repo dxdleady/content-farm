@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 
-import { styleLock, STYLE_LOCK, PRESETS, DEFAULT_PRESET, apiKey, MODEL, EDIT_MODELS } from '../../src/bgen.mjs';
+import { styleLock, STYLE_LOCK, PRESETS, DEFAULT_PRESET, apiKey, MODEL, EDIT_MODELS } from '../../src/bgen.ts';
 import { MODELS } from '../helpers/sut.ts';
 
 const sha = (s: string) => createHash('sha256').update(s).digest('hex').slice(0, 16);
