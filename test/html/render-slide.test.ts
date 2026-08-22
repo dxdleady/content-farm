@@ -65,6 +65,28 @@ test('no golden is orphaned', () => {
   assert.deepEqual(orphans, [], 'goldens with no corpus case — nothing asserts against these');
 });
 
+test('no slide leaks the literal string "undefined" into its output', () => {
+  // A cheap, table-free way to catch a missing required field across the whole corpus:
+  // every unguarded `${s.foo}` on an absent property renders as the text "undefined".
+  // 321 of 325 cases are clean, which is the empirical evidence that src/types.ts's
+  // required/optional split matches the data that actually exists.
+  const KNOWN = new Set([
+    // cover falls back to `background:${s.gradient}` when there is no bgFile — and no
+    // authored deck sets `gradient`, so that branch always emits invalid CSS. Phase 4.
+    'edge--cover--plain',
+    // the tags accent-less object item; its golden is the throw itself
+    'edge--tags--object-without-accent',
+  ]);
+
+  const leaking = readdirSync(GOLDEN)
+    .filter(f => readFileSync(join(GOLDEN, f), 'utf8').includes('undefined'))
+    .map(f => f.replace(/\.html$/, ''))
+    .filter(name => !KNOWN.has(name));
+
+  assert.deepEqual(leaking, [],
+    'a required field went missing — these render the literal text "undefined"');
+});
+
 test('cases that throw today keep throwing, with the same message', () => {
   // A crash is behaviour too. tags with an accent-less object item is a known latent bug
   // (cvar(undefined)); pinning it means Phase 4's fix shows up as an intentional diff.
