@@ -67,19 +67,20 @@ test('RUBRICS: the ten rubric skeletons are structurally sound', () => {
     'myth-vs-fact', 'one-workflow', 'plan-picker', 'unnecessary-censorship',
   ]);
 
-  for (const [id, r] of Object.entries(RUBRICS)) {
-    const rubric = r as { name: string; bucket: string; promise: string; slides: Array<Record<string, unknown>> };
+  // No casts needed here any more: RUBRICS is Record<string, Rubric> since the port, so
+  // `s.layout` is a LayoutName and `s.art` is an ArtPrompt. The runtime checks below now
+  // guard the data rather than the shape — the compiler owns the shape.
+  for (const [id, rubric] of Object.entries(RUBRICS)) {
     assert.ok(rubric.name && rubric.bucket && rubric.promise, `${id}: missing metadata`);
     assert.ok(rubric.slides.length > 0, `${id}: no slides`);
     for (const [i, s] of rubric.slides.entries()) {
       // An `art` prompt on a slide whose layout cannot carry art is dead weight: density
       // only ever picks art slides from ART_CAPABLE, so the prompt would never be used.
       if (s.art) {
-        assert.ok(ART_CAPABLE.has(s.layout as string),
+        assert.ok(ART_CAPABLE.has(s.layout),
           `${id} slide ${i + 1}: layout "${s.layout}" carries an art prompt but is not art-capable`);
-        const art = s.art as Record<string, unknown>;
-        for (const k of ['s', 'c', 'k']) {
-          assert.equal(typeof art[k], 'string', `${id} slide ${i + 1}: art.${k} must be a string`);
+        for (const k of ['s', 'c', 'k'] as const) {
+          assert.equal(typeof s.art[k], 'string', `${id} slide ${i + 1}: art.${k} must be a string`);
         }
       }
     }

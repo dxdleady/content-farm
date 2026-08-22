@@ -10,11 +10,11 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { RUBRICS, ART_CAPABLE, refAnalysisFile, composePrompt } from '../src/plan.mjs';
+import { RUBRICS, ART_CAPABLE, refAnalysisFile, composePrompt } from '../src/plan.ts';
 import { MODELS } from '../src/providers.ts';
 import { pool } from '../src/pool.ts';
 import { Chrome } from '../src/chrome.ts';
-import { renderSlide, inkFor } from '../src/layouts.mjs';
+import { renderSlide, inkFor } from '../src/layouts.ts';
 import { fxPage } from '../src/fx.ts';
 import { formatFromArgv, formatCss, formatTag } from '../src/formats.ts';
 

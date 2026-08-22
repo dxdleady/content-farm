@@ -11,8 +11,8 @@ import { fileURLToPath } from 'node:url';
 import { MODELS } from '../src/providers.ts';
 import { pool } from '../src/pool.ts';
 import { Chrome } from '../src/chrome.ts';
-import { renderSlide } from '../src/layouts.mjs';
-import { refAnalysisFile, composePrompt } from '../src/plan.mjs';
+import { renderSlide } from '../src/layouts.ts';
+import { refAnalysisFile, composePrompt } from '../src/plan.ts';
 import { formatFromArgv, formatCss, formatTag } from '../src/formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');

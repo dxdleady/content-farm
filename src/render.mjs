@@ -4,7 +4,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, symlinkSync, rmSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderSlide } from './layouts.mjs';
+import { renderSlide } from './layouts.ts';
 import { Chrome } from './chrome.ts';
 import { background, status } from './bgen.mjs';
 import { formatFromArgv, formatCss } from './formats.ts';

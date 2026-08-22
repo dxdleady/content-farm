@@ -8,7 +8,7 @@
 // Note the `.mjs` extensions below: that is the pre-migration state. Phase 2 rewrites
 // them to `.ts` in place, and nothing else in test/ moves.
 
-export { renderSlide, layouts, icon, ACCENTS, inkFor } from '../../src/layouts.mjs';
+export { renderSlide, layouts, icon, ACCENTS, inkFor } from '../../src/layouts.ts';
 export { pool } from '../../src/pool.ts';
 export { fxPage, FX_FILTER } from '../../src/fx.ts';
 export { duotone, misprint, grain, halftoneCss, treated } from '../../src/treatment.ts';
@@ -17,7 +17,7 @@ export {
 } from '../../src/formats.ts';
 export {
   RUBRICS, ART_CAPABLE, ART_DIRECTIVE, composePrompt, refAnalysisFile,
-} from '../../src/plan.mjs';
+} from '../../src/plan.ts';
 export { MODELS, dataUri, wavespeed } from '../../src/providers.ts';
 export { RUNS, newRunId, openRun, listRuns } from '../../src/run.ts';
 

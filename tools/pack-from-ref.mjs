@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { MODELS } from '../src/providers.ts';
 import { openRun } from '../src/run.ts';
 import { pool } from '../src/pool.ts';
-import { composePrompt } from '../src/plan.mjs';
+import { composePrompt } from '../src/plan.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 process.loadEnvFile(join(ROOT, '.env'));

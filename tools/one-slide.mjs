@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
-import { renderSlide } from '../src/layouts.mjs';
+import { renderSlide } from '../src/layouts.ts';
 import { Chrome } from '../src/chrome.ts';
 import { resolveFormat, formatCss } from '../src/formats.ts';
 

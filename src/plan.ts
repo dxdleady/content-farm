@@ -7,12 +7,14 @@
 // Composition rule of thumb: text sits low (body--tb) or centred (splash), so art
 // prompts keep the type zone open (lower-left, or the area around the centre).
 
+import type { LayoutName, Rubric } from './types.ts';
+
 // Layouts that can carry a full-bleed generated background (call art() internally).
-export const ART_CAPABLE = new Set([
+export const ART_CAPABLE: Set<LayoutName> = new Set([
   'statement', 'stat', 'quote', 'splash', 'tags', 'bento', 'poster', 'photo', 'steps', 'symbolHero',
 ]);
 
-export const RUBRICS = {
+export const RUBRICS: Record<string, Rubric> = {
   'hot-takes': {
     name: 'Hot Takes', bucket: 'bright',
     promise: 'One opinionated line that stops the scroll. Product only at the end.',
@@ -230,7 +232,7 @@ export const ART_DIRECTIVE =
   + "opposite: no soft dreamy blur, no gradient haze, no neutral stock-studio backdrop.";
 
 // keep = the ref's KEEP recipe; lines = [ "SUBJECT: …", "COMPOSITION: …", "COLOUR: …" ]
-export function composePrompt(keep, lines) {
+export function composePrompt(keep: string[], lines: string[]): string {
   return [
     keep.join('\n'), '',
     "REPLACE — the subject and composition are new, but keep the reference's MEDIUM and its bold colour energy exactly; do NOT clean it up, soften it, or make it tasteful:",
@@ -241,7 +243,7 @@ export function composePrompt(keep, lines) {
 }
 
 // Map a ref number/name to its analysis file name in refs/analysis/.
-export const refAnalysisFile = (ref) => {
+export const refAnalysisFile = (ref: string | number): string => {
   const n = String(ref).match(/\d+/)?.[0];
   return n ? `cast-ref-${String(n).padStart(2, '0')}.json` : String(ref);
 };
