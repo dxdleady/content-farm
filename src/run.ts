@@ -8,16 +8,36 @@ import { randomBytes } from 'node:crypto';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const RUNS = join(ROOT, 'out/runs');
 
+/** Free-form metadata a caller attaches to a run; written verbatim into meta.json. */
+export type RunMeta = Record<string, unknown>;
+
+export type RunHandle = {
+  id: string;
+  dir: string;
+  meta: RunMeta;
+  /**
+   * Running spend, in dollars. Callers mutate this.
+   *
+   * Note it is a plain number on a spread copy, so mutating it does NOT reach the
+   * internal state that close() serialises — pass the total to close(extra) instead.
+   * Transcribed as-is; changing it would change what lands in meta.json.
+   */
+  cost: number;
+  images: string;
+  slides: string;
+  close(extra?: RunMeta): string;
+};
+
 /** 20260818-1432-7a3f — sortable, readable, collision-proof enough. */
-export function newRunId(label = '') {
+export function newRunId(label = ''): string {
   const d = new Date();
-  const p = n => String(n).padStart(2, '0');
+  const p = (n: number) => String(n).padStart(2, '0');
   const stamp = `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`;
   const tag = randomBytes(2).toString('hex');
   return [stamp, label.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, ''), tag].filter(Boolean).join('-');
 }
 
-export function openRun(label, meta = {}) {
+export function openRun(label: string, meta: RunMeta = {}): RunHandle {
   const id = newRunId(label);
   const dir = join(RUNS, id);
   mkdirSync(join(dir, 'images'), { recursive: true });
@@ -29,7 +49,7 @@ export function openRun(label, meta = {}) {
     images: join(dir, 'images'),
     slides: join(dir, 'slides'),
     /** Record everything needed to reproduce this run, then point `latest` here. */
-    close(extra = {}) {
+    close(extra: RunMeta = {}) {
       const meta = { ...state.meta, finishedAt: new Date().toISOString(), ...extra };
       writeFileSync(join(dir, 'meta.json'), JSON.stringify(meta, null, 2));
       const latest = join(RUNS, 'latest');
@@ -40,7 +60,7 @@ export function openRun(label, meta = {}) {
   };
 }
 
-export function listRuns() {
+export function listRuns(): string[] {
   if (!existsSync(RUNS)) return [];
   return readdirSync(RUNS).filter(f => f !== 'latest').sort().reverse();
 }

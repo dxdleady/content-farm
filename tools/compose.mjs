@@ -12,10 +12,10 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RUBRICS, ART_CAPABLE, refAnalysisFile, composePrompt } from '../src/plan.mjs';
 import { MODELS } from '../src/providers.mjs';
-import { pool } from '../src/pool.mjs';
+import { pool } from '../src/pool.ts';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide, inkFor } from '../src/layouts.mjs';
-import { fxPage } from '../src/fx.mjs';
+import { fxPage } from '../src/fx.ts';
 import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');

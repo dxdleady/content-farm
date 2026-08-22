@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MODELS } from '../src/providers.mjs';
-import { pool } from '../src/pool.mjs';
+import { pool } from '../src/pool.ts';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide } from '../src/layouts.mjs';
 import { RUBRICS, refAnalysisFile, composePrompt } from '../src/plan.mjs';

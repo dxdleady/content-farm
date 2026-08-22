@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { MODELS } from '../src/providers.mjs';
 import { Chrome } from '../src/chrome.mjs';
-import { pool } from '../src/pool.mjs';
+import { pool } from '../src/pool.ts';
 
 process.loadEnvFile(join(dirname(fileURLToPath(import.meta.url)), '..', '.env'));
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');

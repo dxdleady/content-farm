@@ -13,7 +13,8 @@ export const FX_FILTER = `
 </filter>`;
 
 // A standalone page that grains one photo and can be screenshot at slide size.
-export const fxPage = (imgUrl, W = 1080, H = 1350) => `<!doctype html><html><head><meta charset="utf-8"><style>
+// The defaults are the Instagram canvas; callers on another format must pass W/H.
+export const fxPage = (imgUrl: string, W = 1080, H = 1350): string => `<!doctype html><html><head><meta charset="utf-8"><style>
   html,body{margin:0;width:${W}px;height:${H}px;overflow:hidden;background:#000}
   .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:url(#castfx)}
 </style></head><body>

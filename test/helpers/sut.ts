@@ -9,9 +9,9 @@
 // them to `.ts` in place, and nothing else in test/ moves.
 
 export { renderSlide, layouts, icon, ACCENTS, inkFor } from '../../src/layouts.mjs';
-export { pool } from '../../src/pool.mjs';
-export { fxPage, FX_FILTER } from '../../src/fx.mjs';
-export { duotone, misprint, grain, halftoneCss, treated } from '../../src/treatment.mjs';
+export { pool } from '../../src/pool.ts';
+export { fxPage, FX_FILTER } from '../../src/fx.ts';
+export { duotone, misprint, grain, halftoneCss, treated } from '../../src/treatment.ts';
 export {
   FORMATS, DEFAULT_FORMAT, resolveFormat, formatFromArgv, formatCss, formatTag,
 } from '../../src/formats.mjs';
@@ -19,7 +19,7 @@ export {
   RUBRICS, ART_CAPABLE, ART_DIRECTIVE, composePrompt, refAnalysisFile,
 } from '../../src/plan.mjs';
 export { MODELS, dataUri, wavespeed } from '../../src/providers.mjs';
-export { RUNS, newRunId, openRun, listRuns } from '../../src/run.mjs';
+export { RUNS, newRunId, openRun, listRuns } from '../../src/run.ts';
 
 // bgen is deliberately NOT re-exported here. It calls process.loadEnvFile() at module
 // scope and has a top-level await inside its main-module guard, so importing it mutates

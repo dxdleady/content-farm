@@ -1,4 +1,4 @@
-// src/treatment.mjs has zero importers today. It is kept per the no-delete decision, so
+// src/treatment.ts has zero importers today. It is kept per the no-delete decision, so
 // it gets covered like anything else — these are pure string builders with no I/O.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
