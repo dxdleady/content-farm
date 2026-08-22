@@ -6,8 +6,8 @@ import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Chrome } from '../src/chrome.mjs';
-import { formatFromArgv, formatTag } from '../src/formats.mjs';
+import { Chrome } from '../src/chrome.ts';
+import { formatFromArgv, formatTag } from '../src/formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FMT = formatFromArgv();

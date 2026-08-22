@@ -5,8 +5,8 @@ import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from 
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { MODELS } from '../src/providers.mjs';
-import { Chrome } from '../src/chrome.mjs';
+import { MODELS } from '../src/providers.ts';
+import { Chrome } from '../src/chrome.ts';
 import { pool } from '../src/pool.ts';
 
 process.loadEnvFile(join(dirname(fileURLToPath(import.meta.url)), '..', '.env'));

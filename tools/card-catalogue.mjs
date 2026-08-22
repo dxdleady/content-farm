@@ -2,7 +2,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Chrome } from '../src/chrome.mjs';
+import { Chrome } from '../src/chrome.ts';
 import { CARDS, CARD_IDS } from '../src/cards.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');

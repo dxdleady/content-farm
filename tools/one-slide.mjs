@@ -6,8 +6,8 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { renderSlide } from '../src/layouts.mjs';
-import { Chrome } from '../src/chrome.mjs';
-import { resolveFormat, formatCss } from '../src/formats.mjs';
+import { Chrome } from '../src/chrome.ts';
+import { resolveFormat, formatCss } from '../src/formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const [deckPath, layout, outPath = join(ROOT, 'out/preview.png')] = process.argv.slice(2);

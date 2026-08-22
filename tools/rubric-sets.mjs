@@ -4,9 +4,9 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Chrome } from '../src/chrome.mjs';
+import { Chrome } from '../src/chrome.ts';
 import { renderSlide } from '../src/layouts.mjs';
-import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FMT = formatFromArgv();

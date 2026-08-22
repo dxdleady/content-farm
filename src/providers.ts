@@ -1,19 +1,35 @@
 // Image providers. Gemini is text-to-image (a reference can only ever be a hint);
 // WaveSpeed hosts image-to-image / edit models, where the reference IS the input.
 import { readFileSync } from 'node:fs';
+import type { Ratio } from './types.ts';
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
-const MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' };
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+const MIME: Record<string, string> = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp' };
 
-export const dataUri = (path) => {
-  const ext = path.split('.').pop().toLowerCase();
+export const dataUri = (path: string): string => {
+  const ext = path.split('.').pop()!.toLowerCase();
   return `data:${MIME[ext] ?? 'image/jpeg'};base64,${readFileSync(path).toString('base64')}`;
 };
 
 const KEY = () => process.env.WAVESPEED_API_KEY;
 
+/**
+ * The shape every adapter accepts. `size` and `ratio` are both optional here even though
+ * several adapters destructure `size` without a default — the runtime relies on
+ * `size ?? SIZE[ratio]`, and declaring it required would be a lie about how it is called.
+ */
+export type CallArgs = { prompt?: string; refs: string[]; ratio?: Ratio; size?: string };
+// Single-reference adapters index refs[0] directly; every caller passes exactly one, and
+// an empty array would already fail at the vendor. The `!` records that assumption.
+
+export type ModelAdapter = { price: number; call: (args: CallArgs) => Promise<Buffer> };
+
 /** Submit a job to a WaveSpeed model and poll until it returns an image. */
-export async function wavespeed(model, input, { timeoutMs = 600000 } = {}) {
+export async function wavespeed(
+  model: string,
+  input: Record<string, unknown>,
+  { timeoutMs = 600000 }: { timeoutMs?: number } = {},
+): Promise<Buffer> {
   const key = KEY();
   if (!key) throw new Error('WAVESPEED_API_KEY missing');
 
@@ -22,7 +38,7 @@ export async function wavespeed(model, input, { timeoutMs = 600000 } = {}) {
     headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
     body: JSON.stringify(input),
   });
-  const body = await res.json().catch(() => ({}));
+  const body = await res.json().catch(() => ({})) as { data?: { id?: string } };
   if (!res.ok) throw new Error(`${model}: ${res.status} ${JSON.stringify(body).slice(0, 300)}`);
 
   const id = body?.data?.id;
@@ -34,7 +50,8 @@ export async function wavespeed(model, input, { timeoutMs = 600000 } = {}) {
     const r = await fetch(`https://api.wavespeed.ai/api/v3/predictions/${id}/result`, {
       headers: { authorization: `Bearer ${key}` },
     });
-    const j = await r.json().catch(() => ({}));
+    // The vendor response is untyped JSON; narrow it here, at the single parse boundary.
+    const j = await r.json().catch(() => ({})) as { data?: { status?: string; outputs?: string[]; error?: string } };
     const d = j?.data ?? {};
     if (d.status === 'completed') {
       const url = d.outputs?.[0];
@@ -52,11 +69,11 @@ export async function wavespeed(model, input, { timeoutMs = 600000 } = {}) {
  * formats registry can ask for is mapped to both. '4:5' is the default and keeps
  * the exact values these adapters shipped with, so Instagram output is unchanged.
  */
-const SIZE = { '4:5': '512*640', '9:16': '576*1024' };          // small working size
-const SIZE_HI = { '4:5': '1024*1536', '9:16': '1024*1792' };    // gpt-image-1.5
-const SIZE_REDUX = { '4:5': '832*1088', '9:16': '768*1344' };
+const SIZE: Record<Ratio, string> = { '4:5': '512*640', '9:16': '576*1024' };          // small working size
+const SIZE_HI: Record<Ratio, string> = { '4:5': '1024*1536', '9:16': '1024*1792' };    // gpt-image-1.5
+const SIZE_REDUX: Record<Ratio, string> = { '4:5': '832*1088', '9:16': '768*1344' };
 // p-image speaks in thirds/quarters, not fifths
-const AR_PIMAGE = { '4:5': '3:4', '9:16': '9:16' };
+const AR_PIMAGE: Record<Ratio, string> = { '4:5': '3:4', '9:16': '9:16' };
 
 /**
  * Model adapters — each maps a common call shape onto that model's own schema,
@@ -85,13 +102,13 @@ export const MODELS = {
   'kontext': {
     price: 0.02,
     call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('wavespeed-ai/flux-kontext-dev-ultra-fast', {
-      prompt, image: dataUri(refs[0]), size: size ?? SIZE[ratio], output_format: 'png',
+      prompt, image: dataUri(refs[0]!), size: size ?? SIZE[ratio], output_format: 'png',
     }),
   },
   'grok': {
     price: 0.025,
     call: ({ prompt, refs }) => wavespeed('x-ai/grok-imagine-image/edit', {
-      prompt, image: dataUri(refs[0]),
+      prompt, image: dataUri(refs[0]!),
     }),
   },
   'seedream4': {
@@ -131,7 +148,7 @@ export const MODELS = {
   'redux': {
     price: 0.025,
     call: ({ refs, ratio = '4:5', size }) => wavespeed('wavespeed-ai/flux-redux-dev', {
-      image: dataUri(refs[0]), size: size ?? SIZE_REDUX[ratio], output_format: 'png',
+      image: dataUri(refs[0]!), size: size ?? SIZE_REDUX[ratio], output_format: 'png',
     }),
   },
   // nano-banana 2 — same price as gpt-image-2 but renders at 2k
@@ -162,4 +179,4 @@ export const MODELS = {
       prompt, images: refs.map(dataUri), size: size ?? SIZE[ratio],
     }),
   },
-};
+} satisfies Record<string, ModelAdapter>;

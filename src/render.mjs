@@ -5,9 +5,9 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, symlin
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderSlide } from './layouts.mjs';
-import { Chrome } from './chrome.mjs';
+import { Chrome } from './chrome.ts';
 import { background, status } from './bgen.mjs';
-import { formatFromArgv, formatCss } from './formats.mjs';
+import { formatFromArgv, formatCss } from './formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FMT = formatFromArgv();

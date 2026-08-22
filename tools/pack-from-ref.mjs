@@ -8,7 +8,7 @@ import { readFileSync, writeFileSync, copyFileSync, existsSync, mkdirSync } from
 import { createHash } from 'node:crypto';
 import { join, dirname, basename, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { MODELS } from '../src/providers.mjs';
+import { MODELS } from '../src/providers.ts';
 import { openRun } from '../src/run.ts';
 import { pool } from '../src/pool.ts';
 import { composePrompt } from '../src/plan.mjs';

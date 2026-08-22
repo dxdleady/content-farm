@@ -11,7 +11,11 @@
 // bottom-anchored content clears the caption block and the action rail instead
 // of hiding under them. Full-bleed elements (art, bands, charts) still run to
 // the edge on purpose — only type respects the safe area.
+import type { Format, FormatId } from './types.ts';
 
+// `satisfies` rather than a plain annotation: it checks each entry against Format while
+// keeping the literal key types, so FORMATS.tiktok.ratio stays '9:16' instead of widening
+// to Ratio. That literalness is what lets callers switch on a format without a cast.
 export const FORMATS = {
   ig: {
     id: 'ig',
@@ -57,16 +61,18 @@ export const FORMATS = {
     framing: 'FRAMING: a tall vertical 9:16 frame — the subject sits in the upper two thirds; '
       + 'the bottom third and the right edge stay open and uncluttered for type',
   },
-};
+} satisfies Record<FormatId, Format>;
 
-export const DEFAULT_FORMAT = 'ig';
+export const DEFAULT_FORMAT: FormatId = 'ig';
 
 /** Resolve a --format value (or an alias) to a format object. Throws on typos. */
-export function resolveFormat(id) {
+export function resolveFormat(id?: string | null): Format {
   if (!id) return FORMATS[DEFAULT_FORMAT];
   const key = String(id).toLowerCase();
-  const alias = { instagram: 'ig', insta: 'ig', '4:5': 'ig', tt: 'tiktok', '9:16': 'tiktok' };
-  const f = FORMATS[alias[key] ?? key];
+  const alias: Record<string, FormatId> = {
+    instagram: 'ig', insta: 'ig', '4:5': 'ig', tt: 'tiktok', '9:16': 'tiktok',
+  };
+  const f = (FORMATS as Record<string, Format | undefined>)[alias[key] ?? key];
   if (!f) throw new Error(`unknown format "${id}" — have: ${Object.keys(FORMATS).join(', ')}`);
   return f;
 }
@@ -75,13 +81,17 @@ export function resolveFormat(id) {
  * Read `--format x` off argv, falling back to $FORMAT, then the default.
  * This is the CLI edge, so a typo exits with a message rather than a stack trace —
  * the same shape as the unknown-rubric / unknown-theme checks in compose.mjs.
+ *
+ * The return type is Format rather than Format | never because process.exit() is typed
+ * `never`, so the catch branch does not widen it. That is also why the typo path cannot
+ * be unit-tested directly — it would take the test runner down with it.
  */
-export function formatFromArgv(argv = process.argv) {
+export function formatFromArgv(argv: string[] = process.argv): Format {
   const i = argv.indexOf('--format');
   try {
     return resolveFormat(i > -1 ? argv[i + 1] : process.env.FORMAT);
   } catch (e) {
-    console.error(e.message);
+    console.error((e as Error).message);
     process.exit(1);
   }
 }
@@ -91,11 +101,11 @@ export function formatFromArgv(argv = process.argv) {
  * vars and falls back to the Instagram canvas when the block is absent, so any
  * caller that hasn't been taught about formats keeps rendering 1080×1350.
  */
-export const formatCss = (f) => `:root{`
+export const formatCss = (f: Format): string => `:root{`
   + `--slide-w:${f.w}px;--slide-h:${f.h}px;`
   + `--safe-t:${f.safe.top}px;--safe-r:${f.safe.right}px;--safe-b:${f.safe.bottom}px;`
   + Object.entries(f.vars ?? {}).map(([k, v]) => `${k}:${v};`).join('')
   + `}`;
 
 /** Suffix for run folders / deck names — Instagram stays unsuffixed (it was here first). */
-export const formatTag = (f) => (f.id === DEFAULT_FORMAT ? '' : `-${f.id}`);
+export const formatTag = (f: Format): string => (f.id === DEFAULT_FORMAT ? '' : `-${f.id}`);

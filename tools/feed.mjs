@@ -6,12 +6,12 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { MODELS } from '../src/providers.mjs';
+import { MODELS } from '../src/providers.ts';
 import { pool } from '../src/pool.ts';
-import { Chrome } from '../src/chrome.mjs';
+import { Chrome } from '../src/chrome.ts';
 import { renderSlide } from '../src/layouts.mjs';
 import { RUBRICS, refAnalysisFile, composePrompt } from '../src/plan.mjs';
-import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 try { process.loadEnvFile(join(ROOT, '.env')); } catch {}

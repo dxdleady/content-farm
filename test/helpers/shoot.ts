@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 
-import { Chrome } from '../../src/chrome.mjs';
+import { Chrome } from '../../src/chrome.ts';
 import { renderSlide } from './sut.ts';
 import { renderPage, composePage, assetHashInputs } from './page.ts';
 import type { PngCase } from './png-cases.ts';

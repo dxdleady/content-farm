@@ -14,7 +14,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { MODELS } from './providers.mjs';
+import { MODELS } from './providers.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = join(ROOT, 'assets/generated');

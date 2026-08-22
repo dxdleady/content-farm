@@ -11,12 +11,12 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RUBRICS, ART_CAPABLE, refAnalysisFile, composePrompt } from '../src/plan.mjs';
-import { MODELS } from '../src/providers.mjs';
+import { MODELS } from '../src/providers.ts';
 import { pool } from '../src/pool.ts';
-import { Chrome } from '../src/chrome.mjs';
+import { Chrome } from '../src/chrome.ts';
 import { renderSlide, inkFor } from '../src/layouts.mjs';
 import { fxPage } from '../src/fx.ts';
-import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FX = !process.argv.includes('--no-fx');   // house film-grain on every photo

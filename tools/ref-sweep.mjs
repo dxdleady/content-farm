@@ -10,7 +10,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { background, status } from '../src/bgen.mjs';
-import { Chrome } from '../src/chrome.mjs';
+import { Chrome } from '../src/chrome.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REFS = join(ROOT, 'refs/style');
