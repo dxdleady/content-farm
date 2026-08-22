@@ -16,15 +16,23 @@ const warn = (label, note) => console.log(`  ! ${label}\n      → ${note}`);
 console.log('\n(cast) content farm — preflight\n');
 
 // ── Node ────────────────────────────────────────────────────────────────────
-// process.loadEnvFile needs 20.12; the global WebSocket that src/chrome.mjs
-// drives the DevTools protocol with is only unflagged from 22.4.
-const [maj, min] = process.versions.node.split('.').map(Number);
-if (maj > 22 || (maj === 22 && min >= 4)) ok('node', process.version);
-else bad(`node ${process.version} — needs >= 22.4.0`,
-  'nvm use 22   (global WebSocket, used by src/chrome.mjs, is missing before 22.4)');
+// Three separate floors, in the order they were added:
+//   20.12  process.loadEnvFile
+//   22.4   the global WebSocket that src/chrome.mjs drives the DevTools protocol with
+//   23.6   native TypeScript type stripping, on by default — the repo runs .ts directly
+const [maj] = process.versions.node.split('.').map(Number);
+if (maj >= 24) ok('node', process.version);
+else bad(`node ${process.version} — needs >= 24.0.0`,
+  'nvm use   (honours .nvmrc; below 24 the .ts sources need --experimental-strip-types)');
 
 if (typeof WebSocket === 'function') ok('global WebSocket');
-else bad('global WebSocket missing', 'same fix: run on Node >= 22.4.0');
+else bad('global WebSocket missing', 'same fix: run on Node >= 24');
+
+// Capability, not a version proxy: this is the definitive answer to "can this runtime
+// execute the .ts sources without a build step".
+if (process.features.typescript) ok('typescript', `native type stripping (${process.features.typescript})`);
+else bad('this runtime cannot run .ts directly',
+  'nvm use   (type stripping is default-on from Node 23.6; you are on ' + process.version + ')');
 
 // ── Chrome ──────────────────────────────────────────────────────────────────
 const BIN = process.env.CHROME_BIN
@@ -54,6 +62,14 @@ try {
   ok('python3', `${v}  (tools/*.py — stdlib only, no pip installs)`);
 } catch {
   warn('python3 not found', 'only needed for tools/build_css.py and the icon helpers');
+}
+
+// ── Typecheck (optional — the only thing that needs node_modules) ───────────
+try {
+  const v = execFileSync('npx', ['--no-install', 'tsc', '--version'], { encoding: 'utf8' }).trim();
+  ok('tsc', `${v}  (npm run typecheck)`);
+} catch {
+  warn('tsc not installed', 'run `npm install` — needed only for `npm run typecheck`, not to render');
 }
 
 console.log(failed

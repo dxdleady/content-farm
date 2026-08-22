@@ -33,18 +33,48 @@ needs instead lives outside npm:
 
 | Dependency | Version | Why |
 |---|---|---|
-| **Node** | **≥ 22.4.0** | `src/chrome.mjs` drives the DevTools protocol over the *global* `WebSocket`, which is only unflagged from 22.4. On Node 20 every render throws. `process.loadEnvFile()` also needs ≥ 20.12. |
+| **Node** | **≥ 24** | Three floors stacked up: `process.loadEnvFile()` needs 20.12; the *global* `WebSocket` that `src/chrome.mjs` drives the DevTools protocol with is only unflagged from 22.4; and native TypeScript type stripping — which is how the `.ts` sources run with no build step — is default-on from 23.6. |
 | **Google Chrome** | 112+ | headless renderer (`--headless=new`). Found at the macOS default path, or set `CHROME_BIN`. |
 | **API keys** | — | `WAVESPEED_API_KEY` (image-to-image backgrounds), `GEMINI_API_KEY` (text-to-image fallback). Without them the layout half still renders; slides fall back to CSS gradients. |
 | **Python 3** | 3.8+ | only for `tools/*.py` (icon/CSS helpers). Stdlib only — nothing to `pip install`. |
 
 ```bash
-nvm use                 # honours .nvmrc (22)
+nvm use                 # honours .nvmrc (24)
 cp .env.example .env    # then paste the keys
-npm run doctor          # checks node, Chrome, keys — exits 1 on a blocker
+npm run doctor          # checks node, type stripping, Chrome, keys — exits 1 on a blocker
 ```
 
-`npm install` is not needed and installs nothing.
+**`dependencies` is empty and stays empty** — nothing the generator runs comes from npm.
+The two `devDependencies` (`typescript`, `@types/node`) exist only so `npm run typecheck`
+works; `npm install` is not needed to render anything.
+
+## Tests
+
+```bash
+npm test          # ~330 cases, no Chrome, no keys, under a second
+npm run typecheck # tsc --noEmit
+npm run test:png  # pixel goldens — needs Chrome, ~40s
+```
+
+Three tiers, each catching what the one before it cannot:
+
+| | What it covers | Cost |
+|---|---|---|
+| `test/unit` | pure logic, frozen prompt digests, all 15 provider adapters via a `fetch` double, and static invariants over the repo (every layout name resolves, every relative import exists) | ms |
+| `test/html` | `renderSlide()` output for 325 slides, byte-compared. Deterministic and machine-independent — this is the tier that validates a refactor | ms |
+| `test/png` | what only Chrome decides: `carousel.css`, fonts, wrapping, overflow | ~40s |
+
+Goldens are captured from the code as it is, not as it should be — a case that throws
+today has its throw pinned too. Re-baseline deliberately:
+
+```bash
+UPDATE_GOLDENS=1 npm test        # HTML tier
+npm run goldens:capture:png      # PNG tier
+```
+
+PNG byte-identity is a **same-machine** gate. The manifest records the Chrome version,
+platform and asset hashes; if they do not match, the tier *skips* with a re-baseline hint
+rather than failing, so a Chrome update does not produce a false red.
 
 ## Quick start
 
@@ -153,6 +183,7 @@ assets/     fonts (Inter + Playfair, inlined), icons-clean, logos, generated (ca
 refs/       style/ (28 references), analysis/ (feature-maps)
 tools/      compose.mjs, feed.mjs, matrix.mjs, ref-slides.mjs, fx.mjs, pack-from-ref.mjs
 out/runs/   one folder per run — immutable
+test/       unit + html + png tiers, goldens, corpus
 .claude/    the `cast-content` skill
 ```
 
