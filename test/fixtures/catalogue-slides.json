@@ -1,0 +1,396 @@
+[
+  {
+    "$case": "01-statement",
+    "$purpose": "Hero Statement — the opening line",
+    "layout": "statement",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 1,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Cold open",
+    "title": "The first *30 seconds* decide the rest"
+  },
+  {
+    "$case": "02-claim",
+    "$purpose": "Claim — heavy grotesk assertion",
+    "layout": "claim",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 2,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Truth",
+    "title": "Edit the *words*, not the waveform"
+  },
+  {
+    "$case": "03-stat",
+    "$purpose": "Giant Number — one stat dominates",
+    "layout": "stat",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 3,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Time back",
+    "value": "73",
+    "unit": "%"
+  },
+  {
+    "$case": "04-statRow",
+    "$purpose": "Stat Row — one number, stated",
+    "layout": "statRow",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 4,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "The maths",
+    "title": "One pass replaces the *stack*",
+    "stats": [
+      {
+        "v": "7→1",
+        "l": "tools"
+      }
+    ]
+  },
+  {
+    "$case": "05-quote",
+    "$purpose": "Pull Quote — testimonial",
+    "layout": "quote",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 5,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "title": "We just *delete the sentence*.",
+    "author": "Dana Reyes",
+    "role": "Signal & Noise"
+  },
+  {
+    "$case": "06-steps",
+    "$purpose": "Numbered Steps — a process",
+    "layout": "steps",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 6,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "The fix",
+    "title": "Move your best line *up*",
+    "items": [
+      "Find it in the transcript",
+      "Cut it loose",
+      "Paste it at 0:00"
+    ]
+  },
+  {
+    "$case": "07-checklist",
+    "$purpose": "Checklist — what is included",
+    "layout": "checklist",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 7,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Inside",
+    "title": "Cleanup you never *touch*",
+    "items": [
+      "Filler words removed",
+      "Dead air trimmed",
+      "Room hum gone",
+      "Pauses tightened"
+    ]
+  },
+  {
+    "$case": "08-dontList",
+    "$purpose": "Don't List — mistakes crossed out",
+    "layout": "dontList",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 8,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Openings",
+    "title": "Six ways to *lose* them",
+    "items": [
+      "Long hellos",
+      "Mic checks",
+      "The weather",
+      "Housekeeping",
+      "So anyway…"
+    ]
+  },
+  {
+    "$case": "09-tags",
+    "$purpose": "Tag Cloud — scannable list",
+    "layout": "tags",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 1,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Openings",
+    "title": "Cut *all* of this",
+    "items": [
+      "Hellos",
+      "Mic check",
+      "The weather",
+      "Housekeeping",
+      "Dead air",
+      "So anyway…",
+      "Sponsor read",
+      "Recap",
+      "Apologies"
+    ]
+  },
+  {
+    "$case": "10-bento",
+    "$purpose": "Feature Bento — feature grid",
+    "layout": "bento",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 2,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Features",
+    "title": "Six tools, *one* pass",
+    "items": [
+      {
+        "title": "Voice cleanup",
+        "icon": "eraser"
+      },
+      {
+        "title": "Word cuts",
+        "icon": "scissors"
+      },
+      {
+        "title": "Adaptive music",
+        "icon": "sound"
+      },
+      {
+        "title": "Auto-ducking",
+        "icon": "sliders"
+      },
+      {
+        "title": "Chapters",
+        "icon": "file"
+      },
+      {
+        "title": "Cleared licence",
+        "icon": "gem"
+      }
+    ],
+    "variant": "k"
+  },
+  {
+    "$case": "11-iconRow",
+    "$purpose": "Icon Row — glyphs with labels",
+    "layout": "iconRow",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 3,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Features",
+    "title": "Everything in *one* place",
+    "items": [
+      {
+        "title": "Voice cleanup",
+        "icon": "eraser"
+      },
+      {
+        "title": "Word cuts",
+        "icon": "scissors"
+      },
+      {
+        "title": "Adaptive music",
+        "icon": "sound"
+      },
+      {
+        "title": "Auto-ducking",
+        "icon": "sliders"
+      },
+      {
+        "title": "Chapters",
+        "icon": "file"
+      },
+      {
+        "title": "Cleared licence",
+        "icon": "gem"
+      }
+    ]
+  },
+  {
+    "$case": "12-bigQuestion",
+    "$purpose": "Big Question — one provocation",
+    "layout": "bigQuestion",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 4,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Censoring",
+    "title": "What if podcast *censoring* was automatic?"
+  },
+  {
+    "$case": "13-priceTiers",
+    "$purpose": "Price Tiers — plans at a glance",
+    "layout": "priceTiers",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 5,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Plans",
+    "title": "Pick your *tier*",
+    "items": [
+      {
+        "nm": "Free",
+        "ch": "100 credits",
+        "pr": "$0"
+      },
+      {
+        "nm": "Lite",
+        "ch": "700 credits",
+        "pr": "$9.99"
+      },
+      {
+        "nm": "Plus",
+        "ch": "2,750 · licence",
+        "pr": "$29.74",
+        "hi": true
+      },
+      {
+        "nm": "Max",
+        "ch": "unlimited · stems",
+        "pr": "$59.99"
+      }
+    ]
+  },
+  {
+    "$case": "14-callout",
+    "$purpose": "Callout — a boxed rule",
+    "layout": "callout",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 6,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Rule",
+    "title": "Start at the *punchline*."
+  },
+  {
+    "$case": "15-fillWord",
+    "$purpose": "Fill Word — one word fills the frame",
+    "layout": "fillWord",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 7,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "The problem",
+    "title": "*silence*"
+  },
+  {
+    "$case": "16-timeline",
+    "$purpose": "Timeline — steps on a line",
+    "layout": "timeline",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 8,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "The flow",
+    "title": "Record to *export*",
+    "items": [
+      "Upload",
+      "Clean",
+      "Transcript",
+      "Chapters",
+      "Music",
+      "Export"
+    ]
+  },
+  {
+    "$case": "17-symbolHero",
+    "$purpose": "Symbol Hero — a big glyph + line",
+    "layout": "symbolHero",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 1,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "icon": "scissors",
+    "title": "Cut a *sentence*, not a selection",
+    "note": "Select the words in the transcript — the audio follows. No waveform surgery, no fades to redraw."
+  },
+  {
+    "$case": "18-footnote",
+    "$purpose": "Footnote — line + honest fine print",
+    "layout": "footnote",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 2,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Licensing",
+    "title": "Commercially *licensed* music",
+    "note": "Generated from Mubert's fully owned sample library. Verify plan details before publishing."
+  },
+  {
+    "$case": "19-lineChart",
+    "$purpose": "Line Chart — trend with gradient fill",
+    "layout": "lineChart",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 3,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "kicker": "Retention",
+    "title": "Where they *stay*",
+    "points": [
+      24,
+      30,
+      28,
+      44,
+      52,
+      50,
+      72,
+      96
+    ],
+    "left": "0:00",
+    "right": "32:00"
+  },
+  {
+    "$case": "20-splash",
+    "$purpose": "Splash — closing brand card",
+    "layout": "splash",
+    "minimal": true,
+    "ground": "superlime",
+    "accent": "accent-purple",
+    "index": 4,
+    "total": 8,
+    "handle": "mubert.com/tools/cast",
+    "title": "Your cold open, found for you"
+  }
+]

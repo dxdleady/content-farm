@@ -1,0 +1,41 @@
+{
+  "$note": "Byte-identity is a SAME-MACHINE gate. A fingerprint mismatch skips the tier with a re-baseline hint rather than failing — see test/png/golden.test.ts.",
+  "env": {
+    "chrome": "Google Chrome 151.0.7922.170",
+    "node": "v24.15.0",
+    "platform": "darwin-arm64",
+    "fontsSha": "5ca65eefad2cc56b",
+    "cssSha": "06b8d71557e9e0b1"
+  },
+  "cases": {
+    "catalogue--01-statement--ig": "sha256:65535dfdc171e77a93b86c009a88434ab31852b5cffcbfe110578ff25abcb8f5",
+    "catalogue--02-claim--ig": "sha256:ec10ea6f07a75f85825ad07c6541c25aa764131e88fb1a3ac7eb923a3936ba13",
+    "catalogue--03-stat--ig": "sha256:95c93426fc106b4f8999a0f13a1d67b68e33c0a83c9b1df6d047e426187749ea",
+    "catalogue--04-statRow--ig": "sha256:7f758fafab93ecad6942d8ab68f3ff27b2623873f17cc49f79d59c700a7ed661",
+    "catalogue--05-quote--ig": "sha256:cf893351797f3da8a87b12384edd2b5d84bf9c2f60e994749f7e4643c9e19fa6",
+    "catalogue--06-steps--ig": "sha256:ff19c6c52dd3d02a390282ef83a091695ca1ffad35c668cbab770ca80af1f27a",
+    "catalogue--07-checklist--ig": "sha256:3bfa9f21970d921f4630102624042ab2ec8becd7ccfcfe26c6631d48e6944a13",
+    "catalogue--08-dontList--ig": "sha256:5342f772674d318eae0617673ba9a70ead1ec7709248de36f94fe8c0e5a52ce3",
+    "catalogue--09-tags--ig": "sha256:37d4cefb0dfec794b8963f7a6c17720dfe69fe855c862569321b2b61445aab6b",
+    "catalogue--10-bento--ig": "sha256:0f5e0945e29c201c97f0b831156285fff7953c945e8ad072b3186346b2240cae",
+    "catalogue--11-iconRow--ig": "sha256:4ab0a22307154ebd3a74b40df54efce0a6ab883d54b15b3b78449c2cec8b790e",
+    "catalogue--12-bigQuestion--ig": "sha256:5f5b9bf9b105ff71f1203a298ad9fd7d159524429ffef71ed59155222354b79e",
+    "catalogue--13-priceTiers--ig": "sha256:dded4a4b809940b247e774af7e0051ee26ea53d859cfdb589f573335aba42237",
+    "catalogue--14-callout--ig": "sha256:262ac07480e9f99afecd6fb1a98fe61ca4cb7e5fa279eb167667267a100357b1",
+    "catalogue--15-fillWord--ig": "sha256:af3850c21baa96a37e43ca0f2c3fc0dec3145b25fa8327b0b9e939994928c067",
+    "catalogue--16-timeline--ig": "sha256:374d9422722f1f2d94fe298d46204cb6f446310f1487d000f98281fe19eee95d",
+    "catalogue--17-symbolHero--ig": "sha256:d84b09fd5a266ba92a86c9d44d6dbd666e193d2254ae683365b69f74231b3048",
+    "catalogue--18-footnote--ig": "sha256:e1889455f179120881180a91f73ae4fa6cd71fee526fe4cea7287c0576b49fc5",
+    "catalogue--19-lineChart--ig": "sha256:2c769f4521661c86296c30e955d0a9ff431cf9379ccaa828a4c259e17d89f91d",
+    "catalogue--20-splash--ig": "sha256:9cfeaef848a3a15704142d378516bb50b6665d14394ee053754129490c64bd95",
+    "risky--bento--tiktok": "sha256:28019a08a756c9abf5b89b92f1085d3a86399c6fcc2e9646b8d735f10dbb76ae",
+    "risky--tags--tiktok": "sha256:566ce34b576cea8486da62dd1f1bcd182dcfd13881a06ab3445f418155af15fd",
+    "risky--lineChart--tiktok": "sha256:17f76e0dbd021d12604ba7628545c52cfc922f60cccd4033d9adcd3dd2fbea1a",
+    "risky--meter--tiktok": "sha256:a2accfc7d591d3b4e6fa7105e2ee4b65fc22f1f6edd6d08a88e18af72349d0e9",
+    "risky--priceTiers--tiktok": "sha256:2d14beef5c36d96252446eb87ed7a4a69fa71cc27469b84e5cb9ff3085df1dd5",
+    "wrapper--grain--render": "sha256:db9e9ffafbe56a2b54ac66c716de9f8d35802881b068408f16c7abc95814c45f",
+    "wrapper--grain--compose": "sha256:542069e0c1b06f482b511fc39ecf75949f31c0ba3872f63f31a07d542766d258",
+    "compose--statement--ig": "sha256:65535dfdc171e77a93b86c009a88434ab31852b5cffcbfe110578ff25abcb8f5",
+    "compose--statement--tiktok": "sha256:919a3c39835f3d968ef9bcd5ac2adb902da382598daff9bf9c961447362841b9"
+  }
+}

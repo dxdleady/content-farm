@@ -1,0 +1,498 @@
+{
+  "p-image|4:5": {
+    "price": 0.01,
+    "url": "https://api.wavespeed.ai/api/v3/pruna-ai/p-image/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "3:4",
+      "output_format": "png"
+    }
+  },
+  "flux2-flash|4:5": {
+    "price": 0.013,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/flux-2-flash/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "512*640"
+    }
+  },
+  "qwen-edit|4:5": {
+    "price": 0.02,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/qwen-image/edit-plus",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "512*640",
+      "output_format": "png"
+    }
+  },
+  "kontext|4:5": {
+    "price": 0.02,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/flux-kontext-dev-ultra-fast",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+      "size": "512*640",
+      "output_format": "png"
+    }
+  },
+  "grok|4:5": {
+    "price": 0.025,
+    "url": "https://api.wavespeed.ai/api/v3/x-ai/grok-imagine-image/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+    }
+  },
+  "seedream4|4:5": {
+    "price": 0.027,
+    "url": "https://api.wavespeed.ai/api/v3/bytedance/seedream-v4/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "512*640"
+    }
+  },
+  "nano-banana|4:5": {
+    "price": 0.038,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "4:5",
+      "output_format": "png"
+    }
+  },
+  "gpt-image-2|4:5": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/openai/gpt-image-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "4:5",
+      "quality": "low",
+      "resolution": "1k",
+      "output_format": "png"
+    }
+  },
+  "gpt-image-1.5|4:5": {
+    "price": 0.1,
+    "url": "https://api.wavespeed.ai/api/v3/openai/gpt-image-1.5/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "1024*1536",
+      "quality": "low",
+      "input_fidelity": "high",
+      "output_format": "png"
+    }
+  },
+  "uso|4:5": {
+    "price": 0.08,
+    "url": "https://api.wavespeed.ai/api/v3/bytedance/uso",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "reference_images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ]
+    }
+  },
+  "redux|4:5": {
+    "price": 0.025,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/flux-redux-dev",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+      "size": "832*1088",
+      "output_format": "png"
+    }
+  },
+  "banana-2k|4:5": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "4:5",
+      "resolution": "2k",
+      "output_format": "png"
+    }
+  },
+  "banana-1k|4:5": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "4:5",
+      "resolution": "1k",
+      "output_format": "png"
+    }
+  },
+  "banana-4k|4:5": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "4:5",
+      "resolution": "4k",
+      "output_format": "png"
+    }
+  },
+  "seedream45|4:5": {
+    "price": 0.04,
+    "url": "https://api.wavespeed.ai/api/v3/bytedance/seedream-v4.5/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "512*640"
+    }
+  },
+  "p-image|9:16": {
+    "price": 0.01,
+    "url": "https://api.wavespeed.ai/api/v3/pruna-ai/p-image/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "9:16",
+      "output_format": "png"
+    }
+  },
+  "flux2-flash|9:16": {
+    "price": 0.013,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/flux-2-flash/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "576*1024"
+    }
+  },
+  "qwen-edit|9:16": {
+    "price": 0.02,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/qwen-image/edit-plus",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "576*1024",
+      "output_format": "png"
+    }
+  },
+  "kontext|9:16": {
+    "price": 0.02,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/flux-kontext-dev-ultra-fast",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+      "size": "576*1024",
+      "output_format": "png"
+    }
+  },
+  "grok|9:16": {
+    "price": 0.025,
+    "url": "https://api.wavespeed.ai/api/v3/x-ai/grok-imagine-image/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+    }
+  },
+  "seedream4|9:16": {
+    "price": 0.027,
+    "url": "https://api.wavespeed.ai/api/v3/bytedance/seedream-v4/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "576*1024"
+    }
+  },
+  "nano-banana|9:16": {
+    "price": 0.038,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "9:16",
+      "output_format": "png"
+    }
+  },
+  "gpt-image-2|9:16": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/openai/gpt-image-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "9:16",
+      "quality": "low",
+      "resolution": "1k",
+      "output_format": "png"
+    }
+  },
+  "gpt-image-1.5|9:16": {
+    "price": 0.1,
+    "url": "https://api.wavespeed.ai/api/v3/openai/gpt-image-1.5/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "1024*1792",
+      "quality": "low",
+      "input_fidelity": "high",
+      "output_format": "png"
+    }
+  },
+  "uso|9:16": {
+    "price": 0.08,
+    "url": "https://api.wavespeed.ai/api/v3/bytedance/uso",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "reference_images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ]
+    }
+  },
+  "redux|9:16": {
+    "price": 0.025,
+    "url": "https://api.wavespeed.ai/api/v3/wavespeed-ai/flux-redux-dev",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
+      "size": "768*1344",
+      "output_format": "png"
+    }
+  },
+  "banana-2k|9:16": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "9:16",
+      "resolution": "2k",
+      "output_format": "png"
+    }
+  },
+  "banana-1k|9:16": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "9:16",
+      "resolution": "1k",
+      "output_format": "png"
+    }
+  },
+  "banana-4k|9:16": {
+    "price": 0.07,
+    "url": "https://api.wavespeed.ai/api/v3/google/nano-banana-2/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "aspect_ratio": "9:16",
+      "resolution": "4k",
+      "output_format": "png"
+    }
+  },
+  "seedream45|9:16": {
+    "price": 0.04,
+    "url": "https://api.wavespeed.ai/api/v3/bytedance/seedream-v4.5/edit",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "authorization": "Bearer test-key"
+    },
+    "body": {
+      "prompt": "P",
+      "images": [
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+      ],
+      "size": "576*1024"
+    }
+  }
+}
