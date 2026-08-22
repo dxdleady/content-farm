@@ -1,0 +1,40 @@
+{
+  // Type-checking only — this config NEVER emits. Node runs the .ts files directly
+  // via native type stripping, so `node tools/compose.ts` keeps working unchanged and
+  // stack traces stay exact (stripping preserves line AND column).
+  //
+  // Three settings are load-bearing and must not be relaxed:
+  //   verbatimModuleSyntax  — Node's stripper is a single-file transform with no type
+  //                           info, so it cannot tell that `import { Slide }` is
+  //                           type-only. Every type import MUST be `import type`.
+  //   erasableSyntaxOnly    — bans enum / namespace / parameter properties, i.e. the
+  //                           syntax that cannot be stripped. Guarantees the source
+  //                           stays valid-after-erasure by construction, which is the
+  //                           escape hatch back to a tsc build if we ever need one.
+  //   allowJs + checkJs:false — lets .ts and .mjs coexist during the migration.
+  //                           Remaining .mjs resolves and infers as any, unchecked.
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "lib": ["ES2023"],
+    "types": ["node"],
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+
+    "allowJs": true,
+    "checkJs": false,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*", "tools/**/*", "test/**/*"],
+  // Imports ../src/cards.mjs and reads src/cards.css — neither has ever existed in git
+  // history, so this file has never executed. Kept on disk per decision, excluded here
+  // because its import cannot resolve. See PHASE4 notes in the plan.
+  "exclude": ["tools/card-catalogue.mjs", "out", "node_modules"]
+}

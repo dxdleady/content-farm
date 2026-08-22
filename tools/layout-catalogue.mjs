@@ -4,9 +4,11 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide } from '../src/layouts.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const W=1080,H=1350;
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h;
 const G = process.env.CARD_GROUND || 'superlime';   // token accent name
 const fonts = readFileSync(join(ROOT,'assets/fonts/fonts.css'),'utf8')
   .replace(/url\((woff2\/[^)]+)\)/g,(_,r)=>`url(data:font/woff2;base64,${readFileSync(join(ROOT,'assets/fonts',r)).toString('base64')})`);
@@ -14,6 +16,7 @@ const tokens = readFileSync(join(ROOT,'tokens/tokens.css'),'utf8').replace(/@imp
 const sheet = readFileSync(join(ROOT,'src/carousel.css'),'utf8');
 const page = inner => `<!doctype html><html><head><meta charset="utf-8">
 <style>${fonts}</style><style>${tokens}</style><style>${sheet}</style>
+<style>${formatCss(FMT)}</style>
 <style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
 
 const F=[{title:'Voice cleanup',icon:'eraser'},{title:'Word cuts',icon:'scissors'},{title:'Adaptive music',icon:'sound'},{title:'Auto-ducking',icon:'sliders'},{title:'Chapters',icon:'file'},{title:'Cleared licence',icon:'gem'}];
@@ -45,7 +48,7 @@ const CAT = [
 CAT[0]=['statement','Hero Statement — the opening line',{kicker:'Cold open',title:'The first *30 seconds* decide the rest'}];
 CAT[1]=['claim','Claim — heavy grotesk assertion',{kicker:'Truth',title:'Edit the *words*, not the waveform'}];
 
-const OUT = join(ROOT, `out/runs/${process.env.RUN_ID||'layout-catalogue'}`);
+const OUT = join(ROOT, `out/runs/${process.env.RUN_ID||'layout-catalogue'}${formatTag(FMT)}`);
 mkdirSync(join(OUT,'cards'),{recursive:true});
 const ONLY = process.env.CARD || null;   // CARD=stat renders just that layout
 const chrome = await Chrome.launch();

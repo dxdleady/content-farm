@@ -1,17 +1,20 @@
 /* (cast) carousel — slide styles. Built on tokens/tokens.css.
-   Canvas is 1080x1350; --type-scale bumps the 1440-web type scale up for feed legibility. */
+   Canvas defaults to Instagram 1080x1350; src/formats.mjs overrides --slide-w/h and
+   the --safe-* insets to render another format (TikTok 9:16) from the same sheet.
+   --type-scale bumps the 1440-web type scale up for feed legibility. */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 .slide {
   --type-scale: 1.9;
   position: relative;
-  width: 1080px;
-  height: 1350px;
+  width: var(--slide-w, 1080px);
+  height: var(--slide-h, 1350px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 72px;
+  /* the platform's own UI is added to the page margin, so type clears it */
+  padding: var(--pad-t) var(--pad-r) var(--pad-b) var(--pad-l);
   background: var(--c-background-dark);
   color: var(--c-text-main);
   font-family: var(--f-ui);
@@ -141,9 +144,10 @@
    then one tile per tool filling the rest of the canvas. Icons are the content
    here, so they get real size and the descriptions are dropped. */
 .grid-slide { position: absolute; inset: 0; z-index: 3; display: grid;
-  grid-template-rows: 330px 1fr; }
+  grid-template-rows: 330px 1fr; padding-bottom: var(--safe-b, 0px); }
 
-.grid-head { padding: 64px 72px 0; display: flex; flex-direction: column; gap: 22px; }
+.grid-head { padding: calc(64px + var(--safe-t, 0px)) var(--pad-r) 0 var(--pad-l);
+  display: flex; flex-direction: column; gap: 22px; }
 .grid-head__logo { width: 176px; }
 .grid-head__logo svg { width: 100%; height: auto; display: block; }
 .grid-head__title { font: 500 60px/1.05 var(--f-ui); letter-spacing: -2px; margin-top: auto;
@@ -176,23 +180,47 @@
 .bg-art { position: absolute; inset: 0; z-index: 0; object-fit: cover; width: 100%; height: 100%;
   filter: saturate(1.32) contrast(1.06) brightness(1.07); }
 .slide--photo .bg-scrim { background:
-    linear-gradient(180deg, rgba(10,10,10,.5) 0%, transparent 14%),
+    var(--scrim-band, none),
+    linear-gradient(180deg, rgba(10,10,10,.5) 0%, transparent calc(14% + var(--safe-t, 0px))),
     linear-gradient(0deg, rgba(10,10,10,.93) 4%, rgba(10,10,10,.5) 34%, transparent 62%); }
 
+/* The diagonal scrim lands its dark end in the bottom corner, which is exactly where
+   4:5 puts the type. A taller canvas centres the type instead, so it sets --band-top /
+   --band-bot to switch on a second, vertical scrim over the band the copy occupies.
+   Both default to 100%, which makes the layer fully transparent — an exact no-op.
+   The gradient is composed HERE, not in the injected :root block, because --scrim-ink
+   is only in scope on the slide: a var() that can't resolve where it is declared makes
+   the whole custom property invalid, and it then inherits as empty. */
+.slide {
+  --scrim-ink: rgba(10,10,10,.62);
+  --scrim-band: linear-gradient(180deg,
+    transparent var(--band-top, 100%),
+    var(--scrim-ink) calc(var(--band-top, 100%) + 22%),
+    var(--scrim-ink) var(--band-bot, 100%),
+    transparent 100%);
+}
+.slide--light { --scrim-ink: rgba(238,235,234,.76); }
+
+/* The top band covers the logo + kicker row. A safe-area pushes that row DOWN the
+   canvas, so the band has to grow by the same amount or the kicker lands in the
+   part of the gradient that has already faded out. Adds 0px without a safe-area. */
 .bg-scrim { position: absolute; inset: 0; z-index: 1;
   background:
+    var(--scrim-band, none),
     /* keep the logo / counter row readable whatever the art does up there */
-    linear-gradient(180deg, rgba(10,10,10,.55) 0%, transparent 16%),
+    linear-gradient(180deg, rgba(10,10,10,.55) 0%, transparent calc(16% + var(--safe-t, 0px))),
     linear-gradient(200deg, transparent 10%, var(--scrim, rgba(10,10,10,.34)) 50%, rgba(10,10,10,.86) 100%); }
 /* light theme keeps the art bright and fades to paper, not to ink, so dark type reads */
 .slide--light .bg-scrim { background:
-    linear-gradient(180deg, rgba(238,235,234,.60) 0%, transparent 16%),
+    var(--scrim-band, none),
+    linear-gradient(180deg, rgba(238,235,234,.60) 0%, transparent calc(16% + var(--safe-t, 0px))),
     linear-gradient(200deg, transparent 12%, var(--scrim, rgba(238,235,234,.34)) 48%, rgba(238,235,234,.90) 100%); }
 
 /* ================= v3: edge-weighted layouts ================= */
 
 /* escape the slide padding, bleed to the canvas edge */
-.edge { margin-left: -72px; margin-right: -72px; width: calc(100% + 144px); }
+.edge { margin-left: calc(var(--pad-l) * -1); margin-right: calc(var(--pad-r) * -1);
+  width: calc(100% + var(--pad-l) + var(--pad-r)); }
 
 /* --- counter: segmented bar instead of "01 / 07" --- */
 .ticks { display:flex; gap:6px; align-items:center; padding-top:18px; flex:0 0 auto; width:auto;
@@ -230,9 +258,10 @@
 
 
 /* steps: bands own the whole canvas below the logo */
-.steps--full { position: absolute; left: 0; right: 0; bottom: 0; top: 210px; z-index: 2;
+.steps--full { position: absolute; left: 0; right: 0; bottom: var(--safe-b, 0px);
+  top: calc(210px + var(--safe-t, 0px)); z-index: 2;
   display: flex; flex-direction: column; }
-.steps--full .step { flex: 1; padding: 0 72px; }
+.steps--full .step { flex: 1; padding: 0 var(--pad-r) 0 var(--pad-l); }
 .steps--full .step__n { font-size: 150px; opacity: .3; }
 .steps--full .step__t { font-size: 52px; }
 
@@ -274,8 +303,8 @@
 
 /* ================= feature slide variants ================= */
 /* Shared shell: title band on top, feature area fills the rest of the canvas. */
-.feat { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; padding: var(--pad);
-  padding: 64px 72px 72px; gap: 44px; }
+.feat { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column;
+  padding: calc(64px + var(--safe-t, 0px)) var(--pad-r) var(--pad-b) var(--pad-l); gap: 44px; }
 /* the artwork behind can be light or dark, so the header carries its own ground */
 .feat--art::before { content: ''; position: absolute; inset: 0 0 auto; height: 340px; z-index: -1;
   background: linear-gradient(180deg, rgba(10,10,10,.92) 0%, rgba(10,10,10,.72) 46%, transparent 100%); }
@@ -303,7 +332,7 @@
 
 /* C — outlined tiles, no fills at all */
 .feat__area--bottom { display: flex; align-items: flex-end; }
-.fc { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 148px);
+.fc { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, var(--feat-row, 148px));
   gap: 12px; width: 100%; }
 .fc__c { border: 2px solid var(--a); border-radius: 18px; padding: 22px 24px;
   display: flex; flex-direction: column; justify-content: space-between;
@@ -372,7 +401,7 @@
 
 
 /* K — variant C's geometry, filled instead of outlined */
-.fk { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 148px);
+.fk { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, var(--feat-row, 148px));
   gap: 12px; width: 100%; }
 .fk__c { background: var(--a); color: var(--ink); border-radius: 18px; padding: 22px 24px;
   display: flex; flex-direction: column; justify-content: space-between; }
@@ -386,6 +415,15 @@
    ===================================================================== */
 :root{
   --pad: 72px;          /* page margin, identical everywhere */
+
+  /* The real insets: the page margin plus whatever the platform's UI covers.
+     --safe-* are injected per format (src/formats.mjs) and default to 0, so an
+     un-taught caller renders the original symmetric 72px Instagram frame. */
+  --pad-t: calc(var(--pad) + var(--safe-t, 0px));
+  --pad-r: calc(var(--pad) + var(--safe-r, 0px));
+  --pad-b: calc(var(--pad) + var(--safe-b, 0px));
+  --pad-l: var(--pad);
+
   --zone: 44px;         /* gap between zones */
   --blk: 56px;   /* the single title↔content gap, identical on every card */          /* gap inside a block */
   --row: 26px;          /* list row padding */
@@ -409,8 +447,13 @@
 .body--tb{ justify-content:flex-start !important; align-items:flex-start;
   gap:0; padding:0; width:100%; }
 .body--tb > .kicker{ margin:var(--zone) 0 0; }
-.body--tb > .stack{ margin-top:auto; width:100%;
+/* content hugs the floor of the safe box; a tall format sets --stack-mb:auto so it
+   centres instead, otherwise 9:16 leaves the whole upper half empty */
+.body--tb > .stack{ margin-top:auto; margin-bottom:var(--stack-mb, 0); width:100%;
   display:flex; flex-direction:column; gap:var(--blk); align-items:flex-start; }
+/* …except the giant figure, whose unit is pinned to the bottom-right corner: centring
+   the number would leave that unit orphaned half a frame away. Weight to the edges. */
+.body--tb > .stack:has(.figure__v){ margin-bottom:0; }
 /* the gap between pretitle and content is capped, so cards never read as two islands */
 .body--tb{ position:relative; }
 .body--tb > .kicker{ margin:var(--zone) 0 0; }
@@ -427,9 +470,11 @@
 .bigq__t{ font-family:var(--f-ui); font-weight:600; font-size:var(--t-head-ui);
   line-height:1.04; letter-spacing:-2.5px; }
 /* Claim is the one grotesk-headline card — sized up 2.5x so it dominates */
-.claim{ font-family:var(--f-ui); font-weight:600; font-size:180px;
+.claim{ font-family:var(--f-ui); font-weight:600; font-size:var(--t-claim, 180px);
   line-height:.94; letter-spacing:-6px; }
-.figure__v{ font-family:var(--f-ui); font-weight:300; font-size:720px;
+/* the unit is pinned to the bottom-right corner of the safe box, so the number has
+   to fit the width that's left — a format with a right safe-area shrinks it */
+.figure__v{ font-family:var(--f-ui); font-weight:300; font-size:var(--t-figure, 720px);
   line-height:.8; letter-spacing:-48px; }
 .def__term,
 .fillword{ font-family:var(--f-display); font-weight:400; font-size:var(--t-hero);
@@ -448,7 +493,7 @@
 .claim__rule{ display:block; width:170px; height:10px; border-radius:5px; }
 
 /* ---- 3 Giant Number: unit in the bottom-right corner ---- */
-.figure__corner{ position:absolute; right:var(--pad); bottom:var(--pad); z-index:4;
+.figure__corner{ position:absolute; right:var(--pad-r); bottom:var(--pad-b); z-index:4;
   font-family:var(--f-display); font-weight:400; font-size:110px; line-height:1; letter-spacing:-2px; }
 
 /* ---- 4 Stat Row ---- */
@@ -537,7 +582,8 @@
 .meter__lab{ display:flex; justify-content:space-between; }
 
 /* ---- 21 Lower Third ---- */
-.chyron{ position:absolute; left:0; right:0; bottom:0; z-index:4; padding:48px var(--pad) 56px; }
+.chyron{ position:absolute; left:0; right:0; bottom:var(--safe-b, 0px); z-index:4;
+  padding:48px var(--pad-r) 56px var(--pad-l); }
 .chyron__k{ font:600 var(--t-meta)/1 var(--f-ui); letter-spacing:5px; text-transform:uppercase; opacity:.6; }
 .chyron__t{ font-family:var(--f-display); font-weight:400; font-size:var(--t-head);
   line-height:1.0; letter-spacing:-2px; margin-top:14px; }
@@ -621,8 +667,9 @@
 .barkey__i b{ opacity:.55; font-weight:600; }
 
 /* 21 chyron rebuilt */
-.chyron{ position:absolute; left:0; right:0; bottom:0; z-index:4;
-  background:var(--c-background-dark); color:var(--c-text-main); padding:52px var(--pad) 60px; }
+.chyron{ position:absolute; left:0; right:0; bottom:var(--safe-b, 0px); z-index:4;
+  background:var(--c-background-dark); color:var(--c-text-main);
+  padding:52px var(--pad-r) 60px var(--pad-l); }
 .chyron__bar{ position:absolute; left:0; top:0; height:10px; width:100%; }
 .chyron__k{ display:block; font:600 var(--t-meta)/1 var(--f-ui); letter-spacing:5px;
   text-transform:uppercase; opacity:.6; }
@@ -650,12 +697,15 @@
 .tier__pr{ font-size:52px; }
 
 /* charts, properly laid out */
-.chartwrap{ width:calc(100% + var(--pad)*2); margin:0 calc(var(--pad)*-1) calc(var(--pad)*-1);
+/* bleeds to the left/right canvas edge, but only past the base margin at the
+   bottom — a chart must not run under the platform's caption block */
+.chartwrap{ width:calc(100% + var(--pad-l) + var(--pad-r));
+  margin:0 calc(var(--pad-r)*-1) calc(var(--pad)*-1) calc(var(--pad-l)*-1);
   display:flex; flex-direction:column; gap:0; }
 /* beat `.body--tb > .stack > *{max-width:100%}` so the chart truly bleeds edge-to-edge */
 .body--tb > .stack > .chartwrap{ max-width:none; }
 .chart{ width:100%; height:460px; display:block; }
-.chartaxis{ display:flex; justify-content:space-between; padding:14px var(--pad) 0;
+.chartaxis{ display:flex; justify-content:space-between; padding:14px var(--pad-r) 0 var(--pad-l);
   font:600 var(--t-meta)/1 var(--f-ui); opacity:.5; }
 
 /* icons: bigger badges */

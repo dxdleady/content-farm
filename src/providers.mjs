@@ -47,33 +47,45 @@ export async function wavespeed(model, input, { timeoutMs = 600000 } = {}) {
 }
 
 /**
+ * The canvas ratio a background is generated for. Models split into two camps —
+ * some take a named aspect_ratio, some want explicit pixels — so every ratio the
+ * formats registry can ask for is mapped to both. '4:5' is the default and keeps
+ * the exact values these adapters shipped with, so Instagram output is unchanged.
+ */
+const SIZE = { '4:5': '512*640', '9:16': '576*1024' };          // small working size
+const SIZE_HI = { '4:5': '1024*1536', '9:16': '1024*1792' };    // gpt-image-1.5
+const SIZE_REDUX = { '4:5': '832*1088', '9:16': '768*1344' };
+// p-image speaks in thirds/quarters, not fifths
+const AR_PIMAGE = { '4:5': '3:4', '9:16': '9:16' };
+
+/**
  * Model adapters — each maps a common call shape onto that model's own schema,
  * so callers never learn a provider's parameter names.
- *   call({ prompt, refs: [paths], size })
+ *   call({ prompt, refs: [paths], ratio, size })
  */
 export const MODELS = {
   'p-image': {
     price: 0.01,
-    call: ({ prompt, refs }) => wavespeed('pruna-ai/p-image/edit', {
-      prompt, images: refs.map(dataUri), aspect_ratio: '3:4', output_format: 'png',
+    call: ({ prompt, refs, ratio = '4:5' }) => wavespeed('pruna-ai/p-image/edit', {
+      prompt, images: refs.map(dataUri), aspect_ratio: AR_PIMAGE[ratio], output_format: 'png',
     }),
   },
   'flux2-flash': {
     price: 0.013,
-    call: ({ prompt, refs, size = '512*640' }) => wavespeed('wavespeed-ai/flux-2-flash/edit', {
-      prompt, images: refs.map(dataUri), size,
+    call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('wavespeed-ai/flux-2-flash/edit', {
+      prompt, images: refs.map(dataUri), size: size ?? SIZE[ratio],
     }),
   },
   'qwen-edit': {
     price: 0.02,
-    call: ({ prompt, refs, size = '512*640' }) => wavespeed('wavespeed-ai/qwen-image/edit-plus', {
-      prompt, images: refs.map(dataUri), size, output_format: 'png',
+    call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('wavespeed-ai/qwen-image/edit-plus', {
+      prompt, images: refs.map(dataUri), size: size ?? SIZE[ratio], output_format: 'png',
     }),
   },
   'kontext': {
     price: 0.02,
-    call: ({ prompt, refs, size = '512*640' }) => wavespeed('wavespeed-ai/flux-kontext-dev-ultra-fast', {
-      prompt, image: dataUri(refs[0]), size, output_format: 'png',
+    call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('wavespeed-ai/flux-kontext-dev-ultra-fast', {
+      prompt, image: dataUri(refs[0]), size: size ?? SIZE[ratio], output_format: 'png',
     }),
   },
   'grok': {
@@ -84,27 +96,27 @@ export const MODELS = {
   },
   'seedream4': {
     price: 0.027,
-    call: ({ prompt, refs, size = '512*640' }) => wavespeed('bytedance/seedream-v4/edit', {
-      prompt, images: refs.map(dataUri), size,
+    call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('bytedance/seedream-v4/edit', {
+      prompt, images: refs.map(dataUri), size: size ?? SIZE[ratio],
     }),
   },
   'nano-banana': {
     price: 0.038,
-    call: ({ prompt, refs }) => wavespeed('google/nano-banana/edit', {
-      prompt, images: refs.map(dataUri), aspect_ratio: '4:5', output_format: 'png',
+    call: ({ prompt, refs, ratio = '4:5' }) => wavespeed('google/nano-banana/edit', {
+      prompt, images: refs.map(dataUri), aspect_ratio: ratio, output_format: 'png',
     }),
   },
   'gpt-image-2': {
     price: 0.07,
-    call: ({ prompt, refs }) => wavespeed('openai/gpt-image-2/edit', {
-      prompt, images: refs.map(dataUri), aspect_ratio: '4:5',
+    call: ({ prompt, refs, ratio = '4:5' }) => wavespeed('openai/gpt-image-2/edit', {
+      prompt, images: refs.map(dataUri), aspect_ratio: ratio,
       quality: 'low', resolution: '1k', output_format: 'png',
     }),
   },
   'gpt-image-1.5': {
     price: 0.10,
-    call: ({ prompt, refs }) => wavespeed('openai/gpt-image-1.5/edit', {
-      prompt, images: refs.map(dataUri), size: '1024*1536',
+    call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('openai/gpt-image-1.5/edit', {
+      prompt, images: refs.map(dataUri), size: size ?? SIZE_HI[ratio],
       quality: 'low', input_fidelity: 'high', output_format: 'png',
     }),
   },
@@ -118,36 +130,36 @@ export const MODELS = {
   },
   'redux': {
     price: 0.025,
-    call: ({ refs, size = '832*1088' }) => wavespeed('wavespeed-ai/flux-redux-dev', {
-      image: dataUri(refs[0]), size, output_format: 'png',
+    call: ({ refs, ratio = '4:5', size }) => wavespeed('wavespeed-ai/flux-redux-dev', {
+      image: dataUri(refs[0]), size: size ?? SIZE_REDUX[ratio], output_format: 'png',
     }),
   },
   // nano-banana 2 — same price as gpt-image-2 but renders at 2k
   'banana-2k': {
     price: 0.07,
-    call: ({ prompt, refs }) => wavespeed('google/nano-banana-2/edit', {
-      prompt, images: refs.map(dataUri), aspect_ratio: '4:5',
+    call: ({ prompt, refs, ratio = '4:5' }) => wavespeed('google/nano-banana-2/edit', {
+      prompt, images: refs.map(dataUri), aspect_ratio: ratio,
       resolution: '2k', output_format: 'png',
     }),
   },
   'banana-1k': {
     price: 0.07,
-    call: ({ prompt, refs }) => wavespeed('google/nano-banana-2/edit', {
-      prompt, images: refs.map(dataUri), aspect_ratio: '4:5',
+    call: ({ prompt, refs, ratio = '4:5' }) => wavespeed('google/nano-banana-2/edit', {
+      prompt, images: refs.map(dataUri), aspect_ratio: ratio,
       resolution: '1k', output_format: 'png',
     }),
   },
   'banana-4k': {
     price: 0.07,
-    call: ({ prompt, refs }) => wavespeed('google/nano-banana-2/edit', {
-      prompt, images: refs.map(dataUri), aspect_ratio: '4:5',
+    call: ({ prompt, refs, ratio = '4:5' }) => wavespeed('google/nano-banana-2/edit', {
+      prompt, images: refs.map(dataUri), aspect_ratio: ratio,
       resolution: '4k', output_format: 'png',
     }),
   },
   'seedream45': {
     price: 0.04,
-    call: ({ prompt, refs, size = '512*640' }) => wavespeed('bytedance/seedream-v4.5/edit', {
-      prompt, images: refs.map(dataUri), size,
+    call: ({ prompt, refs, ratio = '4:5', size }) => wavespeed('bytedance/seedream-v4.5/edit', {
+      prompt, images: refs.map(dataUri), size: size ?? SIZE[ratio],
     }),
   },
 };

@@ -6,16 +6,18 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide } from '../src/layouts.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const W = 1080, H = 1350;
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h;
 
 const fonts = readFileSync(join(ROOT, 'assets/fonts/fonts.css'), 'utf8')
   .replace(/url\((woff2\/[^)]+)\)/g, (_, r) => `url(data:font/woff2;base64,${readFileSync(join(ROOT, 'assets/fonts', r)).toString('base64')})`);
 const tokens = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
 const sheet = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
 const page = inner => `<!doctype html><html><head><meta charset="utf-8">
-<style>${fonts}</style><style>${tokens}</style><style>${sheet}</style>
+<style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>${formatCss(FMT)}</style>
 <style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
 
 const HANDLE = 'mubert.com/tools/cast';
@@ -179,7 +181,7 @@ const DECKS = [
 
 const BUCKET_COLOR = { bright: '#E8FF59', product: '#7B8CFF', guide: '#6EE7A8' };
 
-const OUT = join(ROOT, `out/runs/${process.env.RUN_ID || 'rubric-sets'}`);
+const OUT = join(ROOT, `out/runs/${process.env.RUN_ID || 'rubric-sets'}${formatTag(FMT)}`);
 mkdirSync(join(OUT, 'cards'), { recursive: true });
 
 const chrome = await Chrome.launch();

@@ -2,13 +2,19 @@
 
 Everything visual is `src/carousel.css` (styles) + `src/layouts.mjs` (per-layout
 HTML). Both are tuned; make surgical changes and re-render a single card to
-check: `RUN_ID=wb CARD=<layout> node tools/layout-catalogue.mjs`.
+check: `RUN_ID=wb CARD=<layout> node tools/layout-catalogue.mjs`. Add
+`--format tiktok` to check the same card on the tall canvas.
 
 ## The `:root` scale (edit once, changes everywhere)
 
 In `src/carousel.css`:
 - `--pad: 72px` (page margin), `--zone: 44px` (gap between zones), `--blk: 56px`
   (the single title↔content gap), `--row: 26px` (list row padding).
+- **Use `--pad-t/-r/-b/-l`, not `--pad`, for anything that positions against an
+  edge.** They are `--pad` plus the format's safe-area, and a hardcoded `72px` or
+  a bare `--pad` silently ignores the platform's UI. This bit `.edge`,
+  `.chartwrap`, `.chyron`, `.figure__corner`, `.grid-head`, `.feat` and
+  `.steps--full` — all now parametrised.
 - Type: `--t-hero: 144px` (statement / big-question headlines), `--t-head: 92px`
   (most card headings), `--t-body: 42px`, `--t-meta: 24px`, `--t-note: 28px`.
   Claim is its own thing: `.claim` = 180px grotesk (Inter), the one non-serif
@@ -58,6 +64,28 @@ that hit `poster`, `photo`, and `list`. Wrap content in `<div class="stack">`.
 A full-bleed element (e.g. `.chartwrap`) needs a more specific rule
 (`.body--tb > .stack > .chartwrap{ max-width:none }`) or the negative-margin
 bleed collapses.
+
+### 5. Format overrides must be exact no-ops by default
+`src/formats.mjs` injects a `:root` block at render time; `carousel.css` reads it
+through `var(…, <default>)`. Every default must reproduce Instagram exactly:
+`--safe-t/r/b: 0px`, `--stack-mb: 0` (content hugs the floor), `--band-top` /
+`--band-bot: 100%` (the extra vertical scrim collapses to nothing), `--t-claim:
+180px`, `--t-figure: 720px`, `--feat-row: 148px`. The gate is byte-equality:
+render `tools/layout-catalogue.mjs` before and after and `cmp` the cards.
+
+### 6. A `var()` inside an injected `:root` value dies silently
+If the referenced variable does not also resolve **at `:root`**, the whole custom
+property is invalid at computed-value time and inherits as *empty* — so
+`var(--x, fallback)` quietly takes the fallback and nothing renders. That is why
+the tall-format scrim is `--band-top` / `--band-bot` (plain percentages) with the
+gradient composed in `carousel.css` on `.slide`, where `--scrim-ink` is in scope.
+
+### 7. Bottom-anchored vs centred content
+`.body--tb > .stack` uses `margin-bottom: var(--stack-mb, 0)`; a tall format sets
+it to `auto` so the copy centres in the safe box instead of leaving the upper half
+empty. The one exception is the giant figure — `:has(.figure__v)` forces it back
+to the floor, because its unit is pinned to the bottom-right corner and centring
+the number orphans it half a frame away.
 
 ## Themes
 

@@ -7,11 +7,14 @@ import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { renderSlide } from '../src/layouts.mjs';
 import { Chrome } from '../src/chrome.mjs';
+import { resolveFormat, formatCss } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const W = 1080, H = 1350;
 const [deckPath, layout, outPath = join(ROOT, 'out/preview.png')] = process.argv.slice(2);
 const deck = JSON.parse(readFileSync(deckPath, 'utf8'));
+// the deck already records what it was composed for — preview it in the same canvas
+const FMT = resolveFormat(deck.format?.id);
+const W = FMT.w, H = FMT.h;
 const i = deck.slides.findIndex(s => s.layout === layout);
 if (i < 0) throw new Error(`no slide with layout "${layout}"`);
 
@@ -24,6 +27,7 @@ const sheet = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
 const s = { handle: deck.handle, ...deck.slides[i], index: i + 1, total: deck.slides.length };
 const html = `<!doctype html><html><head><meta charset="utf-8">
 <style>${fonts}</style><style>${tokens}</style><style>${sheet}</style>
+<style>${formatCss(FMT)}</style>
 <style>html,body{margin:0;background:#000}</style></head><body>${renderSlide(s)}</body></html>`;
 
 const dir = mkdtempSync(join(tmpdir(), 'oneslide-'));

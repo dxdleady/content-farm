@@ -1,15 +1,17 @@
 #!/usr/bin/env node
-// content.json -> standalone HTML slides -> 1080x1350 PNGs, rendered by one headless Chrome.
-//   node src/render.mjs [content.json] [outDir]
+// content.json -> standalone HTML slides -> PNGs, rendered by one headless Chrome.
+//   node src/render.mjs [content.json] [outDir] [--format ig|tiktok]
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, symlinkSync, rmSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderSlide } from './layouts.mjs';
 import { Chrome } from './chrome.mjs';
 import { background, status } from './bgen.mjs';
+import { formatFromArgv, formatCss } from './formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const W = 1080, H = 1350;
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h;
 
 /* ---- inline every webfont so a render never depends on installed system fonts ---- */
 function fontCss() {
@@ -36,6 +38,7 @@ const GRAIN = grainDataUri();
 
 const page = body => `<!doctype html><html><head><meta charset="utf-8">
 <style>${FONTS}</style><style>${TOKENS}</style><style>${SHEET}</style>
+<style>${formatCss(FMT)}</style>
 <style>html,body{margin:0;background:#000}:root{--grain:${GRAIN}}</style>
 </head><body>${body}</body></html>`;
 
@@ -68,7 +71,7 @@ console.log(status());
 for (const s of content.slides) {
   if (s.bgFile) { process.stdout.write(`  ~ bg supplied for slide\n`); continue; }
   if (!s.bg) continue;
-  const file = await background(s.bg, { aspect: '4:5', preset: s.bgStyle, colors: s.bgColors, variant: s.bgVariant ?? 0 });
+  const file = await background(s.bg, { aspect: FMT.ratio, preset: s.bgStyle, colors: s.bgColors, variant: s.bgVariant ?? 0 });
   if (file) { s.bgFile = file; process.stdout.write(`  ~ bg ready for "${s.bg.slice(0, 46)}…"\n`); }
 }
 
@@ -110,7 +113,7 @@ writeFileSync(join(outDir, 'manifest.json'), JSON.stringify({
   deck: content.deck ?? 'deck',
   version,
   renderedAt: new Date().toISOString(),
-  canvas: { width: W, height: H },
+  canvas: { width: W, height: H, format: FMT.id, ratio: FMT.ratio },
   slides: made,
   backgroundStage: status(),
   content,

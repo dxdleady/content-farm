@@ -13,10 +13,13 @@ import { pool } from '../src/pool.mjs';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide } from '../src/layouts.mjs';
 import { refAnalysisFile, composePrompt } from '../src/plan.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 try { process.loadEnvFile(join(ROOT, '.env')); } catch {}
-const W = 1080, H = 1350, HANDLE = 'mubert.com/tools/cast', model = 'gpt-image-2';
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h, HANDLE = 'mubert.com/tools/cast', model = 'gpt-image-2';
+const ratioTag = FMT.ratio === '4:5' ? '' : `|${FMT.ratio}`;
 const REFS = [1, 3, 5, 7, 9];
 const hero = {
   copy: { layout: 'statement', accent: 'accent-lime', title: 'Say it like you *mean* it' },
@@ -50,10 +53,10 @@ const enc = p => 'file://' + encodeURI(p).replace(/#/g, '%23');
 const fonts = readFileSync(join(ROOT, 'assets/fonts/fonts.css'), 'utf8').replace(/url\((woff2\/[^)]+)\)/g, (_, r) => `url(data:font/woff2;base64,${readFileSync(join(ROOT, 'assets/fonts', r)).toString('base64')})`);
 const tokens = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
 const sheet = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
-const slidePage = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
+const slidePage = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>${formatCss(FMT)}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
 
 const CACHE = join(ROOT, 'assets/generated'); mkdirSync(CACHE, { recursive: true });
-const OUT = join(ROOT, 'out/runs/fx-test'); mkdirSync(join(OUT, 'cards'), { recursive: true });
+const OUT = join(ROOT, `out/runs/fx-test${formatTag(FMT)}`); mkdirSync(join(OUT, 'cards'), { recursive: true });
 
 const jobs = REFS.map(n => {
   const a = JSON.parse(readFileSync(join(ROOT, 'refs/analysis', refAnalysisFile(n)), 'utf8'));
@@ -63,11 +66,11 @@ let spent = 0;
 console.log('generating 5 hero photos…');
 await pool(jobs, 4, async (j) => {
   const prompt = composePrompt(j.a.keep, [`SUBJECT: ${hero.art.s}.`, `COMPOSITION: ${hero.art.c}.`, `COLOUR: ${hero.art.k}.`]);
-  const cache = join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}`).update(j.refBytes).digest('hex').slice(0, 16)}.png`);
+  const cache = join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}${ratioTag}`).update(j.refBytes).digest('hex').slice(0, 16)}.png`);
   const bg = join(OUT, 'cards', `ref${j.n}.bg.png`);
   if (existsSync(cache)) { copyFileSync(cache, bg); j.bg = bg; return; }
   for (let a = 1; a <= 2; a++) {
-    try { const buf = await MODELS[model].call({ prompt, refs: [j.refFile] }); writeFileSync(cache, buf); writeFileSync(bg, buf); j.bg = bg; spent += MODELS[model].price; console.log(`  ✓ ref ${j.n}`); return; }
+    try { const buf = await MODELS[model].call({ ratio: FMT.ratio, prompt, refs: [j.refFile] }); writeFileSync(cache, buf); writeFileSync(bg, buf); j.bg = bg; spent += MODELS[model].price; console.log(`  ✓ ref ${j.n}`); return; }
     catch (e) { if (a === 2) console.log(`  ✗ ref ${j.n}: ${e.message.slice(0, 80)}`); else await new Promise(r => setTimeout(r, 4000)); }
   }
 });

@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-// Compose ONE post from the plan: rubric × density × ref (× theme).
+// Compose ONE post from the plan: rubric × density × ref (× theme × format).
 //   node tools/compose.mjs --rubric hot-takes --density half --ref 3 [--theme light|dark|color]
-//   node tools/compose.mjs --rubric feature-drop --density minimal
+//   node tools/compose.mjs --rubric feature-drop --density minimal --format tiktok
 // density: minimal | light | half | full  (ids from data/density.json)
 //   minimal → 0 art · light → cover+splash · half → every other · full → all art-capable
 // theme:   light (cream, dark type) · dark (near-black, light type) · color (rotating brand grounds)
+// format:  ig (1080×1350, default) · tiktok (1080×1920, safe-areas + 9:16 art)
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
@@ -15,6 +16,7 @@ import { pool } from '../src/pool.mjs';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide, inkFor } from '../src/layouts.mjs';
 import { fxPage } from '../src/fx.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FX = !process.argv.includes('--no-fx');   // house film-grain on every photo
@@ -25,7 +27,8 @@ const GA = { carrot: 'accent-purple', purpleblue: 'accent-lime', pink: 'accent-l
 const HUE = { carrot: 'carrot orange', purpleblue: 'blue-violet', pink: 'hot pink', green: 'bright grass green', violet65: 'electric violet', mainorange: 'bright orange', blue67: 'cobalt blue', superlime: 'acid lime-green', lightpink: 'soft candy pink' };
 const isLightInk = (g) => inkFor(g).includes('text-main'); // light ink ⇒ the ground is dark
 try { process.loadEnvFile(join(ROOT, '.env')); } catch {}
-const W = 1080, H = 1350, HANDLE = 'mubert.com/tools/cast';
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h, HANDLE = 'mubert.com/tools/cast';
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const rubricId = arg('rubric');
@@ -64,13 +67,18 @@ if (artSet.size) {
 }
 
 const refTag = ref ? `-r${String(ref).match(/\d+/)?.[0]}` : '';
-const deckName = `${rubricId}-${level.id}-${theme}${refTag}`;
+const deckName = `${rubricId}-${level.id}-${theme}${refTag}${formatTag(FMT)}`;
 const OUT = join(ROOT, `out/runs/compose-${deckName}`);
 mkdirSync(OUT, { recursive: true });
 
 // --- build the concrete deck slides ---
 const total = rubric.slides.length;
-const mkReplace = (art, colour) => [`SUBJECT: ${art.s}.`, `COMPOSITION: ${art.c}.`, `COLOUR: ${colour}.`];
+// The art skeletons were written against 4:5. A taller canvas adds its own framing
+// line so the subject doesn't end up centred behind the type or under the platform UI.
+const mkReplace = (art, colour) => [
+  `SUBJECT: ${art.s}.`, `COMPOSITION: ${art.c}.`, `COLOUR: ${colour}.`,
+  ...(FMT.framing ? [`${FMT.framing}.`] : []),
+];
 const slides = rubric.slides.map((sl, i) => {
   const { art, theme: _skip, ...copy } = sl;      // drop art + any authored theme
   const s = { ...copy, minimal: true, handle: HANDLE, index: i + 1, total };
@@ -98,7 +106,11 @@ const slides = rubric.slides.map((sl, i) => {
 const CACHE = join(ROOT, 'assets/generated');
 mkdirSync(CACHE, { recursive: true });
 const buildPrompt = (replace) => composePrompt(analysis.keep, replace);
-const cacheFor = (prompt) => join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}`).update(refBytes).digest('hex').slice(0, 16)}.png`);
+// The ratio is part of the identity of a generated image, but it only enters the key
+// for non-4:5 formats — otherwise every Instagram image already in assets/generated/
+// would miss and get re-bought.
+const ratioTag = FMT.ratio === '4:5' ? '' : `|${FMT.ratio}`;
+const cacheFor = (prompt) => join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}${ratioTag}`).update(refBytes).digest('hex').slice(0, 16)}.png`);
 
 let spent = 0;
 if (artSet.size) {
@@ -112,7 +124,7 @@ if (artSet.size) {
     if (existsSync(cached)) { copyFileSync(cached, dst); slides[i].bgFile = dst; delete slides[i].replace; console.log(`  = slide ${i + 1} cached`); return; }
     for (let a = 1; a <= 2; a++) {
       try {
-        const buf = await MODELS[model].call({ prompt, refs: [refFile] });
+        const buf = await MODELS[model].call({ prompt, refs: [refFile], ratio: FMT.ratio });
         writeFileSync(cached, buf); writeFileSync(dst, buf);
         slides[i].bgFile = dst; delete slides[i].replace; spent += MODELS[model].price;
         console.log(`  ✓ slide ${i + 1}${a > 1 ? ' (retry)' : ''}`); return;
@@ -128,7 +140,7 @@ const fonts = readFileSync(join(ROOT, 'assets/fonts/fonts.css'), 'utf8')
   .replace(/url\((woff2\/[^)]+)\)/g, (_, r) => `url(data:font/woff2;base64,${readFileSync(join(ROOT, 'assets/fonts', r)).toString('base64')})`);
 const tokens = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
 const sheet = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
-const page = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
+const page = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>${formatCss(FMT)}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
 
 const chrome = await Chrome.launch();
 const made = [];
@@ -157,6 +169,7 @@ try {
   const sp = await chrome.newPage(sw, shH); writeFileSync(join(OUT, 'contact-sheet.png'), await chrome.shoot(sp, `file://${shp}`, sw, shH));
 } finally { chrome.kill(); }
 
-writeFileSync(join(OUT, 'deck.json'), JSON.stringify({ deck: deckName, rubric: rubricId, density: level.id, ref: ref ?? null, theme, slides }, null, 2));
-console.log(`\n${made.length} slides -> ${OUT}${spent ? `  ~$${spent.toFixed(2)}` : ''}`);
+writeFileSync(join(OUT, 'deck.json'), JSON.stringify({ deck: deckName, rubric: rubricId, density: level.id, ref: ref ?? null, theme,
+  format: { id: FMT.id, w: FMT.w, h: FMT.h, ratio: FMT.ratio, safe: FMT.safe }, slides }, null, 2));
+console.log(`\n${made.length} slides -> ${OUT}  (${FMT.name} ${W}x${H})${spent ? `  ~$${spent.toFixed(2)}` : ''}`);
 console.log(`sheet -> ${OUT}/contact-sheet.png`);

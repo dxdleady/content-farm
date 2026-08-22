@@ -1,0 +1,31 @@
+{
+  "name": "cast-content-farm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "(cast) / Mubert Cast carousel generator — 1080×1350 (Instagram) and 1080×1920 (TikTok) slides from rubric × density × ref × theme × format",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "test": "node --test \"test/unit/**/*.test.ts\" \"test/html/**/*.test.ts\"",
+    "test:png": "node --test \"test/png/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "goldens:capture": "node test/capture-html.ts",
+    "goldens:capture:png": "node test/capture-png.ts",
+    "doctor": "node tools/doctor.mjs",
+    "compose": "node tools/compose.mjs",
+    "feed": "node tools/feed.mjs",
+    "matrix": "node tools/matrix.mjs",
+    "refs": "node tools/ref-slides.mjs",
+    "fx": "node tools/fx.mjs",
+    "layouts": "node tools/layout-catalogue.mjs",
+    "one-slide": "node tools/one-slide.mjs",
+    "build-decks": "node tools/build-decks.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}

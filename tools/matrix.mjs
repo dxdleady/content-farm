@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 // One row per rubric, each in a DIFFERENT design (density × theme) and a different
 // ref — a 10-row matrix showing the composition system at a glance.
-//   node tools/matrix.mjs
+//   node tools/matrix.mjs [--format ig|tiktok]
 import { execSync } from 'node:child_process';
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Chrome } from '../src/chrome.mjs';
+import { formatFromArgv, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const W = 1080, H = 1350;
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h;
 
 // 10 rubrics, all different combinations (density · theme · ref)
 const M = [
@@ -27,9 +29,10 @@ const M = [
 
 const runs = [];
 for (const c of M) {
-  const deckName = `${c.r}-${c.d}-${c.t}${c.ref ? `-r${c.ref}` : ''}`;
+  const deckName = `${c.r}-${c.d}-${c.t}${c.ref ? `-r${c.ref}` : ''}${formatTag(FMT)}`;
   const dir = join(ROOT, `out/runs/compose-${deckName}`);
-  const args = ['--rubric', c.r, '--density', c.d, '--theme', c.t, '--no-fx', ...(c.ref ? ['--ref', String(c.ref)] : [])];
+  const args = ['--rubric', c.r, '--density', c.d, '--theme', c.t, '--no-fx', '--format', FMT.id,
+    ...(c.ref ? ['--ref', String(c.ref)] : [])];
   process.stdout.write(`▶ ${deckName}\n`);
   try { execSync(`node tools/compose.mjs ${args.map(a => `'${a}'`).join(' ')}`, { cwd: ROOT, stdio: 'pipe' }); }
   catch (e) { console.log(`  ! compose failed: ${String(e.stderr || e.message).slice(0, 140)}`); }
@@ -59,11 +62,11 @@ const row = ({ c, slides }) => `<div style="display:flex;gap:${GAP}px;margin-bot
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style></head>
 <body style="margin:0;background:#0c0c0c;padding:${PAD}px;width:${pageW}px;font-family:Inter">
   <div style="font:700 32px Inter;color:#fff;letter-spacing:-1px;margin-bottom:6px">(cast) — rubric × design × ref matrix</div>
-  <div style="font:400 17px Inter;color:#8a8a8a;margin-bottom:26px">every row a different rubric, density, theme and reference · film-grain house treatment</div>
+  <div style="font:400 17px Inter;color:#8a8a8a;margin-bottom:26px">every row a different rubric, density, theme and reference · ${FMT.name} ${W}×${H} · film-grain house treatment</div>
   ${runs.map(row).join('')}
 </body></html>`;
 
-const OUT = join(ROOT, 'out/runs/matrix'); mkdirSync(OUT, { recursive: true });
+const OUT = join(ROOT, `out/runs/matrix${formatTag(FMT)}`); mkdirSync(OUT, { recursive: true });
 writeFileSync(join(OUT, 'matrix.html'), html);
 const chrome = await Chrome.launch();
 try {

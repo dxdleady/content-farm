@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// Mock an Instagram profile grid — 3 columns × 4 rows of post COVERS (first slide),
-// each a different rubric / design / ref, so we can see how the feed reads.
-//   node tools/feed.mjs
+// Mock a profile grid — 3 columns × 4 rows of post COVERS (first slide), each a
+// different rubric / design / ref, so we can see how the feed reads.
+//   node tools/feed.mjs [--format ig|tiktok]
 import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
@@ -11,10 +11,13 @@ import { pool } from '../src/pool.mjs';
 import { Chrome } from '../src/chrome.mjs';
 import { renderSlide } from '../src/layouts.mjs';
 import { RUBRICS, refAnalysisFile, composePrompt } from '../src/plan.mjs';
+import { formatFromArgv, formatCss, formatTag } from '../src/formats.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 try { process.loadEnvFile(join(ROOT, '.env')); } catch {}
-const W = 1080, H = 1350, HANDLE = 'mubert.com/tools/cast', model = 'gpt-image-2';
+const FMT = formatFromArgv();
+const W = FMT.w, H = FMT.h, HANDLE = 'mubert.com/tools/cast', model = 'gpt-image-2';
+const ratioTag = FMT.ratio === '4:5' ? '' : `|${FMT.ratio}`;
 const GA = { carrot: 'accent-purple', purpleblue: 'accent-lime', pink: 'accent-lime', green: 'accent-purple', violet65: 'accent-lime', mainorange: 'accent-purple', blue67: 'accent-lime', superlime: 'accent-purple', lightpink: 'accent-purple' };
 
 // 12 covers, ALL dark theme. Grid fills row-major (3 cols); balanced so every row
@@ -36,7 +39,7 @@ const POSTS = [
 ];
 
 const CACHE = join(ROOT, 'assets/generated'); mkdirSync(CACHE, { recursive: true });
-const OUT = join(ROOT, 'out/runs/feed'); mkdirSync(join(OUT, 'covers'), { recursive: true });
+const OUT = join(ROOT, `out/runs/feed${formatTag(FMT)}`); mkdirSync(join(OUT, 'covers'), { recursive: true });
 
 // build each cover slide (slide 0 of its rubric) with theme applied
 for (const p of POSTS) {
@@ -44,7 +47,8 @@ for (const p of POSTS) {
   const { art, theme: _t, ...copy } = sl;
   const s = { ...copy, minimal: true, handle: HANDLE, index: 1, total: 1 };   // dark theme = default (near-black, light type)
   if (p.art && art) {
-    s.replace = [`SUBJECT: ${art.s}.`, `COMPOSITION: ${art.c}.`, `COLOUR: true to the reference's own bright, saturated, poppy palette.`];
+    s.replace = [`SUBJECT: ${art.s}.`, `COMPOSITION: ${art.c}.`, `COLOUR: true to the reference's own bright, saturated, poppy palette.`,
+      ...(FMT.framing ? [`${FMT.framing}.`] : [])];
     p.analysis = JSON.parse(readFileSync(join(ROOT, 'refs/analysis', refAnalysisFile(p.ref)), 'utf8'));
     p.refFile = join(ROOT, 'refs/style', p.analysis.ref);
     p.refBytes = readFileSync(p.refFile);
@@ -58,11 +62,11 @@ const artPosts = POSTS.filter(p => p.s.replace);
 console.log(`generating ${artPosts.length} art covers…`);
 await pool(artPosts, 4, async (p) => {
   const prompt = composePrompt(p.analysis.keep, p.s.replace);
-  const cache = join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}`).update(p.refBytes).digest('hex').slice(0, 16)}.png`);
+  const cache = join(CACHE, `pack-${createHash('sha256').update(`${model}|${prompt}${ratioTag}`).update(p.refBytes).digest('hex').slice(0, 16)}.png`);
   const bg = join(OUT, 'covers', `${p.r}-${p.ref}.bg.png`);
   if (existsSync(cache)) { copyFileSync(cache, bg); p.s.bgFile = bg; delete p.s.replace; return; }
   for (let a = 1; a <= 2; a++) {
-    try { const buf = await MODELS[model].call({ prompt, refs: [p.refFile] }); writeFileSync(cache, buf); writeFileSync(bg, buf); p.s.bgFile = bg; delete p.s.replace; spent += MODELS[model].price; console.log(`  ✓ ${p.r} r${p.ref}`); return; }
+    try { const buf = await MODELS[model].call({ prompt, refs: [p.refFile], ratio: FMT.ratio }); writeFileSync(cache, buf); writeFileSync(bg, buf); p.s.bgFile = bg; delete p.s.replace; spent += MODELS[model].price; console.log(`  ✓ ${p.r} r${p.ref}`); return; }
     catch (e) { if (a === 2) console.log(`  ✗ ${p.r} r${p.ref}: ${e.message.slice(0, 80)}`); else await new Promise(r => setTimeout(r, 4000)); }
   }
 });
@@ -72,7 +76,7 @@ const fonts = readFileSync(join(ROOT, 'assets/fonts/fonts.css'), 'utf8').replace
 const tokens = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
 const sheet = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
 const wordmark = readFileSync(join(ROOT, 'assets/logos/cast-wordmark.svg'), 'utf8');
-const page = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
+const page = inner => `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}</style><style>${tokens}</style><style>${sheet}</style><style>${formatCss(FMT)}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
 const enc = p => 'file://' + encodeURI(p).replace(/#/g, '%23');
 
 const chrome = await Chrome.launch();
@@ -85,22 +89,33 @@ try {
   }
   await chrome.close(rp);
 
-  // instagram-style profile grid (portrait 4:5 tiles, 3 cols)
-  const TILE = 420, tH = Math.round(TILE * H / W), GAPX = 4, PAD = 26;
-  const cols = 3, gridW = cols * TILE + (cols - 1) * GAPX;
+  // profile grid — the platform crops covers to its own tile ratio, so the mockup does too
+  const TILE = 420, tH = Math.round(TILE / FMT.grid.tile), GAPX = 4, PAD = 26;
+  const cols = FMT.grid.cols, gridW = cols * TILE + (cols - 1) * GAPX;
   const pageW = gridW + PAD * 2;
   const rows = Math.ceil(POSTS.length / cols);
-  const headerH = 150;
+  const headerH = FMT.id === 'tiktok' ? 290 : 150;
   const pageH = PAD + headerH + rows * tH + (rows - 1) * GAPX + PAD;
   const tiles = POSTS.map(p => `<img src="${enc(p.cover)}" style="width:${TILE}px;height:${tH}px;object-fit:cover;display:block">`).join('');
-  const header = `<div style="display:flex;align-items:center;gap:26px;height:${headerH}px;padding:0 6px">
-    <div class="av" style="width:104px;height:104px;border-radius:50%;background:#e8ff59;display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden;color:#111">${wordmark}</div>
-    <div>
-      <div style="font:700 30px Inter;color:#fff">cast.tools</div>
-      <div style="display:flex;gap:26px;margin-top:10px;color:#ddd;font:400 19px Inter">
-        <span><b style="color:#fff">248</b> posts</span><span><b style="color:#fff">31.4k</b> followers</span><span><b style="color:#fff">12</b> following</span></div>
-      <div style="margin-top:10px;color:#9a9a9a;font:400 18px Inter">Audio-first podcast editing — record to publish-ready. mubert.com/tools/cast</div>
-    </div></div>`;
+  const avatar = `<div class="av" style="width:104px;height:104px;border-radius:50%;background:#e8ff59;display:flex;align-items:center;justify-content:center;flex:0 0 auto;overflow:hidden;color:#111">${wordmark}</div>`;
+  const bio = 'Audio-first podcast editing — record to publish-ready. mubert.com/tools/cast';
+  // TikTok stacks the profile centred above the grid; Instagram runs it along the left
+  const header = FMT.id === 'tiktok'
+    ? `<div style="display:flex;flex-direction:column;align-items:center;gap:12px;height:${headerH}px;text-align:center">
+        ${avatar}
+        <div style="font:700 26px Inter;color:#fff">@cast.tools</div>
+        <div style="display:flex;gap:34px;color:#ddd;font:400 18px Inter">
+          <span><b style="color:#fff">12</b> Following</span><span><b style="color:#fff">31.4k</b> Followers</span><span><b style="color:#fff">402.1k</b> Likes</span></div>
+        <div style="color:#9a9a9a;font:400 17px Inter;max-width:660px">${bio}</div>
+      </div>`
+    : `<div style="display:flex;align-items:center;gap:26px;height:${headerH}px;padding:0 6px">
+        ${avatar}
+        <div>
+          <div style="font:700 30px Inter;color:#fff">cast.tools</div>
+          <div style="display:flex;gap:26px;margin-top:10px;color:#ddd;font:400 19px Inter">
+            <span><b style="color:#fff">248</b> posts</span><span><b style="color:#fff">31.4k</b> followers</span><span><b style="color:#fff">12</b> following</span></div>
+          <div style="margin-top:10px;color:#9a9a9a;font:400 18px Inter">${bio}</div>
+        </div></div>`;
   const html = `<!doctype html><html><head><meta charset="utf-8"><style>${fonts}
     .grid{display:grid;grid-template-columns:repeat(${cols},${TILE}px);gap:${GAPX}px}
     .av svg{width:62px;height:auto;display:block}</style></head>
@@ -110,4 +125,4 @@ try {
   const sp = await chrome.newPage(pageW, pageH);
   writeFileSync(join(OUT, 'feed.png'), await chrome.shoot(sp, `file://${join(OUT, 'feed.html')}`, pageW, pageH));
 } finally { chrome.kill(); }
-console.log(`\nfeed -> ${OUT}/feed.png   ~$${spent.toFixed(2)}`);
+console.log(`\nfeed -> ${OUT}/feed.png  (${FMT.grid.label})   ~$${spent.toFixed(2)}`);
