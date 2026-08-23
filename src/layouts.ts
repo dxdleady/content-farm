@@ -99,8 +99,30 @@ const rotate = <T,>(list: T[], offset = 0) => (i: number): T => list[(i + offset
 // safe for the same reason cvar() is: these names are only ever interpolated into a
 // --c-accent-<name> custom property, and validateBrand() has already resolved every one
 // of them against the product's own tokens.json.
-const paletteFor = (s: RenderSlide): AccentToken[] =>
-  ((s.palette ?? ACCENTS) as AccentToken[]).filter(a => a !== s.ground);
+const paletteFor = (s: RenderSlide): AccentToken[] => {
+  const all = ((s.palette ?? ACCENTS) as AccentToken[]).filter(a => a !== s.ground);
+  if (!s.ground) return all;
+
+  // Removing the ground is not enough. On a flooded brand ground most of the remaining
+  // palette is unreadable against it — measured on (cast): seven of eight accents on
+  // `carrot`, five on `purpleblue`, and mainorange-on-purpleblue lands at 1.02:1, the
+  // same vibrating pair that had to be fixed in colorTheme.em. Every --theme color post
+  // with an index, tags or bento row was painting rows in colours that shimmer.
+  //
+  // So the rotation is filtered by contrast, not just by identity. Same maths as inkFor.
+  const g = String(s.ground);
+  const gh = TOKENS.color.accent[g] ?? TOKENS.color.background[g.replace('background-', '')];
+  if (!gh) return all;
+
+  const scored = all
+    .map(a => ({ a, r: TOKENS.color.accent[a] ? ratio(lum(gh), lum(TOKENS.color.accent[a]!)) : 0 }))
+    .filter(x => x.r > 0);
+  const readable = scored.filter(x => x.r >= 2).map(x => x.a);
+
+  // Below two survivors the row colours stop reading as a rotation anyway, so take the
+  // two best rather than emit nothing — a short cycle beats an unreadable one.
+  return readable.length >= 2 ? readable : scored.sort((x, y) => y.r - x.r).slice(0, 2).map(x => x.a);
+};
 const esc = (s: unknown): string => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 // One map, not three. This was INK_CLASSES (which classes exist) + FILL (class -> colour

@@ -236,10 +236,13 @@ be derived — layouts, colour and format all follow from the system, but what t
 *says* is the user's call and yours to execute, not to invent. Picking a topic yourself
 and presenting finished slides wastes the user's turn and reads as not listening.
 
-### The order is topic → hook → plan → draft. Do not collapse it.
+### The order is topic → hook → plan → draft → render → caption → approval → schedule. Do not collapse it.
 
-Four decisions, and they are **sequential**, because each is only judgeable once the one
-before it is settled. Nobody can pick a hook for a topic they have not chosen.
+Eight steps, and they are **sequential**, because each is only judgeable once the one
+before it is settled. Nobody can pick a hook for a topic they have not chosen, nobody can
+write a caption for a picture they have not seen, and nothing gets uploaded before a human
+has approved the words. The last step is the only one that leaves this machine — treat the
+gate in front of it as the strictest one in the list.
 
 | step | what is decided | who |
 |---|---|---|
@@ -247,6 +250,13 @@ before it is settled. Nobody can pick a hook for a topic they have not chosen.
 | **2. Hook** | six candidates, handed over as a **filled table**: move · hook · chars · lines · trigger word and its class · what the deck must pay. A blank cell means the hook is not finished — see "the table IS the check" in `references/hooks.md` | the user picks |
 | **3. Plan** | the template, and what each slide TEACHES — the middle column before any headline | you propose, the user corrects |
 | **4. Draft** | the post JSON, shown before anything renders | you write, the user reads |
+| **5. Render** | the pictures. Then **offer the studio** and look at the PNGs yourself | you run it, the user looks |
+| **6. Caption** | the words beside the picture — see below. Written after the render, because it is written while looking at it | you write, the user reads |
+| **7. Approval** | the user says it, in chat, in words. Only then does `status` become `approved` | **the user, and only the user** |
+| **8. Schedule** | upload the slides to Postiz, queue both channels on a date, write `publish` and `status: scheduled` back into the post — see **Publishing — Postiz** | you run it, **only on an approved post and only when asked** |
+
+`published` is not a step you perform: Postiz publishes on the date, and the status is
+updated afterwards, together with each channel's `postId` so analytics can find it.
 
 **The most common way to get this wrong is offering topics with hooks already attached.**
 It looks efficient and it is not: it asks for two judgements at once, and it biases the
@@ -295,6 +305,95 @@ When the user does give a topic, still ground it: read
 Show the JSON and let the user read it **before** you render. A render is cheap but a
 wrong topic rendered is still wrong, and the JSON is where they can correct you in one
 line instead of a paragraph.
+
+## The caption — the post to everyone who does not swipe
+
+The slides are the post to a reader who swipes. The caption is the post to everyone else,
+and it is the only text the platform can index or read aloud. A post without one renders
+fine and cannot be published — `checkCaption()` in `src/post.ts` says so, and the studio
+shows it.
+
+It lives on the post, not per format: `caption: { body, hashtags[], title? }`.
+
+- **`body`** — up to **2200 characters** on both Instagram and TikTok, counted *with* the
+  tags. Aim far below it. The first line is the only one shown before "more", so it has to
+  survive alone — treat it as a second hook, not a summary of the first one.
+- **`hashtags`** — stored **without** the `#`; `captionText()` adds it. A space inside a
+  tag is an error, not a typo: it publishes as two tags.
+- **`title`** — TikTok only, **≤90 characters**. Instagram ignores it.
+
+**Rules, and they are the hook rules again:**
+- **Do not repeat slide 1.** The reader has already read it. The caption's job is what the
+  slides could not hold — the caveat, the specific number, the personal line, the question
+  that earns a comment.
+- **Same voice as the deck.** Not a press release, and not a corporate summary of one.
+- **Never claim what `brief/product.json` `voice.avoid` forbids** — the caption is where
+  that slips in most easily, because prose feels less checked than a headline.
+- **End on one thing to do or answer.** A caption that just stops gets no comments.
+- **Tags: 3–8, specific.** `#podcastediting` earns a reader; `#content` earns nothing.
+
+## Post status — what it means and who may set it
+
+`status` in the post JSON is a **claim about the world**, and the states are ordered:
+
+| status | means |
+|---|---|
+| `draft` | being written — slides or copy may be missing |
+| `review` | finished and rendered, waiting on a human. **Not approved.** |
+| `approved` | a human approved it in chat. Words final, nothing uploaded |
+| `scheduled` | uploaded to Postiz and queued for a date — see `publish` in the post |
+| `published` | out |
+
+**You may never set `approved` or anything past it on your own initiative.** Approval is a
+human act: the user says it, in chat, in words. "Looks good to me" from you is not
+approval, and neither is a clean scorecard. When a post is finished, say so and **ask**.
+
+`checkStatus()` enforces what the later states imply — `approved` requires a valid
+caption, `scheduled` requires publish targets and a date, `published` requires each
+target's Postiz post id (without it the post is unmeasurable). None of these block a
+render; they block publishing.
+
+## Publishing — Postiz
+
+The account is connected and reachable two ways: the **`postiz` skill** (CLI) and the
+**`mcp__postiz__*` tools**. Prefer the MCP tools — they are already authenticated in
+session and return structured output. The CLI works too, but it is installed under Node 20
+where it crashes (`ERR_REQUIRE_ESM`); run it under the repo's Node 24 if you need it.
+
+**Our three channels** (`Mubert Cast` — the others in the account belong to other products
+and must never receive a (cast) post):
+
+| channel | platform | integration id |
+|---|---|---|
+| Mubert Cast | `instagram-standalone` | `cmt5rodtb02twqk0y63oo6v7q` |
+| Mubert Cast | `tiktok-business` | `cmt5qruv60bw9qp0yp79tl25f` |
+| Mubert Cast | `youtube` | `cmt5ru5h902v1qk0yblvtpals` |
+
+`--format ig` renders go to Instagram, `--format tiktok` renders go to TikTok. YouTube
+takes video and we do not make any — leave it alone.
+
+**The order:**
+1. Confirm the post is `approved`. If it is not, stop and ask — do not upload on a guess.
+2. Upload every slide PNG **to Postiz first**. Raw paths and external URLs are rejected by
+   both platforms; TikTok pulls media by URL and only from a verified domain.
+3. Schedule with `mcp__postiz__integrationSchedulePostTool`, one call per channel, slides
+   in order as attachments, `captionText()` as the content.
+4. Write the result back into the post: `status: 'scheduled'`, and a `publish` block with
+   `scheduledFor` and one target per channel carrying its Postiz `postId`.
+
+**Three ways this fails silently — check every time:**
+- **TikTok `content_posting_method` must be `DIRECT_POST`.** `UPLOAD` does *not* publish;
+  it drops the media into the app's inbox while the API reports success, and it makes
+  TikTok discard every other setting.
+- **TikTok `autoAddMusic: "yes"` attaches a RANDOM library track** on photo posts and
+  overrides any chosen one. Use `"no"` unless the user asked otherwise — this is a music
+  company's account.
+- **Read `mcp__postiz__integrationSchema` before scheduling.** A setting that does not
+  apply is discarded silently, not rejected, and the post still reports success.
+
+**Never publish without being asked.** Scheduling is outward-facing and hard to undo —
+posts cannot even be deleted through these tools, only in the Postiz app. Default to
+`type: "draft"` at Postiz unless the user asked for a date.
 
 ## The one command you'll use most
 
@@ -357,7 +456,18 @@ npm run studio          # http://localhost:4321
 
 The dashboard for the judgement calls: look at a rendered post, mark slides `ok` or
 `redo`, fix the copy, see validation problems next to the slide they belong to, and tag
-the post `draft` / `review` / `ready`.
+the post `draft` / `review` / `approved`. (`scheduled` and `published` are shown but not
+offered — those are facts about Postiz, and a click cannot make a post be queued.)
+
+**Tell the user it exists, and offer to start it — every time a post finishes rendering.**
+This is the one step the terminal genuinely cannot do: whether a slide is readable, and
+whether it says anything, is a judgement made by looking. Do not describe the render and
+move on. Say the post is rendered, offer `npm run studio`, and say what to look for.
+Then **look at the PNGs yourself too** — the two catch different things: you catch
+overflow and unreadable type, the user catches copy that is merely fine.
+
+Start it only when the user says yes. It is a server on port 4321, and an unrequested
+one is still an unrequested run.
 
 **When to reach for it:** any time you are changing what a post says. Posts are JSON and
 the studio writes them; nothing here edits TypeScript.
@@ -494,8 +604,8 @@ say "verify the live pricing page" rather than asserting them.
 
 ## Deeper references (load when the task needs them)
 
-Five files. The first three are the writing loop and you will use them on every post;
-the last two are looked up when the task touches them.
+Six files. The first three are the writing loop and you will use them on every post;
+the last three are looked up when the task touches them.
 
 | | |
 |---|---|

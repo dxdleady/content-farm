@@ -5,7 +5,7 @@
     "node": "v24.15.0",
     "platform": "darwin-arm64",
     "fontsSha": "5ca65eefad2cc56b",
-    "cssSha": "0da3267d23cde80f"
+    "cssSha": "f198dd102c1a641f"
   },
   "cases": {
     "catalogue--01-statement--ig": "sha256:65535dfdc171e77a93b86c009a88434ab31852b5cffcbfe110578ff25abcb8f5",
@@ -16,8 +16,8 @@
     "catalogue--06-steps--ig": "sha256:db3756d535b4d223fc9cf1beaad0149a07e590e993f980707adc20bc06550dba",
     "catalogue--07-checklist--ig": "sha256:3bfa9f21970d921f4630102624042ab2ec8becd7ccfcfe26c6631d48e6944a13",
     "catalogue--08-dontList--ig": "sha256:cfbdf338711ff981ff2f184ef8e209056ffe9e65c2cfd7c9c7fc821ba5c2de09",
-    "catalogue--09-tags--ig": "sha256:37d4cefb0dfec794b8963f7a6c17720dfe69fe855c862569321b2b61445aab6b",
-    "catalogue--10-bento--ig": "sha256:0f5e0945e29c201c97f0b831156285fff7953c945e8ad072b3186346b2240cae",
+    "catalogue--09-tags--ig": "sha256:011f22ac23085304f3c917912458f30ea7a56ca514aff26b390925ab0de5ff2a",
+    "catalogue--10-bento--ig": "sha256:ce9ee40e8a2558b1e77fb9164c386f84c9f24a03a88b4c8b29a3665856557268",
     "catalogue--11-iconRow--ig": "sha256:4ab0a22307154ebd3a74b40df54efce0a6ab883d54b15b3b78449c2cec8b790e",
     "catalogue--12-bigQuestion--ig": "sha256:5f5b9bf9b105ff71f1203a298ad9fd7d159524429ffef71ed59155222354b79e",
     "catalogue--13-priceTiers--ig": "sha256:dded4a4b809940b247e774af7e0051ee26ea53d859cfdb589f573335aba42237",
@@ -28,8 +28,8 @@
     "catalogue--18-footnote--ig": "sha256:3280de2976f57f2f46ffde7c3b874de20d3ed107e6cff21f827756f63661df3f",
     "catalogue--19-lineChart--ig": "sha256:2c769f4521661c86296c30e955d0a9ff431cf9379ccaa828a4c259e17d89f91d",
     "catalogue--20-splash--ig": "sha256:9cfeaef848a3a15704142d378516bb50b6665d14394ee053754129490c64bd95",
-    "risky--bento--tiktok": "sha256:28019a08a756c9abf5b89b92f1085d3a86399c6fcc2e9646b8d735f10dbb76ae",
-    "risky--tags--tiktok": "sha256:566ce34b576cea8486da62dd1f1bcd182dcfd13881a06ab3445f418155af15fd",
+    "risky--bento--tiktok": "sha256:21f62ec6597972efb777dbcd37430016c8783b0b22b31f4d37c73f7ca06508e5",
+    "risky--tags--tiktok": "sha256:b005f7af7b7e7a1dee8b4e5878f004a2967bd080ee7a8ef7c195c6dd3753ea14",
     "risky--lineChart--tiktok": "sha256:17f76e0dbd021d12604ba7628545c52cfc922f60cccd4033d9adcd3dd2fbea1a",
     "risky--meter--tiktok": "sha256:17a5df186ae3fb8df18fff53dd2310c2ad2014da8b84057ddeb5b29762357d83",
     "risky--priceTiers--tiktok": "sha256:2d14beef5c36d96252446eb87ed7a4a69fa71cc27469b84e5cb9ff3085df1dd5",
