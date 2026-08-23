@@ -30,8 +30,8 @@ const sha = (s: string) => createHash('sha256').update(s).digest('hex').slice(0,
 const INNER = '<div class="slide"></div>';
 
 test('the shell is byte-frozen, per format', () => {
-  assert.equal(sha(slidePage(INNER, FORMATS.ig)), 'e223703febaff017', 'the ig shell moved');
-  assert.equal(sha(slidePage(INNER, FORMATS.tiktok)), '2a85656fd8a753a2', 'the tiktok shell moved');
+  assert.equal(sha(slidePage(INNER, FORMATS.ig)), '3cc92064a060df2b', 'the ig shell moved');
+  assert.equal(sha(slidePage(INNER, FORMATS.tiktok)), 'bdc4d3d787c63a43', 'the tiktok shell moved');
   assert.notEqual(sha(slidePage(INNER, FORMATS.ig)), sha(slidePage(INNER, FORMATS.tiktok)),
     'the two formats must not collapse to the same document');
 });

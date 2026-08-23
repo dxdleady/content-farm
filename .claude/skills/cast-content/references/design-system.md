@@ -118,6 +118,11 @@ floor against them. That is a warning on every command, deliberately not an erro
 2. An element carrying an accent class must not also be dimmed
    (`test/unit/invariants.test.ts`). `.step__n` was `opacity:.4` on top of an accent and
    the step numbers vanished over art. Opacity is for elements that inherit their colour.
+3. An element sitting ON an accent fill must not be painted WITH an accent. `comparison`
+   fills its second row with the slide accent, and `mark()` defaults to `accent-pink` —
+   pink on purpleblue is 1.19:1, so every emphasised word in that column disappeared.
+   Inside a filled block, emphasis takes `--ink` and is distinguished by the italic
+   display cut instead.
 
 ## Themes
 

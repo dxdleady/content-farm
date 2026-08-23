@@ -232,10 +232,16 @@ function render(d) {
         el('span', { class: 'muted' }, FILE.rubric + ' · ' + FILE.axes.density
           + ' · ' + FILE.axes.theme + ' · ' + FILE.axes.formats.join('+')),
         formatBar(d.siblings || [], () => render(d)),
-        ...['draft', 'review', 'ready'].map(s => el('button', {
+        ...['draft', 'review', 'approved'].map(s => el('button', {
           class: FILE.status === s ? 'on' : '',
           onclick: () => { FILE.status = s; save(); },
         }, s)),
+        // Not buttons: these two are facts about Postiz, not opinions. Clicking one
+        // would claim the post is queued when nothing was uploaded.
+        ['scheduled', 'published'].includes(FILE.status)
+          ? el('span', { class: 'on', style: 'padding:4px 8px;border-radius:4px' },
+              FILE.status + (FILE.publish?.scheduledFor ? ' · ' + FILE.publish.scheduledFor.slice(0, 16) : ''))
+          : null,
         el('button', { onclick: save }, 'Save'),
         el('button', { onclick: rerender }, 'Re-render (free)'),
         el('span', { class: 'muted' },

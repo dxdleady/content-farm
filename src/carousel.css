@@ -566,6 +566,13 @@
 .vs__row--b{ background:var(--a); color:var(--ink); }
 .vs__row:first-child .vs__h{ color:var(--a); opacity:1; }
 .vs__row--b .vs__h{ color:var(--ink); opacity:.72; }
+/* Emphasis inside the FILLED row takes the row's readable ink, not another accent.
+   mark() defaults to accent-pink, and the row's background is itself an accent — pink on
+   purpleblue is 1.19:1, so every *marked* word in the b column simply vanished. The
+   italic display cut is what marks it here; colour would only fight the fill.
+   Same family as the .step__n rule: an element sitting ON an accent must not be painted
+   WITH one. */
+.vs__row--b .em{ color:var(--ink); }
 .vs__list{ display:flex; flex-direction:column; gap:10px; }
 
 /* ---- 14 Before / After ---- */

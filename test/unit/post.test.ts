@@ -15,7 +15,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 import {
-  asRubric, checkPost, listPosts, loadPost, postDir, postId, postsById, savePost, type Post,
+  asRubric, captionText, checkCaption, checkPost, checkStatus, listPosts, loadPost, postDir,
+  postId, postsById, savePost, statusRank, CAPTION_MAX, POST_STATUSES, TIKTOK_TITLE_MAX,
+  type Post, type PostStatus,
 } from '../../src/post.ts';
 import { PRODUCTS } from '../../src/product.ts';
 import { rubricsFor } from '../../src/plan.ts';
@@ -159,4 +161,146 @@ test('a missing post names the path it looked at', () => {
     assert.throws(() => loadPost(p, 'nope'), new RegExp(`no post "nope" for product "${p.id}"`));
     assert.equal(existsSync(join(postDir(p), 'nope.json')), false);
   } finally { cleanup(); }
+});
+
+/* ------------------------------------------------------------------ the caption */
+//
+// The words beside the picture. These are the only fields in the model that compose never
+// reads — which is exactly why they need their own checks: nothing in the render path
+// would ever notice they are missing, wrong, or 400 characters too long.
+
+const withCaption = (caption: Post['caption']): Post => ({
+  id: 'c', product: 'cast', name: 'C', bucket: 'product', promise: 'p',
+  rubric: null, status: 'draft',
+  axes: { density: 'minimal', theme: 'light', ref: null, formats: ['ig'] },
+  slides: [{ layout: 'statement', title: 'x' }, { layout: 'splash', title: 'y' }],
+  caption,
+});
+
+test('captionText publishes body, a blank line, then the tags — with exactly one hash', () => {
+  assert.equal(captionText({ body: 'Just the words.' }), 'Just the words.',
+    'no tags means no trailing blank line');
+  assert.equal(captionText({ body: 'Words.', hashtags: ['podcast', 'editing'] }),
+    'Words.\n\n#podcast #editing');
+  // Tolerant on the way out rather than strict on the way in: a tag the author typed with
+  // a hash must not publish as "##podcast".
+  assert.equal(captionText({ body: 'W.', hashtags: ['#podcast', '##x'] }), 'W.\n\n#podcast #x');
+  assert.equal(captionText(undefined), '', 'an unwritten caption is the empty string, not a crash');
+});
+
+test('checkCaption names every way a caption fails to publish', () => {
+  const what = (p: Post) => checkCaption(p).map(x => x.what).join(' | ');
+
+  assert.match(what(withCaption(undefined)), /no caption/);
+  assert.match(what(withCaption({ body: '   ' })), /no caption/, 'whitespace is not a caption');
+
+  // The ceiling counts the RENDERED string — body plus the tags plus the blank line —
+  // because that is what the platform receives. Counting only the body would pass a
+  // caption that publishes truncated.
+  const body = 'x'.repeat(CAPTION_MAX - 10);
+  assert.deepEqual(checkCaption(withCaption({ body })), [], 'just under the cap is fine');
+  const over = what(withCaption({ body, hashtags: ['podcasting', 'editing'] }));
+  assert.match(over, new RegExp(String(CAPTION_MAX)), 'the cap is named');
+  assert.match(over, /with its tags/, 'and it is clear the tags are what pushed it over');
+
+  assert.match(what(withCaption({ body: 'ok', title: 't'.repeat(TIKTOK_TITLE_MAX + 1) })),
+    /TikTok caps it at 90/);
+  assert.deepEqual(checkCaption(withCaption({ body: 'ok', title: 't'.repeat(TIKTOK_TITLE_MAX) })), [],
+    'exactly at the cap passes');
+
+  // The quiet one: a space does not error at the platform, it publishes two tags.
+  assert.match(what(withCaption({ body: 'ok', hashtags: ['podcast editing'] })), /would publish as two tags/);
+});
+
+test('a missing caption never blocks a render — it only blocks publishing', () => {
+  // compose filters checkPost down to non-warn problems. If a caption problem arrived as
+  // an error, a post with finished art and unwritten words could not be drawn at all,
+  // which is backwards: the caption is written by looking at the render.
+  const p = withCaption(undefined);
+  assert.deepEqual(checkPost(p).filter(x => x.level !== 'warn'), []);
+  assert.ok(checkPost(p).some(x => x.level === 'warn' && /no caption/.test(x.what)),
+    'but it is still reported, so the studio can refuse to call the post ready');
+  // And with a caption present, nothing is reported at all.
+  assert.deepEqual(checkPost(withCaption({ body: 'Words.', hashtags: ['podcast'] }))
+    .filter(x => /caption|hashtag|title/.test(x.what)), []);
+});
+
+/* ------------------------------------------------------------------ the lifecycle */
+//
+// Status is a CLAIM — "a human approved this", "this is queued at Postiz" — and a JSON
+// field can claim anything. These tests are what stop the later states from being
+// decoration.
+
+const at = (status: PostStatus, extra: Partial<Post> = {}): Post => ({
+  id: 's', product: 'cast', name: 'S', bucket: 'product', promise: 'p',
+  rubric: null, status,
+  axes: { density: 'minimal', theme: 'light', ref: null, formats: ['ig', 'tiktok'] },
+  slides: [{ layout: 'statement', title: 'x' }, { layout: 'splash', title: 'y' }],
+  caption: { body: 'Words.', hashtags: ['podcast'] },
+  ...extra,
+});
+
+const IG = { platform: 'instagram-standalone', integrationId: 'cmt5rod', format: 'ig' as const };
+
+test('the five statuses are a progression, not a set', () => {
+  assert.deepEqual(POST_STATUSES, ['draft', 'review', 'approved', 'scheduled', 'published']);
+  // The order is load-bearing: every gate below is expressed as "at least this far".
+  assert.ok(statusRank('draft') < statusRank('review'));
+  assert.ok(statusRank('review') < statusRank('approved'));
+  assert.ok(statusRank('approved') < statusRank('scheduled'));
+  assert.ok(statusRank('scheduled') < statusRank('published'));
+  assert.equal(statusRank('nonsense' as PostStatus), 0, 'an unknown status is not silently the last one');
+});
+
+test('a post cannot be approved with nothing to publish beside it', () => {
+  const what = (p: Post) => checkStatus(p).map(x => x.what).join(' | ');
+
+  // The point of the caption work: approval means the WORDS are final, and a post with
+  // no caption has no words. Before `approved` this is nobody's business yet.
+  assert.deepEqual(checkStatus(at('draft', { caption: undefined })), []);
+  assert.deepEqual(checkStatus(at('review', { caption: undefined })), []);
+  assert.match(what(at('approved', { caption: undefined })), /approved, but no caption/);
+  assert.match(what(at('published', { caption: undefined })), /published, but no caption/);
+
+  assert.deepEqual(checkStatus(at('approved')), [], 'with a caption it passes');
+  assert.match(what(at('unknown' as PostStatus)), /unknown status/);
+});
+
+test('scheduled and published have to name where the post actually went', () => {
+  const what = (p: Post) => checkStatus(p).map(x => x.what).join(' | ');
+
+  const bare = at('scheduled');
+  assert.match(what(bare), /no publish targets/);
+  assert.match(what(bare), /no scheduledFor/);
+
+  const good = at('scheduled', { publish: { scheduledFor: '2026-09-01T09:00:00Z', targets: [IG] } });
+  assert.deepEqual(checkStatus(good), []);
+
+  assert.match(what(at('scheduled', { publish: { scheduledFor: 'soon', targets: [IG] } })),
+    /is not a date/);
+
+  // A target claiming a crop the post never rendered — the channel would have received
+  // pictures that do not exist.
+  assert.match(
+    what(at('scheduled', { axes: { density: 'minimal', theme: 'light', ref: null, formats: ['ig'] },
+      publish: { scheduledFor: '2026-09-01T09:00:00Z', targets: [{ ...IG, platform: 'tiktok-business', format: 'tiktok' }] } })),
+    /not in axes.formats/);
+
+  // Published without Postiz's own id is published and unmeasurable.
+  assert.match(what(at('published', { publish: { scheduledFor: '2026-09-01T09:00:00Z', targets: [IG] } })),
+    /no postId — analytics cannot find it/);
+  assert.deepEqual(
+    checkStatus(at('published', { publish: { scheduledFor: '2026-09-01T09:00:00Z', targets: [{ ...IG, postId: 'abc' }] } })),
+    []);
+
+  // And the reverse drift: a publish record on a post that claims not to be queued.
+  assert.match(what(at('draft', { publish: { targets: [IG] } })), /one of the two is stale/);
+});
+
+test('a wrong status never blocks a render either', () => {
+  // Same reasoning as the caption: compose does not read status, so refusing to draw a
+  // mislabelled post would be a check punishing the wrong step.
+  const p = at('published', { caption: undefined });
+  assert.deepEqual(checkPost(p).filter(x => x.level !== 'warn'), []);
+  assert.ok(checkPost(p).some(x => x.level === 'warn' && /published, but no caption/.test(x.what)));
 });

@@ -9,7 +9,7 @@
   "axes": {
     "density": "full",
     "theme": "color",
-    "ref": null,
+    "ref": 9,
     "formats": [
       "ig",
       "tiktok"
@@ -36,39 +36,39 @@
       "title": "Nine jobs, one *at a time*",
       "items": [
         {
-          "title": "Find the tangent",
+          "title": "Tangents",
           "meta": "Scrub, listen, overshoot, scrub back"
         },
         {
-          "title": "Cut the filler",
+          "title": "Filler",
           "meta": "Every um and uh, one at a time"
         },
         {
-          "title": "Trim dead air",
+          "title": "Dead air",
           "meta": "Hundreds of gaps, none worth keeping"
         },
         {
-          "title": "Shorten the pauses",
+          "title": "Pauses",
           "meta": "A beat too long, everywhere"
         },
         {
-          "title": "Clean the room",
-          "meta": "Hum you stopped hearing an hour ago"
+          "title": "Room hum",
+          "meta": "You stopped hearing it an hour ago"
         },
         {
-          "title": "Bleep one word",
+          "title": "One swear",
           "meta": "Find it, cut it, time the tone"
         },
         {
-          "title": "Mark the chapters",
+          "title": "Chapters",
           "meta": "Re-listen to find where it turns"
         },
         {
-          "title": "Choose the music",
+          "title": "Music",
           "meta": "Auditioning tracks is not editing"
         },
         {
-          "title": "Level the file",
+          "title": "Levels",
           "meta": "Then listen to the whole thing again"
         }
       ],
@@ -111,8 +111,8 @@
       ],
       "status": "unseen",
       "art": {
-        "s": "a single clean ribbon of tape lifting free from a dense tangle, the tangle confined to the very top edge of the frame",
-        "c": "the tangle is a narrow band across the TOP of the frame and nothing else; the whole lower two thirds is bare empty studio floor, one unbroken colour, no debris",
+        "s": "a single clean ribbon of tape lifting free from a dense tangle that sits low and to the right",
+        "c": "the tangle occupies only the lower-right quadrant; the top fifth of the frame is bare empty backdrop because the logo and the kicker sit there, and the whole left half is plain unbroken colour where the type goes",
         "k": "acid lime-green against cream"
       }
     },
@@ -191,9 +191,9 @@
       "title": "Get the *evening* back.",
       "status": "unseen",
       "art": {
-        "s": "a desk lamp switched off, the room behind it empty and settled",
-        "c": "the lamp sits low and to the right, small in frame; the whole centre and upper half is bare empty backdrop so centred type sits on nothing",
-        "k": "hot fuchsia against cream"
+        "s": "a desk lamp switched off on a bare surface, the room behind it empty and settled",
+        "c": "the lamp sits small in the lower-right corner; the entire centre and upper half is one flat unbroken pale backdrop with nothing in it, so centred type sits on plain colour rather than on a gradient",
+        "k": "cream and pale blush, kept light and even so dark type reads over it"
       }
     }
   ]
