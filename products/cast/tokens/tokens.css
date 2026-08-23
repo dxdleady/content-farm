@@ -1,0 +1,92 @@
+/* cast design tokens — generated from tokens.json. Do not edit by hand. */
+@import url("../../../assets/fonts/fonts.css");
+
+:root {
+  --c-accent-purpleblue: #6E75FF;
+  --c-accent-mainorange: #FF3400;
+  --c-accent-pink: #FE4F8D;
+  --c-accent-carrot: #FE7A7C;
+  --c-accent-green: #23EE78;
+  --c-accent-superlime: #EEFF04;
+  --c-accent-lightpink: #FFCDCC;
+  --c-accent-blue67: #555DFF;
+  --c-accent-violet65: #995CED;
+  --c-text-main: #EDEDED;
+  --c-text-second: #FFFFFFB2;
+  --c-text-inverse: #DBDBDB;
+  --c-text-dark: #111315;
+  --c-text-light: #DBDBDB;
+  --c-background-dark: #0A0A0A;
+  --c-background-light: #EEEBEA;
+  --c-background-light2: #F2F2F2;
+  --c-background-white: #FFFFFF;
+  --c-background-surface: #111315;
+  --c-black-10: #0000001A;
+  --c-black-20: #00000033;
+  --c-black-30: #0000004D;
+  --c-black-40: #00000066;
+  --c-black-50: #00000080;
+  --c-black-60: #00000099;
+  --c-black-70: #000000B2;
+  --c-black-80: #000000CC;
+  --c-black-90: #000000E5;
+  --c-white-10: #FFFFFF1A;
+  --c-white-20: #FFFFFF33;
+  --c-white-30: #FFFFFF4D;
+  --c-white-40: #FFFFFF66;
+  --c-white-50: #FFFFFF80;
+  --c-white-60: #FFFFFF99;
+  --c-white-70: #FFFFFFB2;
+  --c-white-80: #FFFFFFCC;
+  --c-white-90: #FFFFFFE5;
+  --c-misc-transparency: #0000004D;
+  --c-misc-transparency2: #D9D9D966;
+  --c-misc-hover-logo-overlay: #0000001A;
+
+  --g-yellowblue: linear-gradient(135deg, #F7B44E, #2EE5FF);
+  --g-bluepinc: linear-gradient(135deg, #009BEE, #FE4F8D);
+  --g-mubert: linear-gradient(135deg, #555DFF, #995CED);
+  --g-orangepurple: linear-gradient(135deg, #FF7A5C, #6E75FF);
+  --g-pink: linear-gradient(135deg, #FE7A7C, #EF88A5);
+
+  --f-display: "Playfair Display", Georgia, serif;
+  --f-ui: Inter, -apple-system, "Helvetica Neue", sans-serif;
+
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-badge: 13px;
+  --r-sm: 8px;
+  --s-xs: 8px;
+  --s-sm: 16px;
+  --s-md: 24px;
+  --s-lg: 40px;
+  --s-xl: 64px;
+  --s-2xl: 80px;
+}
+
+/* Type scale. Sizes are in px at the 1440-wide web baseline; scale with --type-scale. */
+:root { --type-scale: 1; }
+.t-display-super-hero { font-family: var(--f-display); font-size: calc(92px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(-2px * var(--type-scale)); }
+.t-display-hero { font-family: var(--f-display); font-size: calc(72px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(-2px * var(--type-scale)); }
+.t-display-hero-mob { font-family: var(--f-display); font-size: calc(48px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(-2px * var(--type-scale)); }
+.t-display-super-hero-mob { font-family: var(--f-display); font-size: calc(32px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-display-feature { font-family: var(--f-display); font-size: calc(40px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-display-small { font-family: var(--f-display); font-size: calc(28px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-display-small-mob { font-family: var(--f-display); font-size: calc(24px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h1 { font-family: var(--f-ui); font-size: calc(48px * var(--type-scale)); font-weight: 500; line-height: 1.1; letter-spacing: calc(-1px * var(--type-scale)); }
+.t-heading-h2 { font-family: var(--f-ui); font-size: calc(32px * var(--type-scale)); font-weight: 500; line-height: 1.2; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h2-mob { font-family: var(--f-ui); font-size: calc(24px * var(--type-scale)); font-weight: 500; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h3 { font-family: var(--f-ui); font-size: calc(22px * var(--type-scale)); font-weight: 500; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h3-mob { font-family: var(--f-ui); font-size: calc(15px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h4 { font-family: var(--f-ui); font-size: calc(18px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-extra { font-family: var(--f-ui); font-size: calc(40px * var(--type-scale)); font-weight: 300; line-height: 1.25; letter-spacing: calc(-1px * var(--type-scale)); }
+.t-body-extra-mob { font-family: var(--f-ui); font-size: calc(26px * var(--type-scale)); font-weight: 400; line-height: 1.6; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-super { font-family: var(--f-ui); font-size: calc(18px * var(--type-scale)); font-weight: 400; line-height: 1.6; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-large { font-family: var(--f-ui); font-size: calc(16px * var(--type-scale)); font-weight: 400; line-height: 1.6; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-base { font-family: var(--f-ui); font-size: calc(14px * var(--type-scale)); font-weight: 400; line-height: 1.5; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-small { font-family: var(--f-ui); font-size: calc(12px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-big-button { font-family: var(--f-ui); font-size: calc(18px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-button { font-family: var(--f-ui); font-size: calc(16px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-small-button { font-family: var(--f-ui); font-size: calc(14px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-label { font-family: var(--f-ui); font-size: calc(12px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(-1px * var(--type-scale)); }
+.t-ui-title-caps { font-family: var(--f-ui); font-size: calc(10px * var(--type-scale)); font-weight: 700; line-height: 1.0; letter-spacing: calc(10px * var(--type-scale)); text-transform: uppercase; }

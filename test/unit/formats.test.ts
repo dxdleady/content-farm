@@ -46,7 +46,9 @@ test('formatCss: exact output', () => {
   assert.equal(formatCss(FORMATS.tiktok),
     ':root{--slide-w:1080px;--slide-h:1920px;--safe-t:110px;--safe-r:120px;--safe-b:400px;'
     + '--stack-mb:auto;--t-claim:150px;--t-figure:620px;--feat-row:215px;'
-    + '--band-top:20%;--band-bot:80%;}');
+    + '--band-top:8%;--band-bot:62%;'
+    + '--scrim-far-dark:rgba(10,10,10,.34);--scrim-far-light:rgba(238,235,234,.30);'
+    + '--scrim-ink-light:rgba(238,235,234,.66);}');
 });
 
 test('formatCss: every Instagram override is an exact no-op', () => {
@@ -77,4 +79,53 @@ test('format geometry', () => {
   for (const f of Object.values(FORMATS)) {
     assert.equal(f.w, 1080, `${f.id}: every format is 1080 wide — the shared type scale depends on it`);
   }
+});
+
+// ---------------------------------------------- one picture, however many formats
+//
+// The bug this pins: art used to be generated per FORMAT, at that format's ratio and with
+// that format's framing line. So the same post cross-posted to Instagram and TikTok
+// showed two different pictures from two different prompts — the same post in name only —
+// and cost two generations. `.art-full` is object-fit:cover, so a frame crops whatever it
+// is handed; the fix is to generate once at the tallest ratio and let the shorter frames
+// crop down. Tall→wide keeps the middle; wide→tall would crop the SIDES and lose about a
+// third of the picture's width, which is where compositions put their subject.
+test('artRatio picks the tallest, so every shorter frame crops rather than regenerates', async () => {
+  const { artRatio, artFraming, FORMATS } = await import('../../src/formats.ts');
+
+  assert.equal(artRatio([FORMATS.ig]), '4:5', 'a lone Instagram run is unchanged — its cache still hits');
+  assert.equal(artRatio([FORMATS.tiktok]), '9:16');
+  assert.equal(artRatio([FORMATS.ig, FORMATS.tiktok]), '9:16');
+  assert.equal(artRatio([FORMATS.tiktok, FORMATS.ig]), '9:16', 'order must not matter');
+
+  assert.equal(artFraming([FORMATS.ig]), null, 'the 4:5 skeletons need no extra framing line');
+  assert.equal(artFraming([FORMATS.ig, FORMATS.tiktok]), FORMATS.tiktok.framing,
+    'a cross-post is framed for the ratio it is GENERATED at, not the one being rendered');
+});
+
+test('the framing line survives being cropped, because that is now how the other format is served', async () => {
+  const { FORMATS } = await import('../../src/formats.ts');
+  const f = FORMATS.tiktok.framing!;
+  // It used to say "the subject sits in the upper two thirds" — correct for a picture that
+  // only ever appeared at 9:16, and fatal once the same picture also has to be a 4:5 crop,
+  // which keeps the middle ~70% of the height and discards the upper third entirely.
+  assert.ok(!/upper two thirds/.test(f), 'a subject in the upper third is cropped away at 4:5');
+  assert.ok(/centred in the middle band/.test(f), 'the subject must live where every crop overlaps');
+  assert.ok(/cropped away at other aspect ratios/.test(f), 'the model is told why, not just what');
+});
+
+test('two formats sharing an art ratio share the cache entry — one image, one payment', async () => {
+  const { artRatio, FORMATS } = await import('../../src/formats.ts');
+  const { cachePath } = await import('../../src/cache.ts');
+
+  const shared = { model: 'gpt-image-2', prompt: 'a prompt', refBytes: Buffer.from('ref') };
+  const ratio = artRatio([FORMATS.ig, FORMATS.tiktok]);
+
+  // What compose computes for each of the two runs. Identical inputs, identical file.
+  assert.equal(cachePath({ ...shared, ratio }), cachePath({ ...shared, ratio }));
+
+  // …and the old behaviour, for contrast: keyed on the RENDER format, they diverged.
+  assert.notEqual(cachePath({ ...shared, ratio: FORMATS.ig.ratio }),
+    cachePath({ ...shared, ratio: FORMATS.tiktok.ratio }),
+    'this divergence is exactly what made a cross-post two different pictures');
 });

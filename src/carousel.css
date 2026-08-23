@@ -1,4 +1,4 @@
-/* (cast) carousel — slide styles. Built on tokens/tokens.css.
+/* Carousel slide styles — shared by every product. Built on the product's tokens.css.
    Canvas defaults to Instagram 1080x1350; src/formats.mjs overrides --slide-w/h and
    the --safe-* insets to render another format (TikTok 9:16) from the same sheet.
    --type-scale bumps the 1440-web type scale up for feed legibility. */
@@ -191,7 +191,16 @@
    The gradient is composed HERE, not in the injected :root block, because --scrim-ink
    is only in scope on the slide: a var() that can't resolve where it is declared makes
    the whole custom property invalid, and it then inherits as empty. */
+/* The diagonal's far end is format-settable. It was a fixed .86 / .90, chosen so its dark
+   corner sat under 4:5's bottom-left type — and on a tall canvas, where the copy centres
+   and --scrim-band switches on to cover it, that fixed value became a SECOND scrim doing
+   a job the band was already doing. The two multiplied and bleached the lower half of
+   every 9:16 frame. A format that turns the band on turns this down.
+
+   Declared here on .slide rather than injected as a whole gradient, for the reason in the
+   note above: the injected :root value is a plain colour, which resolves anywhere. */
 .slide {
+  --scrim-far: var(--scrim-far-dark, rgba(10,10,10,.86));
   --scrim-ink: rgba(10,10,10,.62);
   --scrim-band: linear-gradient(180deg,
     transparent var(--band-top, 100%),
@@ -199,7 +208,8 @@
     var(--scrim-ink) var(--band-bot, 100%),
     transparent 100%);
 }
-.slide--light { --scrim-ink: rgba(238,235,234,.76); }
+.slide--light { --scrim-ink: var(--scrim-ink-light, rgba(238,235,234,.76));
+  --scrim-far: var(--scrim-far-light, rgba(238,235,234,.90)); }
 
 /* The top band covers the logo + kicker row. A safe-area pushes that row DOWN the
    canvas, so the band has to grow by the same amount or the kicker lands in the
@@ -209,12 +219,12 @@
     var(--scrim-band, none),
     /* keep the logo / counter row readable whatever the art does up there */
     linear-gradient(180deg, rgba(10,10,10,.55) 0%, transparent calc(16% + var(--safe-t, 0px))),
-    linear-gradient(200deg, transparent 10%, var(--scrim, rgba(10,10,10,.34)) 50%, rgba(10,10,10,.86) 100%); }
+    linear-gradient(200deg, transparent 10%, var(--scrim, rgba(10,10,10,.34)) 50%, var(--scrim-far) 100%); }
 /* light theme keeps the art bright and fades to paper, not to ink, so dark type reads */
 .slide--light .bg-scrim { background:
     var(--scrim-band, none),
     linear-gradient(180deg, rgba(238,235,234,.60) 0%, transparent calc(16% + var(--safe-t, 0px))),
-    linear-gradient(200deg, transparent 12%, var(--scrim, rgba(238,235,234,.34)) 48%, rgba(238,235,234,.90) 100%); }
+    linear-gradient(200deg, transparent 12%, var(--scrim, rgba(238,235,234,.34)) 48%, var(--scrim-far) 100%); }
 
 /* ================= v3: edge-weighted layouts ================= */
 
@@ -244,7 +254,9 @@
 .steps--flush { margin-bottom: -136px; }
 .step { display: flex; align-items: center; gap: 40px; padding: 58px 72px;
   background: var(--band); color: var(--band-ink); }
-.step__n { font: 400 132px/.8 var(--f-display); letter-spacing: -6px; opacity: .32; flex: 0 0 auto; min-width: 150px; }
+/* No opacity here, and none on the two rules below either — see the note at .step__n
+   in the v3 block. */
+.step__n { font: 400 132px/.8 var(--f-display); letter-spacing: -6px; flex: 0 0 auto; min-width: 150px; }
 .step__t { font: 500 46px/1.1 var(--f-ui); letter-spacing: -1.4px; }
 
 /* --- tag wall: chips are the content, not decoration --- */
@@ -262,7 +274,7 @@
   top: calc(210px + var(--safe-t, 0px)); z-index: 2;
   display: flex; flex-direction: column; }
 .steps--full .step { flex: 1; padding: 0 var(--pad-r) 0 var(--pad-l); }
-.steps--full .step__n { font-size: 150px; opacity: .3; }
+.steps--full .step__n { font-size: 150px; }
 .steps--full .step__t { font-size: 52px; }
 
 /* poster: art on the top edge, type on the bottom edge */
@@ -486,7 +498,11 @@
 .def__body{ font-weight:300; line-height:1.35; max-width:22ch; }
 .statrow__l,.ba__lab,.vs__h,.meter__lab,.tl__l,.ir__l,.tier__ch{
   font:600 var(--t-meta)/1.2 var(--f-ui); letter-spacing:2px; text-transform:uppercase; opacity:.55; }
-.footnote,.callout__n{ font:400 var(--t-note)/1.4 var(--f-ui); opacity:.55; max-width:30ch; }
+/* .72, not .55. The lower value was tuned against cream and near-black, where secondary
+   text can afford to recede; on a flooded brand ground — the `color` theme floods nine of
+   them — the same value collapsed the callout's answer line into a smudge. It is still
+   plainly secondary to the headline above it, which is the job the opacity was doing. */
+.footnote,.callout__n{ font:400 var(--t-note)/1.4 var(--f-ui); opacity:.72; max-width:30ch; }
 
 /* ---- 2 Claim ---- */
 .claimwrap{ gap:var(--blk) !important; }
@@ -517,7 +533,15 @@
 .step{ display:flex; align-items:baseline; gap:28px; padding:var(--row) 0; background:none !important;
   border-top:2px solid color-mix(in srgb, currentColor 22%, transparent); }
 .step:last-child{ border-bottom:2px solid color-mix(in srgb, currentColor 22%, transparent); }
-.step__n{ font:400 46px/1 var(--f-display); opacity:.4; min-width:74px; }
+/* The step number is the ONE element in the system that carries an accent class and used
+   to be dimmed as well — `<span class="step__n ${a}">`. The two multiply: an accent
+   already sits at a modest ratio against a brand ground, and .4 opacity on top took the
+   numbers on `steps` below visible, especially over art. Dimming is for elements that
+   inherit their colour; an accent is already the differentiation.
+   Hierarchy here comes from the face and the weight instead — display 400 against the
+   step text's UI 500 — which costs no contrast at all.
+   test/unit/invariants.test.ts enforces the rule so this cannot come back. */
+.step__n{ font:400 46px/1 var(--f-display); min-width:74px; }
 
 .tickrows{ display:flex; flex-direction:column; gap:18px; width:100%; }
 .tick{ display:flex; align-items:center; gap:22px; }
@@ -631,7 +655,10 @@
 .splash__badge svg{ width:28px; height:28px; }
 .splash__line{ white-space:normal; font-size:52px; }
 
-.dim{ opacity:.5; }
+/* .68, not .5. This dims a whole column on `comparison`, and when a marked word inside it
+   already carries an accent colour the two multiply — the emphasis vanished exactly where
+   the reader was meant to look. Secondary, not illegible. */
+.dim{ opacity:.68; }
 
 
 /* ---------- v9: gaps, size, and the rebuilt cards ---------- */

@@ -70,7 +70,7 @@ export type SlideBase = {
   paletteOffset?: number;
 
   /* --- authored inputs to the image stage; consumed before render --- */
-  /** Natural-language background prompt (src/content.json style decks). */
+  /** Natural-language background prompt (content.json style decks). */
   bg?: string;
   /** Key into src/styles.json treatments. */
   bgStyle?: string;
@@ -195,6 +195,118 @@ export type Format = {
 export type FormatSnapshot = Pick<Format, 'id' | 'w' | 'h' | 'ratio' | 'safe'>;
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   Products — the sixth axis
+   ═══════════════════════════════════════════════════════════════════════════
+   Everything a brand owns, in one object. The engine (layouts, carousel.css,
+   formats, the generation pipeline) is shared; a Product supplies the assets,
+   the colour vocabulary and the voice.
+
+   Modelled on Format deliberately: a registry keyed by id, the incumbent as the
+   entry with NO override keys, and a tag that is empty for the default so its
+   paths never move. */
+
+export type ProductId = 'cast';
+
+/**
+ * Which bare token each ink class paints with.
+ *
+ * Replaces the three parallel tables in layouts.ts. FILL is derivable —
+ * `FILL[c] === cvar(ink[c])` — so one map is enough. Declared per product rather
+ * than derived from tokens.json: tokens carries nine accents but only five earn a
+ * CSS class, and calling that class `accent-purple` rather than `accent-purpleblue`
+ * is a design decision. Deriving it would invent class names carousel.css has no
+ * rules for, and the failure mode is inherited white text on cream.
+ *
+ * PARTIAL, and the values are strings rather than AccentToken. Both widenings were forced
+ * by the first product that was not (cast), and both were hiding a real assumption:
+ * carousel.css ships five classes but a brand is entitled to use four, and AccentToken
+ * names the INCUMBENT's nine tokens — a second brand shares none of them. What keeps this
+ * honest is not the type but validateBrand(), which resolves every name against that
+ * product's own tokens.json and its own stylesheet rules.
+ */
+export type InkMap = Partial<Record<InkClass, string>>;
+
+/** The `--theme color` rotation: one brand ground per slide, plus a readable accent. */
+export type ColorTheme = {
+  /** Ground tokens in rotation order — slide i gets rotation[i % length]. */
+  rotation: string[];
+  /** Ground token → the em accent that pops against it. */
+  em: Record<string, InkClass>;
+  /** Ground token → prose hue, fed to the image model in the REPLACE block. */
+  hue: Record<string, string>;
+};
+
+/**
+ * The brand half of the image-generation prompt. The craft half stays in styles.json.
+ *
+ * The split was made by reading the lines rather than the section names. Of the eight in
+ * styles.json's base + hard, exactly two named a brand or a canvas; the other six — no
+ * readable text, invented people, keep the lower-left third calm — are true for every
+ * product and would have to be copy-pasted into each one if they moved here. So `base`
+ * and `hard` below ADD to the shared frame instead of replacing it, and are empty on the
+ * incumbent, like every other override key on a Product.
+ */
+export type ArtVoice = {
+  /** Names the product to the model, e.g. "(cast) — an audio/podcast editing brand". */
+  subject: string;
+  /** The brand's colour rule, in prose. A treatment preset may still override it. */
+  palette: string;
+  /** Extra craft lines, appended to styles.json's base. */
+  base: string[];
+  /** Extra non-negotiables, appended to styles.json's hard. */
+  hard: string[];
+};
+
+export type Product = {
+  /**
+   * Widened to string on purpose. The registry's keys are still a closed union — that is
+   * what `PRODUCTS satisfies Record<ProductId, Product>` enforces, and it is what makes a
+   * typo there a compile error. But a Product is also a plain value, and test fixtures
+   * build hostile ones that must never appear in the registry: a second brand that only
+   * exists to prove the first one is not hardcoded should not become a shippable id.
+   */
+  id: string;
+  name: string;
+  /** The one true handle. It was declared eleven times before this. */
+  handle: string;
+  /** Absolute path to products/<id>. */
+  dir: string;
+
+  /* --- brand assets, as paths. The registry is the single place these move. --- */
+  tokensJson: string;
+  tokensCss: string;
+  fontsCss: string;
+  wordmark: string;
+  /** Authored decks + content.json + topics.json — this product's written copy. */
+  decks: string;
+
+  /* --- colour vocabulary --- */
+  /** The rotation colour-forward layouts walk so a tag row never repeats a hue. */
+  accents: string[];
+  ink: InkMap;
+  colorTheme: ColorTheme;
+
+  art: ArtVoice;
+
+  /* --- overrides. Absent on the incumbent, exactly as FORMATS.ig has no `vars`. --- */
+  /** The eight --t-* headline sizes; a brand with other faces refits them here. */
+  typeVars?: Record<string, string>;
+  /** Per (product × format) refits, merged into the format block so geometry still wins. */
+  formatVars?: Partial<Record<FormatId, Record<string, string>>>;
+  /**
+   * Path to a last-resort stylesheet. The escape hatch for the type metrics carousel.css
+   * hard-codes — 34 literal font-sizes and ~50 optical letter-spacing corrections, all
+   * hand-tuned to Playfair and Inter. A brand with different faces gets correct colour
+   * and geometry for free and APPROXIMATE headline fitting; this is where the last mile
+   * goes. Do not try to make carousel.css font-agnostic instead.
+   */
+  overrideCss?: string;
+  /** Extra refs and icons layered on top of the shared pools. */
+  refs?: string;
+  icons?: string;
+};
+
+/* ═══════════════════════════════════════════════════════════════════════════
    Decks — three producers, two consumers
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -205,8 +317,11 @@ export type BuiltDeck = DeckCommon & { refAnalysis: string; model: string; minim
 /** tools/compose.mjs */
 export type ComposedDeck = DeckCommon & {
   rubric: string; density: string; ref: string | null; theme: string; format: FormatSnapshot;
+  /** Which brand this was composed for. Optional: decks written before the product axis
+   *  existed have no such field, and they are all (cast). */
+  product?: ProductId;
 };
-/** src/content.json */
+/** A product's content.json */
 export type ContentDeck = DeckCommon & { meta?: string };
 
 /**
@@ -222,7 +337,7 @@ export type Deck = DeckCommon & Partial<BuiltDeck & ComposedDeck & ContentDeck>;
 
 /** refs/analysis/*.json — 36 files. `note` is present on only 4 of them. */
 export type RefAnalysis = {
-  /** Source image filename, e.g. "Cast Ref 3.jpg". */
+  /** Source image filename, e.g. "ref-03.jpg". */
   ref: string;
   /** Slug, e.g. "icy-chrome-beauty". */
   name: string;
@@ -256,10 +371,11 @@ export type Treatment = { lines: string[]; palette?: string };
 
 export type Styles = {
   default: string;
+  /** The craft frame — true for every brand. A product appends via ArtVoice.base. */
   base: string[];
   treatments: Record<string, Treatment>;
   topicHints: Record<string, string>;
-  palette: string;
+  /** The non-negotiables. A product appends via ArtVoice.hard. */
   hard: string[];
   /** Mixes a `$note` string in with the string[] pools; bgen skips $-prefixed keys. */
   wildcards: Record<string, string[] | string>;
@@ -278,7 +394,7 @@ export type DensityLevel = {
   rubrics: string[];
 };
 
-/** src/topics.json — the input to tools/build-decks.mjs. */
+/** A product's topics.json — the input to tools/build-decks.ts. */
 export type Topic = {
   deck: string;
   /** A refs/analysis FILENAME including .json — unlike compose's numeric ref. */

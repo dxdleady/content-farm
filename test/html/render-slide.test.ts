@@ -22,7 +22,12 @@ const UPDATE = !!process.env.UPDATE_GOLDENS;
 const cases = corpus();
 
 test('the corpus covers every layout', async () => {
-  assert.ok(cases.length > 300, `corpus collapsed to ${cases.length} cases`);
+  // 230, not 300. Every post was deleted deliberately — they predated the hook and
+  // slide-plan rules and are being rewritten from scratch — and their rubric cases went
+  // with them. Coverage does NOT depend on a post existing: the catalogue contributes one
+  // case per layout and the edge cases cover the branches, which is what this tier is
+  // for. The floor guards against a SILENT collapse, not a chosen one.
+  assert.ok(cases.length > 230, `corpus collapsed to ${cases.length} cases`);
 
   const { layouts } = await import('../helpers/sut.ts');
   const covered = new Set(cases.map(c => c.slide.layout));
@@ -68,32 +73,24 @@ test('no golden is orphaned', () => {
 test('no slide leaks the literal string "undefined" into its output', () => {
   // A cheap, table-free way to catch a missing required field across the whole corpus:
   // every unguarded `${s.foo}` on an absent property renders as the text "undefined".
-  // 321 of 325 cases are clean, which is the empirical evidence that src/types.ts's
-  // required/optional split matches the data that actually exists.
-  const KNOWN = new Set([
-    // cover falls back to `background:${s.gradient}` when there is no bgFile — and no
-    // authored deck sets `gradient`, so that branch always emits invalid CSS. Phase 4.
-    'edge--cover--plain',
-    // the tags accent-less object item; its golden is the throw itself
-    'edge--tags--object-without-accent',
-  ]);
-
+  // It started with two allowlisted leaks — cover's missing gradient and the tags crash.
+  // Both are fixed, so all 325 cases are clean and the list stays empty.
   const leaking = readdirSync(GOLDEN)
     .filter(f => readFileSync(join(GOLDEN, f), 'utf8').includes('undefined'))
-    .map(f => f.replace(/\.html$/, ''))
-    .filter(name => !KNOWN.has(name));
+    .map(f => f.replace(/\.html$/, ''));
 
   assert.deepEqual(leaking, [],
     'a required field went missing — these render the literal text "undefined"');
 });
 
-test('cases that throw today keep throwing, with the same message', () => {
-  // A crash is behaviour too. tags with an accent-less object item is a known latent bug
-  // (cvar(undefined)); pinning it means Phase 4's fix shows up as an intentional diff.
+test('no case throws', () => {
+  // A crash is behaviour too, so the harness captures a throw as its golden rather than
+  // failing the capture. This list was ['edge--tags--object-without-accent'] until that
+  // crash was fixed; it is empty now, and anything appearing here is a new one.
   const throwing = readdirSync(GOLDEN)
     .filter(f => readFileSync(join(GOLDEN, f), 'utf8').startsWith('!! THREW:'))
     .map(f => f.replace(/\.html$/, ''));
 
-  assert.deepEqual(throwing, ['edge--tags--object-without-accent'],
-    'the set of throwing cases changed — a crash was introduced or silently fixed');
+  assert.deepEqual(throwing, [],
+    'a slide that used to render now crashes — the golden holds the message');
 });

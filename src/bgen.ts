@@ -16,6 +16,8 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { MODELS } from './providers.ts';
 import type { Ratio, Styles, Tokens } from './types.ts';
+import { PRODUCTS, DEFAULT_PRODUCT } from './product.ts';
+import type { ArtVoice, Product } from './types.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CACHE = join(ROOT, 'assets/generated');
@@ -31,20 +33,40 @@ export const apiKey = () => process.env.GEMINI_API_KEY || process.env.GOOGLE_API
 // can be swapped per slide without touching code.
 // Read but never referenced. Kept because the read itself is module-scope behaviour;
 // dropping it would remove a filesystem access at import time.
-const T = JSON.parse(readFileSync(join(ROOT, 'tokens/tokens.json'), 'utf8')) as Tokens;
+const T = JSON.parse(readFileSync(PRODUCTS[DEFAULT_PRODUCT].tokensJson, 'utf8')) as Tokens;
 void T;
 const S = JSON.parse(readFileSync(join(ROOT, 'src/styles.json'), 'utf8')) as Styles;
 
 export const PRESETS: string[] = Object.keys(S.treatments);
 export const DEFAULT_PRESET: string = S.default;
 
-export function styleLock(preset: string = S.default): string {
+/** The default brand voice — the incumbent's, so existing callers need no argument. */
+const ART: ArtVoice = PRODUCTS[DEFAULT_PRODUCT].art;
+
+/**
+ * The one line that is a function of the CANVAS, not the brand and not the craft.
+ *
+ * It used to be written into styles.json twice, as "Vertical 4:5 poster art for (cast) …"
+ * and "Vertical 4:5, full-bleed." — and it stayed 4:5 when the TikTok format arrived, so
+ * every 9:16 generation was handed a prompt that named one aspect while the FRAMING line
+ * beside it named another. The model was being asked to resolve a contradiction we could
+ * have resolved ourselves. background() already knows the aspect; now the prompt does too.
+ */
+const aspectLine = (aspect: string, art: ArtVoice) =>
+  `Vertical ${aspect} poster art for ${art.subject}. Full-bleed, edge to edge.`;
+
+const hardLines = (aspect: string, art: ArtVoice) =>
+  [`Vertical ${aspect}, full-bleed.`, ...S.hard, ...art.hard];
+
+export function styleLock(preset: string = S.default, art: ArtVoice = ART, aspect = '4:5'): string {
   const t = S.treatments[preset];
   if (!t) throw new Error(`unknown bgStyle "${preset}" — have: ${PRESETS.join(', ')}`);
   return [
     'STYLE LOCK — follow exactly:',
+    `· ${aspectLine(aspect, art)}`,
     ...S.base.map((l: string) => `· ${l}`),
-    `· ${t.palette ?? S.palette}`,
+    ...art.base.map((l: string) => `· ${l}`),
+    `· ${t.palette ?? art.palette}`,
     '',
     `TREATMENT — ${preset}:`,
     ...t.lines.map((l: string) => `· ${l}`),
@@ -180,7 +202,7 @@ const SOLO_TAIL = `
 Everything not listed above stays as close to the reference as you can get it.
 Do not make it cleaner, safer, calmer or more tasteful than the reference.`.trim();
 
-function soloPrompt({ subject, framing, color, colorName }: SoloSpec): string {
+function soloPrompt({ subject, framing, color, colorName }: SoloSpec, art: ArtVoice = ART, aspect = '4:5'): string {
   return [
     SOLO_NOTE,
     `· SUBJECT -> ${subject}`,
@@ -190,25 +212,25 @@ function soloPrompt({ subject, framing, color, colorName }: SoloSpec): string {
     SOLO_TAIL,
     '',
     'NON-NEGOTIABLE:',
-    ...S.hard.map((l: string) => `· ${l}`),
+    ...hardLines(aspect, art).map((l: string) => `· ${l}`),
   ].join('\n');
 }
 
 // Two modes. With refs the prose shrinks to the non-negotiables so it cannot
 // out-shout the images; without refs the full written lock does the work.
-const promptFor = (subject: string, nRefs = 0, preset: string = S.default, colors: string[] | null = null, variant = 0): string => {
+const promptFor = (subject: string, nRefs = 0, preset: string = S.default, colors: string[] | null = null, variant = 0, art: ArtVoice = ART, aspect = '4:5'): string => {
   const pin = colors?.length
     ? `\n\nCOLOUR: lean on ${colors.join(' and ')}, but the references decide the palette if they disagree.`
     : '';
   const head = nRefs
-    ? `${REF_NOTE}\n\nNON-NEGOTIABLE:\n${S.hard.map((l: string) => `· ${l}`).join('\n')}`
-    : styleLock(preset);
+    ? `${REF_NOTE}\n\nNON-NEGOTIABLE:\n${hardLines(aspect, art).map((l: string) => `· ${l}`).join('\n')}`
+    : styleLock(preset, art, aspect);
   return `${head}${pin}\n\nDEPICT: ${subject}${wildcards(subject, variant)}`;
 };
 
 /* ------------------------------------------------------------------ generation */
-function cachePath(subject: string, aspect: string, refList: RefImage[], preset: string, colors: string[] | null, variant: number): string {
-  const sig = `${MODEL}|${aspect}|${promptFor(subject, refList.length, preset, colors, variant)}|${refList.map((r: RefImage) => r.hash).join(',')}`;
+function cachePath(subject: string, aspect: string, refList: RefImage[], preset: string, colors: string[] | null, variant: number, art: ArtVoice = ART): string {
+  const sig = `${MODEL}|${aspect}|${promptFor(subject, refList.length, preset, colors, variant, art, aspect)}|${refList.map((r: RefImage) => r.hash).join(',')}`;
   const h = createHash('sha256').update(sig).digest('hex').slice(0, 16);
   return join(CACHE, `bg-${h}.png`);
 }
@@ -221,9 +243,12 @@ export type BackgroundOptions = {
   aspect?: Ratio | string; force?: boolean; preset?: string; colors?: string[] | null;
   refPaths?: string[] | null; variant?: number; solo?: SoloSpec | null;
   model?: string | null; size?: string;
+  /** Whose voice the prompt speaks in. Defaults to the incumbent. */
+  product?: Product;
 };
 
-export async function background(subject: string, { aspect = '4:5', force = false, preset = S.default, colors = null, refPaths = null, variant = 0, solo = null, model = null, size = '512*640' }: BackgroundOptions = {}): Promise<string | null> {
+export async function background(subject: string, { aspect = '4:5', force = false, preset = S.default, colors = null, refPaths = null, variant = 0, solo = null, model = null, size = '512*640', product = PRODUCTS[DEFAULT_PRODUCT] }: BackgroundOptions = {}): Promise<string | null> {
+  const art = product.art;
   if (!subject && !solo) return null;
 
   // Preferred path: an edit model, with the reference as the real input image.
@@ -244,10 +269,10 @@ export async function background(subject: string, { aspect = '4:5', force = fals
     }
   }
   const refList = refPaths ? refPaths.map(refFile) : refs(preset, `${subject}|${variant}`);
-  const text = solo ? soloPrompt(solo) : promptFor(subject, refList.length, preset, colors, variant);
+  const text = solo ? soloPrompt(solo, art, aspect) : promptFor(subject, refList.length, preset, colors, variant, art, aspect);
   const out = solo
     ? join(CACHE, `bg-${createHash('sha256').update(`${MODEL}|${aspect}|${text}|${refList.map(r => r.hash).join(',')}`).digest('hex').slice(0, 16)}.png`)
-    : cachePath(subject, aspect, refList, preset, colors, variant);
+    : cachePath(subject, aspect, refList, preset, colors, variant, art);
   if (!force && existsSync(out)) return out;
 
   const key = apiKey();

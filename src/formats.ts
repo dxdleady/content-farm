@@ -11,7 +11,7 @@
 // bottom-anchored content clears the caption block and the action rail instead
 // of hiding under them. Full-bleed elements (art, bands, charts) still run to
 // the edge on purpose — only type respects the safe area.
-import type { Format, FormatId } from './types.ts';
+import type { Format, FormatId, Ratio } from './types.ts';
 
 // `satisfies` rather than a plain annotation: it checks each entry against Format while
 // keeping the literal key types, so FORMATS.tiktok.ratio stays '9:16' instead of widening
@@ -50,16 +50,33 @@ export const FORMATS = {
       '--t-claim': '150px',   // the one 180px grotesk headline, refit to the narrower column
       '--t-figure': '620px',  // giant number, refit so the corner unit still clears it
       '--feat-row': '215px',  // feature tiles grow into the taller canvas
-      // the diagonal scrim darkens the bottom corner; on 9:16 the copy sits mid-frame,
-      // so switch on carousel.css's second, vertical scrim across that band
-      '--band-top': '20%',
-      '--band-bot': '80%',
+      // The scrim is not the 4:5 one stretched — it is a different shape for a different
+      // frame, and treating it as inherited is what washed 9:16 out.
+      //
+      // At 4:5 one diagonal does everything: its dark end lands in the bottom-left corner,
+      // which is exactly where the type is. At 9:16 --stack-mb:auto centres the copy in
+      // the safe box (110..1520 of 1920), so the type sits around 29-55% of the frame and
+      // the corner is empty. The band covers THAT, and the diagonal is turned down to
+      // match — left at its 4:5 strength it stacked on top of the band and bleached the
+      // lower half of every frame.
+      '--band-top': '8%',    // ink reaches full at +22%, i.e. 30%
+      '--band-bot': '62%',   // and holds to just past the copy, not to the floor
+      '--scrim-far-dark': 'rgba(10,10,10,.34)',
+      '--scrim-far-light': 'rgba(238,235,234,.30)',
+      '--scrim-ink-light': 'rgba(238,235,234,.66)',
     },
-    // Appended to every image REPLACE block: the art prompts were written for
-    // 4:5, where "the lower-left third stays open" is enough. A 9:16 frame needs
-    // the whole bottom third and the right edge kept quiet.
-    framing: 'FRAMING: a tall vertical 9:16 frame — the subject sits in the upper two thirds; '
-      + 'the bottom third and the right edge stay open and uncluttered for type',
+    // Appended to every image REPLACE block.
+    //
+    // This line used to say "the subject sits in the upper two thirds", which was right
+    // for a picture that only ever appeared at 9:16 — and wrong the moment the same
+    // image also has to serve 4:5. A 9:16 frame cropped to 4:5 keeps the middle ~70% of
+    // the height and throws the rest away, so a subject in the upper third is simply
+    // gone from the Instagram version. Anything that must survive both crops lives in
+    // the middle band; the top and bottom edges are the disposable part, which is
+    // convenient, because on TikTok they are also what the platform UI covers.
+    framing: 'FRAMING: a tall vertical 9:16 frame — the subject is centred in the middle band '
+      + 'of the frame and stays clear of the top and bottom edges, which are cropped away '
+      + 'at other aspect ratios; within that band the lower-left stays open and uncluttered for type',
   },
 } satisfies Record<FormatId, Format>;
 
@@ -109,3 +126,48 @@ export const formatCss = (f: Format): string => `:root{`
 
 /** Suffix for run folders / deck names — Instagram stays unsuffixed (it was here first). */
 export const formatTag = (f: Format): string => (f.id === DEFAULT_FORMAT ? '' : `-${f.id}`);
+
+/**
+ * Read `--format a,b` off argv. One name is the ordinary case and behaves exactly as
+ * formatFromArgv did; a list means the same post is being published to several places.
+ */
+export function formatsFromArgv(argv: string[] = process.argv): Format[] {
+  const i = argv.indexOf('--format');
+  const raw = i > -1 ? argv[i + 1] : process.env.FORMAT;
+  if (!raw) return [FORMATS[DEFAULT_FORMAT]];
+  try {
+    const seen = new Set<string>();
+    return String(raw).split(',').map(x => x.trim()).filter(Boolean)
+      .map(resolveFormat)
+      .filter(f => !seen.has(f.id) && seen.add(f.id));
+  } catch (e) {
+    console.error((e as Error).message);
+    process.exit(1);
+  }
+}
+
+/**
+ * The aspect ratio to GENERATE art at, given the formats it has to serve.
+ *
+ * The tallest one, always — and this is the whole point rather than a detail. `.art-full`
+ * is `object-fit: cover`, so every frame crops whatever image it is handed; the only
+ * question is which direction. Going tall→wide crops the top and bottom and keeps the
+ * middle. Going wide→tall crops the SIDES, and at 4:5 → 9:16 that discards about a third
+ * of the picture's width, which is where compositions actually put their subject.
+ *
+ * So: generate once, at the tallest, and let the shorter frames crop down. One image
+ * serves every format, which is not only half the money but the only arrangement under
+ * which a post cross-posted to two platforms shows the same picture in both. Generating
+ * per format produced two different images from two different prompts — the same post in
+ * name only.
+ */
+export function artRatio(formats: Format[]): Ratio {
+  const tallest = formats.reduce((a, b) => (a.h / a.w >= b.h / b.w ? a : b));
+  return tallest.ratio;
+}
+
+/** The framing line for a generation ratio — the tallest format's, not the renderer's. */
+export function artFraming(formats: Format[]): string | null {
+  const r = artRatio(formats);
+  return (Object.values(FORMATS) as Format[]).find(f => f.ratio === r)?.framing ?? null;
+}

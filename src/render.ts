@@ -1,26 +1,20 @@
 #!/usr/bin/env node
 // content.json -> standalone HTML slides -> PNGs, rendered by one headless Chrome.
-//   node src/render.mjs [content.json] [outDir] [--format ig|tiktok]
+//   node src/render.ts [content.json] [outDir] [--format ig|tiktok] [--product cast]
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, symlinkSync, rmSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { renderSlide } from './layouts.ts';
+import { rendererFor } from './layouts.ts';
 import { Chrome } from './chrome.ts';
 import { background, status } from './bgen.ts';
 import { formatFromArgv, formatCss } from './formats.ts';
+import { slidePage } from './page.ts';
+import { productFromArgv } from './product.ts';
 import type { Deck, RenderSlide } from './types.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const FMT = formatFromArgv();
 const W = FMT.w, H = FMT.h;
-
-/* ---- inline every webfont so a render never depends on installed system fonts ---- */
-function fontCss(): string {
-  const dir = join(ROOT, 'assets/fonts');
-  return readFileSync(join(dir, 'fonts.css'), 'utf8')
-    .replace(/url\((woff2\/[^)]+)\)/g, (_: string, rel: string) =>
-      `url(data:font/woff2;base64,${readFileSync(join(dir, rel)).toString('base64')})`);
-}
 
 /* ---- deterministic grain tile, so flat fills don't band ---- */
 function grainDataUri(seed = 7): string {
@@ -32,22 +26,18 @@ function grainDataUri(seed = 7): string {
   return `url("data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}")`;
 }
 
-const FONTS = fontCss();
-const TOKENS = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
-const SHEET = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
 const GRAIN = grainDataUri();
 
-const page = (body: string) => `<!doctype html><html><head><meta charset="utf-8">
-<style>${FONTS}</style><style>${TOKENS}</style><style>${SHEET}</style>
-<style>${formatCss(FMT)}</style>
-<style>html,body{margin:0;background:#000}:root{--grain:${GRAIN}}</style>
-</head><body>${body}</body></html>`;
+const P = productFromArgv();
+const { renderSlide } = rendererFor(P);
+
+const page = (body: string) => slidePage(body, FMT, P, `:root{--grain:${GRAIN}}`);
 
 /* ------------------------------------------------------------------ main */
 const argv = process.argv.slice(2).filter(a => !a.startsWith('--'));
 const styleArg = process.argv.slice(2).find(a => a.startsWith('--style='))?.split('=')[1] ?? null;
 
-const contentPath = resolve(argv[0] ?? join(ROOT, 'src/content.json'));
+const contentPath = resolve(argv[0] ?? join(P.decks, 'content.json'));
 const baseDir = resolve(argv[1] ?? join(ROOT, 'out'));
 // The deck is read straight off disk with no validation, exactly as before. A checked
 // parseDeck() would turn a later TypeError into an earlier, clearer one — which is a
@@ -82,7 +72,8 @@ for (const s of content.slides) {
 const chrome = await Chrome.launch();
 const made = [];
 try {
-  const slide = await chrome.newPage(W, H);
+  // A target per shot: holding one across the loop intermittently wedges
+  // Page.captureScreenshot — see Chrome.shootFresh.
   const total = content.slides.length;
 
   for (const [i, raw] of content.slides.entries()) {
@@ -90,11 +81,10 @@ try {
     const name = `${String(i + 1).padStart(2, '0')}-${s.layout}`;
     const htmlPath = join(buildDir, `${name}.html`);
     writeFileSync(htmlPath, page(renderSlide(s)));
-    writeFileSync(join(outDir, `${name}.png`), await chrome.shoot(slide, `file://${htmlPath}`, W, H));
+    writeFileSync(join(outDir, `${name}.png`), await chrome.shootPooled(`file://${htmlPath}`, W, H));
     made.push(name);
     process.stdout.write(`  ✓ ${name}.png\n`);
   }
-  await chrome.close(slide);
 
   // contact sheet of the whole deck
   const cols = 5, thumb = 340, gap = 16;

@@ -1,0 +1,54 @@
+{
+  "id": "edit-time--edit-your-whole-episode-without-a-waveform-full-color-r9",
+  "product": "cast",
+  "rubric": "edit-time",
+  "status": "draft",
+  "axes": {
+    "density": "full",
+    "theme": "color",
+    "ref": "9",
+    "formats": [
+      "tiktok"
+    ]
+  },
+  "slides": [
+    {
+      "layout": "statement",
+      "status": "unseen"
+    },
+    {
+      "layout": "comparison",
+      "status": "unseen"
+    },
+    {
+      "layout": "index",
+      "status": "unseen"
+    },
+    {
+      "layout": "steps",
+      "status": "unseen"
+    },
+    {
+      "layout": "beforeAfter",
+      "status": "unseen"
+    },
+    {
+      "layout": "bento",
+      "status": "unseen"
+    },
+    {
+      "layout": "callout",
+      "status": "unseen"
+    },
+    {
+      "layout": "checklist",
+      "status": "unseen"
+    },
+    {
+      "layout": "splash",
+      "status": "unseen"
+    }
+  ],
+  "lastRun": "compose-edit-time--edit-your-whole-episode-without-a-waveform-full-color-r9-tiktok",
+  "updatedAt": "2026-08-23T18:37:19.480Z"
+}

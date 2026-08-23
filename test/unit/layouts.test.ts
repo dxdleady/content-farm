@@ -36,6 +36,28 @@ test('inkFor: readable ink per accent token', () => {
   assert.equal(inkFor('not-a-token'), 'var(--c-text-dark)', 'unknown falls back to dark ink');
 });
 
+test('the product ink map matches the classes carousel.css actually ships', async () => {
+  // These were three parallel tables in layouts.ts (INK_CLASSES, FILL, TOKEN_OF) that
+  // mirrored five CSS rules by hand. They are one map on the product now, and this is
+  // what stops it drifting from the stylesheet: a class in the map with no rule renders
+  // inherited text (white on cream), and a rule with no map entry is unreachable.
+  const { readFileSync } = await import('node:fs');
+  const { join, dirname } = await import('node:path');
+  const { fileURLToPath } = await import('node:url');
+  const { PRODUCTS } = await import('../../src/product.ts');
+
+  const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+  const css = readFileSync(join(root, 'src/carousel.css'), 'utf8');
+
+  // .accent-lime { color: var(--c-accent-superlime); }  ->  ['accent-lime', 'superlime']
+  const fromCss = Object.fromEntries(
+    [...css.matchAll(/^\.(accent-[a-z]+)\s*\{\s*color:\s*var\(--c-accent-([a-z0-9]+)\);?\s*\}/gm)]
+      .map(m => [m[1]!, m[2]!]));
+
+  assert.deepEqual(PRODUCTS.cast.ink, fromCss,
+    'the ink map and carousel.css disagree about which classes exist or what they paint');
+});
+
 test('ACCENTS covers every token inkFor is asked about', () => {
   assert.equal(ACCENTS.length, 9);
   assert.equal(new Set(ACCENTS).size, 9, 'no duplicates — colour-forward layouts rotate through this');

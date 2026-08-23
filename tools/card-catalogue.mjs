@@ -12,7 +12,7 @@ const INK = process.env.CARD_INK || '#0A0A0A';
 
 const fonts = readFileSync(join(ROOT,'assets/fonts/fonts.css'),'utf8')
   .replace(/url\((woff2\/[^)]+)\)/g,(_,r)=>`url(data:font/woff2;base64,${readFileSync(join(ROOT,'assets/fonts',r)).toString('base64')})`);
-const tokens = readFileSync(join(ROOT,'tokens/tokens.css'),'utf8').replace(/@import[^\n]*\n/,'');
+const tokens = readFileSync(join(ROOT,'products/cast/tokens/tokens.css'),'utf8').replace(/@import[^\n]*\n/,'');
 const cardsCss = readFileSync(join(ROOT,'src/cards.css'),'utf8');
 const page = inner => `<!doctype html><html><head><meta charset="utf-8">
 <style>${fonts}</style><style>${tokens}</style><style>${cardsCss}</style>

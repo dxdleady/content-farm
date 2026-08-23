@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>studio</title>
+<!--
+  One file: markup, styles, behaviour. No framework and no build step, because the repo
+  has neither and a dashboard is not a good reason to acquire both. tools/studio.ts
+  re-reads this on every request, so editing it needs a browser refresh and nothing else.
+-->
+<style>
+  :root{
+    --bg:#0b0b0d; --panel:#141418; --line:#26262c; --ink:#f2f0ee; --dim:#8a8a95;
+    --lime:#e8ff59; --pink:#fe4f8d; --violet:#995ced; --green:#23ee78; --carrot:#ff6a2b;
+    --pad:16px; --r:10px;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.45}
+  button{font:inherit;color:inherit;background:none;border:1px solid var(--line);
+    border-radius:6px;padding:5px 10px;cursor:pointer}
+  button:hover{border-color:var(--dim)}
+  button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  a{color:var(--lime)}
+
+  .app{display:grid;grid-template-columns:300px 1fr;height:100vh}
+  .side{border-right:1px solid var(--line);overflow:auto;padding:var(--pad)}
+  .main{overflow:auto;padding:var(--pad) 24px 80px}
+
+  h1{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+     margin:0 0 12px;font-weight:600}
+  h2{font-size:20px;margin:0 0 4px;font-weight:600}
+  .muted{color:var(--dim)}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+  .item{display:block;width:100%;text-align:left;border:1px solid var(--line);
+    border-radius:var(--r);padding:10px;margin-bottom:8px;background:var(--panel)}
+  .item:hover{border-color:var(--dim)}
+  .item.sel{border-color:var(--lime)}
+  .item b{display:block;font-weight:600;margin-bottom:3px}
+  .item small{color:var(--dim);font-size:12px}
+
+  .tag{font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;
+    border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+  .tag.draft{border-color:var(--dim)}
+  .tag.review{border-color:var(--carrot);color:var(--carrot)}
+  .tag.ready{border-color:var(--green);color:var(--green)}
+  .tag.redo{border-color:var(--pink);color:var(--pink)}
+  .tag.ok{border-color:var(--green);color:var(--green)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;margin-top:18px}
+  .card{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden}
+  .card.redo{border-color:var(--pink)}
+  .card.ok{border-color:var(--green)}
+  /* The card follows the canvas, so a 9:16 preview is not squashed into a 4:5 box.
+     --ar is set per render from the format on screen. */
+  .card img{width:100%;display:block;background:#000;aspect-ratio:var(--ar,4/5);object-fit:contain}
+  .card .b{padding:12px}
+  .card h3{margin:0 0 8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+  label{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--dim);margin:8px 0 3px}
+  textarea,input{width:100%;background:#0e0e11;color:var(--ink);border:1px solid var(--line);
+    border-radius:6px;padding:7px 9px;font:inherit;resize:vertical}
+  textarea:focus,input:focus{outline:none;border-color:var(--lime)}
+  textarea.edited,input.edited{border-color:var(--violet)}
+
+  .probs{margin-top:8px;border-left:2px solid var(--pink);padding-left:9px}
+  .probs div{color:var(--pink);font-size:12px;margin:2px 0}
+
+  .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 12px;
+    border-bottom:1px solid var(--line);margin-bottom:4px}
+  pre.log{white-space:pre-wrap;background:#0e0e11;border:1px solid var(--line);
+    border-radius:var(--r);padding:12px;font-size:12px;max-height:280px;overflow:auto;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .empty{color:var(--dim);padding:40px 0}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="side">
+    <h1>Posts</h1><div id="posts"></div>
+    <h1 style="margin-top:22px">Renders</h1><div id="renders"></div>
+  </div>
+  <div class="main" id="main"><div class="empty">Pick a post on the left.</div></div>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const el = (t, a = {}, ...kids) => {
+  const n = document.createElement(t);
+  for (const [k, v] of Object.entries(a)) {
+    if (k === 'class') n.className = v;
+    else if (k.startsWith('on')) n.addEventListener(k.slice(2), v);
+    else if (v !== null && v !== undefined) n.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c != null) n.append(c.nodeType ? c : String(c));
+  return n;
+};
+const api = async (p, opts) => {
+  const r = await fetch(p, opts);
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+};
+
+let STATE = null;        // /api/state
+let VIEW = null;         // {kind:'post'|'file', id}
+let FILE = null;         // the post file being edited, if any
+let DIRTY = false;
+// Which canvas is on screen. A post rendered to ig+tiktok is ONE post — the same words in
+// two crops — so the format is a view of it, not a second entry in the queue. Sticky
+// across posts on purpose: reviewing a batch for TikTok means staying in TikTok.
+let FMT = 'ig';
+
+/* ------------------------------------------------------------------ sidebar */
+
+async function loadState() {
+  STATE = await api('/api/state');
+  const files = $('#posts'), rendered = $('#renders');
+  files.replaceChildren(); rendered.replaceChildren();
+
+  if (!STATE.posts.length) files.append(el('div', { class: 'muted' }, 'No post files found.'));
+  for (const d of STATE.posts) {
+    if (d.error) { files.append(el('div', { class: 'muted' }, d.id + ' — ' + d.error)); continue; }
+    const redo = (d.slides || []).filter(s => s.status === 'redo').length;
+    files.append(el('button', {
+      class: 'item' + (VIEW?.kind === 'file' && VIEW.id === d.id ? ' sel' : ''),
+      onclick: () => open_('file', d.id),
+    },
+      el('b', {}, d.id),
+      el('div', { class: 'row' },
+        el('span', { class: 'tag ' + d.status }, d.status),
+        redo ? el('span', { class: 'tag redo' }, redo + ' redo') : null),
+      el('small', {}, d.rubric + ' · ' + d.axes.density + ' · ' + d.axes.theme)));
+  }
+
+  if (!STATE.renders.length) rendered.append(el('div', { class: 'muted' }, 'No compose runs in out/runs yet.'));
+  for (const p of STATE.renders) {
+    // One entry per POST. The formats it was rendered into are chips, not separate rows.
+    const lead = p.formats.find(f => f.id === FMT) || p.formats[0];
+    posts.append(el('button', {
+      class: 'item' + (VIEW?.kind === 'post' && p.formats.some(f => f.run === VIEW.id) ? ' sel' : ''),
+      onclick: () => open_('post', lead.run),
+    },
+      el('b', {}, p.hook || p.key),
+      el('div', { class: 'row' }, p.formats.map(f => el('span', { class: 'tag' }, f.id))),
+      // The axes are what tell two posts apart when they share a hook — same rubric at a
+      // different density or ref is a different post, and the headline alone hides that.
+      el('small', {}, [p.rubric, p.density, p.theme, p.ref ? 'ref ' + p.ref : null,
+        p.slides + ' slides'].filter(Boolean).join(' · '))));
+  }
+}
+
+/* ------------------------------------------------------------------ views */
+
+async function open_(kind, id) {
+  if (DIRTY && !confirm('You have unsaved edits. Discard them?')) return;
+  DIRTY = false; VIEW = { kind, id }; FILE = null;
+  await loadState();
+  kind === 'post' ? await showPost(id) : await showPostFile(id);
+}
+
+async function showPost(id) {
+  const post = await api('/api/post/' + encodeURIComponent(id));
+  if (!post.siblings.some(f => f.id === FMT)) FMT = post.siblings[0]?.id ?? 'ig';
+  const draw = () => showPost(id);
+  setAspect();
+
+  $('#main').replaceChildren(
+    el('div', { class: 'bar' },
+      el('h2', {}, post.hook || post.deck),
+      el('div', { class: 'row' },
+        el('span', { class: 'muted' }, post.rubric + ' · ' + post.density + ' · ' + post.theme
+          + (post.ref ? ' · ref ' + post.ref : '')),
+        formatBar(post.siblings, draw),
+        el('button', { onclick: () => open_('file', post.rubric) }, 'Edit the words →'))),
+    el('div', { class: 'muted', style: 'margin-top:10px' },
+      'A render, read-only. Open its post to mark slides and change copy.'),
+    el('div', { class: 'grid' }, post.slides.map(s => el('div', { class: 'card' },
+      pngFor(s.png) ? el('img', { src: pngFor(s.png), loading: 'lazy' }) : null,
+      el('div', { class: 'b' },
+        el('h3', {}, (s.i + 1) + ' · ' + s.layout),
+        Object.entries(s.copy).map(([k, v]) =>
+          el('div', {}, el('label', {}, k), el('div', {}, fmt(v)))),
+        s.problems.length
+          ? el('div', { class: 'probs' }, s.problems.map(p => el('div', {}, p.what)))
+          : null)))));
+}
+
+/**
+ * The format switch. It never re-fetches: every slide arrives with one image per format,
+ * so switching is a src swap. That matters for the job this dashboard exists to do —
+ * checking whether the same words survive both crops means flipping between them fast.
+ */
+function formatBar(siblings, onSwitch) {
+  if (siblings.length < 2) return siblings.length ? el('span', { class: 'tag' }, siblings[0].id) : null;
+  return el('div', { class: 'row' }, siblings.map(f => el('button', {
+    class: FMT === f.id ? 'on' : '',
+    onclick: () => { FMT = f.id; onSwitch(); },
+  }, f.id)));
+}
+
+/** Pick this format's image, falling back to whatever exists so a card is never blank. */
+const pngFor = pngs => (pngs && (pngs[FMT] ?? Object.values(pngs)[0])) || null;
+
+/** The aspect the cards should hold. Kept here so adding a format needs one line. */
+const AR = { ig: '4/5', tiktok: '9/16' };
+const setAspect = () => document.documentElement.style.setProperty('--ar', AR[FMT] ?? '4/5');
+
+const fmt = v => Array.isArray(v)
+  ? v.map(x => (x && typeof x === 'object' ? (x.title || x.label || JSON.stringify(x)) : x)).join(' · ')
+  : String(v);
+
+async function showPostFile(id) {
+  const d = await api('/api/post/' + encodeURIComponent(id));
+  if (d.error) { $('#main').replaceChildren(el('div', { class: 'empty' }, d.error)); return; }
+  FILE = d.post;
+  render(d);
+}
+
+function render(d) {
+  setAspect();
+  const main = $('#main');
+  const counts = d.slides.reduce((a, s) => (a[s.status] = (a[s.status] || 0) + 1, a), {});
+
+  main.replaceChildren(
+    el('div', { class: 'bar' },
+      el('h2', {}, FILE.id),
+      el('div', { class: 'row' },
+        el('span', { class: 'muted' }, FILE.rubric + ' · ' + FILE.axes.density
+          + ' · ' + FILE.axes.theme + ' · ' + FILE.axes.formats.join('+')),
+        formatBar(d.siblings || [], () => render(d)),
+        ...['draft', 'review', 'ready'].map(s => el('button', {
+          class: FILE.status === s ? 'on' : '',
+          onclick: () => { FILE.status = s; save(); },
+        }, s)),
+        el('button', { onclick: save }, 'Save'),
+        el('button', { onclick: rerender }, 'Re-render (free)'),
+        el('span', { class: 'muted' },
+          (counts.ok || 0) + ' ok · ' + (counts.redo || 0) + ' redo · ' + (counts.unseen || 0) + ' unseen'))),
+
+    d.problems.length
+      ? el('div', { class: 'probs', style: 'margin-top:12px' },
+          d.problems.map(p => el('div', {}, (p.level === 'warn' ? '· ' : '') + p.what)))
+      : null,
+
+    el('div', { id: 'log' }),
+    el('div', { class: 'grid' }, d.slides.map(slideCard)));
+}
+
+function slideCard(s) {
+  // The slide IS the post's slide — edits go straight into it. There is no patch layer and
+  // no template underneath: a rubric holds shape, a post holds words, so the words here
+  // have nothing to be a diff against.
+  const entry = FILE.slides[s.i];
+
+  const setStatus = v => { entry.status = v; DIRTY = true; save(); };
+  const edit = (k, v) => { entry[k] = v; DIRTY = true; };
+
+  return el('div', { class: 'card ' + (entry.status === 'unseen' ? '' : entry.status) },
+    pngFor(s.png) ? el('img', { src: pngFor(s.png), loading: 'lazy' }) : null,
+    el('div', { class: 'b' },
+      el('div', { class: 'row' },
+        el('h3', { style: 'flex:1;margin:0' }, (s.i + 1) + ' · ' + s.layout),
+        el('button', { class: entry.status === 'ok' ? 'on' : '', onclick: () => setStatus('ok') }, 'ok'),
+        el('button', { class: entry.status === 'redo' ? 'on' : '', onclick: () => setStatus('redo') }, 'redo')),
+
+      // Only the text fields are editable. Arrays and colours stay read-only here: a
+      // comma-joined items list round-tripping through a text box is a data-loss bug
+      // waiting to happen, and the accent belongs to the theme, not to the copy.
+      Object.entries(s.copy).map(([k, v]) => typeof v === 'string'
+        ? el('div', {},
+            el('label', {}, k),
+            el('textarea', {
+              rows: Math.min(4, Math.ceil(v.length / 42)),
+              oninput: e => { edit(k, e.target.value); e.target.className = 'edited'; },
+            }, v))
+        : el('div', {}, el('label', {}, k + ' · read-only'), el('div', { class: 'muted' }, fmt(v)))),
+
+      el('label', {}, 'note'),
+      el('input', {
+        value: entry.note || '', placeholder: 'why it needs redoing',
+        oninput: e => { entry.note = e.target.value; DIRTY = true; },
+      }),
+
+      s.problems.length
+        ? el('div', { class: 'probs' }, s.problems.map(p => el('div', {}, p.what)))
+        : null));
+}
+
+/* ------------------------------------------------------------------ actions */
+
+async function save() {
+  await api('/api/post/' + encodeURIComponent(FILE.id), {
+    method: 'PUT', headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(FILE),
+  });
+  DIRTY = false;
+  await loadState();
+  await showPostFile(FILE.id);
+}
+
+async function rerender() {
+  const log = $('#log');
+  log.replaceChildren(el('pre', { class: 'log' }, 'rendering…'));
+  if (DIRTY) await save();
+  const r = await api('/api/post/' + encodeURIComponent(FILE.id) + '/render', { method: 'POST' });
+  const head = r.code === 0 ? '✓ rendered, nothing spent'
+    : r.code === 2 ? '✗ refused: this would need NEW art. Nothing was spent — run compose yourself to buy it.'
+    : '✗ failed (exit ' + r.code + ')';
+  log.replaceChildren(el('pre', { class: 'log' }, head + '\n\n' + r.log));
+  if (r.code === 0) await showPostFile(FILE.id);
+}
+
+addEventListener('beforeunload', e => { if (DIRTY) e.preventDefault(); });
+loadState();
+</script>
+</body>
+</html>

@@ -1,14 +1,40 @@
 #!/usr/bin/env python3
-"""tokens/tokens.json -> tokens/tokens.css (custom properties + type utility classes)."""
-import json, re
+"""products/<id>/tokens/tokens.json -> tokens.css (custom properties + type utility classes).
 
-T = json.load(open('tokens/tokens.json'))
+    python3 tools/build_css.py            # the default product
+    python3 tools/build_css.py --product x
+
+Every product owns its tokens, so the paths are derived from the product id rather than
+hardcoded. The @import at the top of the output points back at the SHARED font pool, so
+its ../ depth is a function of how deep the product directory sits — computed, not
+written by hand. Nothing in the render path depends on getting it right (both readers
+strip that line whole), but a stylesheet you can open in a browser is worth the four
+lines it costs.
+"""
+import json, os, re, sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+argv = sys.argv[1:]
+product = argv[argv.index('--product') + 1] if '--product' in argv else 'cast'
+
+tokens_dir = os.path.join(ROOT, 'products', product, 'tokens')
+src = os.path.join(tokens_dir, 'tokens.json')
+dst = os.path.join(tokens_dir, 'tokens.css')
+if not os.path.isfile(src):
+    have = sorted(d for d in os.listdir(os.path.join(ROOT, 'products'))
+                  if os.path.isdir(os.path.join(ROOT, 'products', d)))
+    sys.exit(f'no tokens.json for product "{product}" at {src} — have: {", ".join(have)}')
+
+fonts = os.path.relpath(os.path.join(ROOT, 'assets/fonts/fonts.css'), tokens_dir)
+
+T = json.load(open(src))
 
 def kebab(s):
     return re.sub(r'(?<=[a-z0-9])(?=[A-Z])', '-', s).lower()
 
-lines = ["/* (cast) design tokens — generated from tokens/tokens.json. Do not edit by hand. */",
-         '@import url("../assets/fonts/fonts.css");', "", ":root {"]
+lines = [f"/* {product} design tokens — generated from tokens.json. Do not edit by hand. */",
+         f'@import url("{fonts}");', "", ":root {"]
 
 for grp, vals in T['color'].items():
     if grp == 'alpha':
@@ -48,5 +74,5 @@ for grp, styles in T['typography'].items():
             d.append(f"text-transform: {s['transform']}")
         lines.append(f"{cls} {{ " + "; ".join(d) + "; }")
 
-open('tokens/tokens.css', 'w').write("\n".join(lines) + "\n")
-print("wrote tokens/tokens.css")
+open(dst, 'w').write("\n".join(lines) + "\n")
+print(f"wrote {os.path.relpath(dst, ROOT)}")

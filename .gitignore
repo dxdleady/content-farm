@@ -1,6 +1,12 @@
 .env
 node_modules/
-out/
+# out/* rather than out/ — git cannot re-include anything inside an excluded DIRECTORY,
+# so the negation below only works if the directory itself is never excluded.
+out/*
+# …except the posts. They are generated INTO out/, but they are authored words — the most
+# expensive thing here to reproduce — and losing them to a stray `rm -rf out` or an
+# untracked working copy is not a risk worth taking for tidiness.
+!out/posts/
 assets/generated/
 .DS_Store
 .idea/

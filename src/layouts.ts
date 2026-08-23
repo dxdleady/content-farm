@@ -2,39 +2,88 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PRODUCTS, DEFAULT_PRODUCT } from './product.ts';
 import type {
-  AccentToken, GroundToken, InkClass, LayoutName, RenderSlide, Tokens,
+  AccentToken, GroundToken, InkClass, InkMap, LayoutName, Product, ProductId,
+  RenderSlide, Tokens,
 } from './types.ts';
+
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-const icons: Record<string, string> = Object.fromEntries(
-  readdirSync(join(ROOT, 'assets/icons-clean'))
-    .filter(f => f.endsWith('.svg'))
-    .map(f => [f.slice(0, -4), readFileSync(join(ROOT, 'assets/icons-clean', f), 'utf8')])
-);
-const wordmark = readFileSync(join(ROOT, 'assets/logos/cast-wordmark.svg'), 'utf8');
-const waveform = readFileSync(join(ROOT, 'assets/images/waveform-strip.svg'), 'utf8');
 
-export const icon = (n: string): string => icons[n] ?? '';
+/* ═══════════════════════════════════════════════════════════════════════════
+   Brand — everything a product supplies to the renderer
+   ═══════════════════════════════════════════════════════════════════════════
+   These four assets used to be module-scope `const`s read eagerly at import, which
+   meant the module WAS (cast): two products could not be rendered by one process.
+   They are read per product now, and memoised, so the cost is unchanged for a run
+   that only ever touches one brand — which is every run today. */
+
+export type Brand = {
+  icons: Record<string, string>;
+  wordmark: string;
+  tokens: Tokens;
+  ink: InkMap;
+  /** The product's own token names. Strings, not AccentToken — that union is the
+   *  incumbent's vocabulary, and a second brand shares none of it. */
+  accents: string[];
+  handle: string;
+};
+
+const brands = new Map<string, Brand>();
+
+export function brandFor(p: Product): Brand {
+  const hit = brands.get(p.id);
+  if (hit) return hit;
+  const iconDir = p.icons ?? join(ROOT, 'assets/icons-clean');
+  const built: Brand = {
+    icons: Object.fromEntries(
+      readdirSync(iconDir)
+        .filter(f => f.endsWith('.svg'))
+        .map(f => [f.slice(0, -4), readFileSync(join(iconDir, f), 'utf8')])),
+    wordmark: readFileSync(p.wordmark, 'utf8'),
+    tokens: JSON.parse(readFileSync(p.tokensJson, 'utf8')) as Tokens,
+    ink: p.ink,
+    accents: p.accents,
+    handle: p.handle,
+  };
+  brands.set(p.id, built);
+  return built;
+}
+
+/**
+ * Build a renderer bound to one brand.
+ *
+ * The 32 layout bodies below are unchanged — not one character. They already read
+ * `icon`, `wordmark`, `inkFor`, `fillOf`, `ink` and `ACCENTS` as free variables, so
+ * closing over them costs no edit inside the templates. That matters more than it
+ * looks: the whitespace inside those template literals IS the emitted HTML, so a
+ * re-indent would move all 326 goldens. Nothing here is re-indented for exactly
+ * that reason, which also keeps the diff to the two inserted blocks.
+ */
+export function makeRenderer(brand: Brand) {
+const icons = brand.icons;
+const wordmark = brand.wordmark;
+
+const icon = (n: string): string => icons[n] ?? '';
 
 // Token accents, in the order the design system lists them. Colour-forward layouts
 // walk this list so a tag row / bento grid never repeats a hue.
-export const ACCENTS: AccentToken[] = ['superlime', 'pink', 'purpleblue', 'green', 'carrot',
-                        'violet65', 'mainorange', 'blue67', 'lightpink'];
+const ACCENTS = brand.accents;
 const cvar = (a: AccentToken | GroundToken): string =>
   (a.startsWith('background-') ? `var(--c-${a})` : `var(--c-accent-${a})`);
 
 // Accent fills carry text, so pick the readable ink for each one instead of
 // assuming dark-on-colour. sRGB relative luminance, WCAG threshold.
-const TOKENS = JSON.parse(readFileSync(join(ROOT, 'tokens/tokens.json'), 'utf8')) as Tokens;
+const TOKENS = brand.tokens;
 const lum = (hex: string) => {
   const [r, g, b] = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
     .map(c => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)) as [number, number, number];
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 const ratio = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
-export const inkFor = (accent: AccentToken | GroundToken | string): string => {
+const inkFor = (accent: AccentToken | GroundToken | string): string => {
   const hex = TOKENS.color.accent[accent]
     ?? TOKENS.color.background[String(accent).replace('background-', '')];
   if (!hex) return 'var(--c-text-dark)';
@@ -45,21 +94,28 @@ export const inkFor = (accent: AccentToken | GroundToken | string): string => {
 const rotate = <T,>(list: T[], offset = 0) => (i: number): T => list[(i + offset) % list.length]!;
 // A chip/row painted in the same colour as the slide ground disappears, so the
 // ground is removed from the rotation before anything cycles through it.
-const paletteFor = (s: RenderSlide): AccentToken[] => (s.palette ?? ACCENTS).filter(a => a !== s.ground);
+// AccentToken[] on the way out because that is what the layouts consume; the product's
+// own names arrive as strings. The cast is where the two vocabularies meet, and it is
+// safe for the same reason cvar() is: these names are only ever interpolated into a
+// --c-accent-<name> custom property, and validateBrand() has already resolved every one
+// of them against the product's own tokens.json.
+const paletteFor = (s: RenderSlide): AccentToken[] =>
+  ((s.palette ?? ACCENTS) as AccentToken[]).filter(a => a !== s.ground);
 const esc = (s: unknown): string => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
-// carousel.css only ships these ink classes — a typo here silently renders white text
-const INK_CLASSES = new Set(['accent-pink', 'accent-lime', 'accent-carrot', 'accent-purple', 'accent-green']);
-// ink-class -> the actual accent colour var (cvar expects a bare token, mark/ink expect a class)
-const FILL: Record<string, string> = { 'accent-pink':'var(--c-accent-pink)', 'accent-lime':'var(--c-accent-superlime)',
-  'accent-carrot':'var(--c-accent-carrot)', 'accent-purple':'var(--c-accent-purpleblue)',
-  'accent-green':'var(--c-accent-green)' };
+// One map, not three. This was INK_CLASSES (which classes exist) + FILL (class -> colour
+// var) + TOKEN_OF (class -> bare token), and they were not independent: FILL[c] is always
+// cvar(TOKEN_OF[c]), and both mirror the five rules at carousel.css:65-69. The map lives
+// on the product because the vocabulary is a brand decision — tokens.json carries nine
+// accents, only five earn a class, and calling one `accent-purple` rather than
+// `accent-purpleblue` is a choice, not data. test/unit/layouts.test.ts checks it against
+// the stylesheet so the two cannot drift.
+const INK = brand.ink;
+const INK_CLASSES = new Set(Object.keys(INK));
 /** The one legitimate bridge between the two accent domains — quote() passes a bare token. */
-const fillOf = (c: InkClass | AccentToken): string => FILL[c] ?? cvar(c as AccentToken);
-// ink-class -> bare token name, for inkFor() (which wants 'superlime', not 'accent-lime')
-const TOKEN_OF: Record<string, AccentToken> = { 'accent-pink':'pink', 'accent-lime':'superlime', 'accent-carrot':'carrot',
-  'accent-purple':'purpleblue', 'accent-green':'green' };
-const inkClassInk = (c: InkClass): string => inkFor(TOKEN_OF[c] ?? c);
+const fillOf = (c: InkClass | AccentToken): string => cvar((INK[c as InkClass] ?? c) as AccentToken);
+/** Readable ink over an accent fill; inkFor() wants 'superlime', not 'accent-lime'. */
+const inkClassInk = (c: InkClass): string => inkFor(INK[c] ?? c);
 const ink = (c?: InkClass): InkClass | undefined => {
   if (c && !INK_CLASSES.has(c)) throw new Error(`unknown accent class "${c}" — have: ${[...INK_CLASSES].join(', ')}`);
   return c;
@@ -85,7 +141,7 @@ const chrome = (s: RenderSlide): string => `
 
 // Off by default — a handle on every slide is noise. Set "foot": true where it earns its place.
 const foot = (s: RenderSlide): string => s.foot
-  ? `<footer class="foot"><span class="foot__mark">${icon('sound')}${esc(s.handle ?? 'mubert.com/cast')}</span></footer>`
+  ? `<footer class="foot"><span class="foot__mark">${icon('sound')}${esc(s.handle ?? brand.handle)}</span></footer>`
   : '<span class="foot foot--empty"></span>';
 
 const rings = (n = 4, size = 420, x = '72%', y = '18%'): string =>
@@ -118,11 +174,14 @@ const bleed = (dir: string, color: string): string =>
 type LayoutFn<K extends LayoutName> = (s: Extract<RenderSlide, { layout: K }>) => string;
 type LayoutTable = { [K in LayoutName]: LayoutFn<K> };
 
-export const layouts: LayoutTable = {
+const layouts: LayoutTable = {
   // Big opener: display headline over a brand gradient.
   cover(s) {
     return `
-      ${s.bgFile ? art(s) : `<div class="bleed" style="background:${s.gradient}"></div>`}
+      ${s.bgFile ? art(s)
+        // No art and no gradient means nothing to paint — emit no element rather than a
+        // bleed whose background is the literal text "undefined".
+        : s.gradient ? `<div class="bleed" style="background:${s.gradient}"></div>` : ''}
       ${rings(5, 460, '78%', '12%')}
       ${chrome(s)}
       <div class="body body--tb">
@@ -209,7 +268,7 @@ export const layouts: LayoutTable = {
         <span class="splash__mark">${wordmark}</span>
         ${s.title ? `<h2 class="splash__line">${mark(s.title, s.accent ?? 'accent-lime')}</h2>` : ''}
         <span class="splash__gap splash__gap--b"></span>
-        <span class="splash__badge">${icon('link')}${esc(s.handle ?? 'mubert.com/tools/cast')}</span>
+        <span class="splash__badge">${icon('link')}${esc(s.handle ?? brand.handle)}</span>
       </div>`;
   },
 
@@ -229,14 +288,14 @@ export const layouts: LayoutTable = {
   tags(s) {
     const pick = rotate(paletteFor(s), s.paletteOffset ?? 0);
     const chips = s.items.map((t, i) => {
-      const a = typeof t === 'object' ? t.accent : pick(i);
+      // An object item may omit its accent; fall back to the rotation exactly as a
+      // string item does. Before this, `a` went undefined and cvar() threw on
+      // .startsWith — the whole slide, not just the chip.
+      const a = (typeof t === 'object' ? t.accent : undefined) ?? pick(i);
       const label = typeof t === 'object' ? t.label : t;
       const ghost = s.style2 === 'ghost' || (typeof t === 'object' && t.ghost);
       const sm = (typeof t === 'object' && t.small) || String(label).length > 14 ? ' tag--sm' : '';
-      // TODO(bug-tags-accent): an object item with no `accent` makes `a` undefined, and
-      // cvar(undefined) throws on .startsWith. Pinned by the golden
-      // edge--tags--object-without-accent; the fix belongs to Phase 4.
-      return `<span class="tag${ghost ? ' tag--ghost' : ''}${sm}" style="--tag:${cvar(a!)};--tag-ink:${inkFor(a!)}">${esc(label)}</span>`;
+      return `<span class="tag${ghost ? ' tag--ghost' : ''}${sm}" style="--tag:${cvar(a)};--tag-ink:${inkFor(a)}">${esc(label)}</span>`;
     }).join('');
     return `
       ${art(s)}
@@ -447,22 +506,19 @@ const shells = {
       <span class="feat__kick kicker kicker--paren">( ${esc(s.kicker ?? 'Features')} )</span>
       <div class="stack"><h2 class="h-display h-display--m">${mark(s.title, s.accent??'accent-lime')}</h2><div class="iconrow">${cells}</div></div></div>${foot(s)}`;
   },
-  // TODO(bug-accent-domain): `a` here is an ink class, but cvar() builds
-  // var(--c-accent-<token>) — so this emits var(--c-accent-accent-lime),
-  // which is invalid CSS and silently dropped. Phase 4.
   meter(s) {
     const a = s.accent ?? 'accent-carrot';
     const segs = s.segments ?? [{label:s.left??'',v:s.pct??50,accent:a},{label:s.right??'',v:100-(s.pct??50),accent:'accent-purple'}];
     const total = segs.reduce((t,x)=>t+x.v,0);
     return `${chrome(s)}<div class="body body--tb">${kicker(s)}
       <div class="stack"><h2 class="h-display h-display--m">${mark(s.title, a)}</h2>
-      <div class="bar">${segs.map(x=>`<span class="bar__s" style="flex:${x.v};background:${cvar((x.accent??a) as AccentToken)}"></span>`).join('')}</div>
-      <div class="barkey">${segs.map(x=>`<span class="barkey__i"><span class="barkey__sw" style="background:${cvar((x.accent??a) as AccentToken)}"></span>${esc(x.label)}<b>${Math.round(x.v/total*100)}%</b></span>`).join('')}</div>
+      <div class="bar">${segs.map(x=>`<span class="bar__s" style="flex:${x.v};background:${fillOf(x.accent??a)}"></span>`).join('')}</div>
+      <div class="barkey">${segs.map(x=>`<span class="barkey__i"><span class="barkey__sw" style="background:${fillOf(x.accent??a)}"></span>${esc(x.label)}<b>${Math.round(x.v/total*100)}%</b></span>`).join('')}</div>
       </div></div>${foot(s)}`;
   },
   timeline(s) {
     const a = s.accent ?? 'accent-lime';
-    const rows = s.items.map((t,i)=>`<div class="vt__r"><span class="vt__dot" style="background:${cvar(a as unknown as AccentToken)}"></span><span class="vt__n">${String(i+1).padStart(2,'0')}</span><span class="vt__t">${esc(t)}</span></div>`).join('');
+    const rows = s.items.map((t,i)=>`<div class="vt__r"><span class="vt__dot" style="background:${fillOf(a)}"></span><span class="vt__n">${String(i+1).padStart(2,'0')}</span><span class="vt__t">${esc(t)}</span></div>`).join('');
     return `${chrome(s)}<div class="body body--tb">${kicker(s)}
       <div class="stack"><h2 class="h-display h-display--m">${mark(s.title, a)}</h2>
       <div class="vt">${rows}</div></div></div>${foot(s)}`;
@@ -492,7 +548,7 @@ const shells = {
     const a = s.accent ?? 'accent-lime';
     return `${art(s)}${chrome(s)}
       <div class="chyron">
-        <span class="chyron__bar" style="background:${cvar(a as unknown as AccentToken)}"></span>
+        <span class="chyron__bar" style="background:${fillOf(a)}"></span>
         <span class="chyron__k">${esc(s.kicker ?? '')}</span>
         <h1 class="chyron__t">${mark(s.title, a)}</h1>
       </div>`;
@@ -519,7 +575,7 @@ const shells = {
   },
 };
 
-export function renderSlide(s: RenderSlide): string {
+function renderSlide(s: RenderSlide): string {
   // The one dynamic index in the file. TypeScript cannot prove that layouts[s.layout]
   // accepts this particular s across the lookup, so the narrowing is asserted once here
   // rather than weakened everywhere else.
@@ -534,4 +590,32 @@ export function renderSlide(s: RenderSlide): string {
     ? `background:${cvar(s.ground)};color:${inkFor(s.ground)};`
     : '';
   return `<div class="slide${theme}" style="${ground}${s.style ?? ''}">${fn(s)}${s.minimal ? '' : '<span class="grain"></span>'}</div>`;
+}
+
+  return { layouts, renderSlide, icon, inkFor, ACCENTS };
+}
+
+/* ------------------------------------------------------------------ bindings */
+
+// The incumbent, bound at module scope so every existing caller keeps working and
+// renderSlide keeps its one-parameter signature. That signature is load-bearing:
+// test/capture-html.ts and test/helpers/page.ts are the frozen arbiters this whole
+// refactor is measured against, and they must be able to go on calling renderSlide(slide).
+const CAST = makeRenderer(brandFor(PRODUCTS[DEFAULT_PRODUCT]));
+
+export const layouts = CAST.layouts;
+export const icon = CAST.icon;
+export const inkFor = CAST.inkFor;
+export const ACCENTS = CAST.ACCENTS;
+export const renderSlide = CAST.renderSlide;
+
+const renderers = new Map<string, ReturnType<typeof makeRenderer>>([[ 'cast', CAST ]]);
+
+/** A renderer for any product. Tools bind this once, next to formatFromArgv(). */
+export function rendererFor(p: Product) {
+  const hit = renderers.get(p.id);
+  if (hit) return hit;
+  const built = makeRenderer(brandFor(p));
+  renderers.set(p.id, built);
+  return built;
 }

@@ -1,0 +1,200 @@
+{
+  "id": "edit-evening",
+  "product": "cast",
+  "name": "The evening the edit takes",
+  "bucket": "product",
+  "promise": "Where an evening of editing actually goes, why searching by ear is the slow part, and what one pass removes.",
+  "rubric": "problem-fix",
+  "status": "draft",
+  "axes": {
+    "density": "full",
+    "theme": "color",
+    "ref": null,
+    "formats": [
+      "ig",
+      "tiktok"
+    ]
+  },
+  "note": "First post written to the hook + slide-plan rules. Hook move: loss. Trigger word: stealing (Helper). Pays its promise on slide 2.",
+  "slides": [
+    {
+      "layout": "statement",
+      "kicker": "If you edit your own",
+      "accent": "accent-lime",
+      "title": "Your edit is *stealing* an evening a week",
+      "status": "unseen",
+      "art": {
+        "s": "a wall clock with its hands blurred into a single continuous ring, standing alone on a bare studio floor",
+        "c": "the clock sits centre-right in the middle band of the frame; the entire lower-left third is bare empty floor, one flat unbroken colour with no objects and no pattern",
+        "k": "hot fuchsia and cream dominant"
+      }
+    },
+    {
+      "layout": "index",
+      "kicker": "Where the evening goes",
+      "accent": "accent-carrot",
+      "title": "Nine jobs, one *at a time*",
+      "items": [
+        {
+          "title": "Find the tangent",
+          "meta": "Scrub, listen, overshoot, scrub back"
+        },
+        {
+          "title": "Cut the filler",
+          "meta": "Every um and uh, one at a time"
+        },
+        {
+          "title": "Trim dead air",
+          "meta": "Hundreds of gaps, none worth keeping"
+        },
+        {
+          "title": "Shorten the pauses",
+          "meta": "A beat too long, everywhere"
+        },
+        {
+          "title": "Clean the room",
+          "meta": "Hum you stopped hearing an hour ago"
+        },
+        {
+          "title": "Bleep one word",
+          "meta": "Find it, cut it, time the tone"
+        },
+        {
+          "title": "Mark the chapters",
+          "meta": "Re-listen to find where it turns"
+        },
+        {
+          "title": "Choose the music",
+          "meta": "Auditioning tracks is not editing"
+        },
+        {
+          "title": "Level the file",
+          "meta": "Then listen to the whole thing again"
+        }
+      ],
+      "status": "unseen"
+    },
+    {
+      "layout": "claim",
+      "kicker": "Notice what they have in common",
+      "accent": "accent-carrot",
+      "title": "Every one of them is a *search*",
+      "status": "unseen"
+    },
+    {
+      "layout": "comparison",
+      "kicker": "And searching is the slow part",
+      "accent": "accent-purple",
+      "aTitle": "A waveform",
+      "a": [
+        "Is a picture of loudness, not words",
+        "So you find a sentence by listening for it",
+        "Every search plays back in real time"
+      ],
+      "bTitle": "A transcript",
+      "b": [
+        "Puts the words *on screen*",
+        "So you find the sentence by reading it",
+        "Every search runs at the speed *you read*"
+      ],
+      "status": "unseen"
+    },
+    {
+      "layout": "steps",
+      "kicker": "The shorter route",
+      "accent": "accent-lime",
+      "title": "Read it, select it, *delete* it",
+      "items": [
+        "Upload the recording and read the transcript that comes back",
+        "Select the tangent the way you would in any document",
+        "Delete \u2014 the audio under those words goes with them, crossfade included"
+      ],
+      "status": "unseen",
+      "art": {
+        "s": "a single clean ribbon of tape lifting free from a dense tangle, the tangle confined to the very top edge of the frame",
+        "c": "the tangle is a narrow band across the TOP of the frame and nothing else; the whole lower two thirds is bare empty studio floor, one unbroken colour, no debris",
+        "k": "acid lime-green against cream"
+      }
+    },
+    {
+      "layout": "bento",
+      "kicker": "What that one pass covers",
+      "accent": "accent-pink",
+      "title": "Eight of the nine, *automatically*",
+      "variant": "k",
+      "items": [
+        {
+          "title": "Filler-word removal",
+          "icon": "eraser"
+        },
+        {
+          "title": "Silence removal",
+          "icon": "pause"
+        },
+        {
+          "title": "Shorten pauses",
+          "icon": "chevron-up"
+        },
+        {
+          "title": "Voice cleanup",
+          "icon": "sliders"
+        },
+        {
+          "title": "Censoring & bleeping",
+          "icon": "close"
+        },
+        {
+          "title": "Podcast chapters",
+          "icon": "file"
+        },
+        {
+          "title": "Music & ducking",
+          "icon": "music"
+        },
+        {
+          "title": "Loudness presets",
+          "icon": "zap"
+        }
+      ],
+      "status": "unseen",
+      "art": {
+        "s": "an empty studio backdrop with one soft sweep of light across it and no objects at all",
+        "c": "the entire frame is a plain unbroken sweep of colour with nothing in it \u2014 this slide carries eight tiles of type and the picture must stay out of their way",
+        "k": "pastel baby-blue dominant"
+      }
+    },
+    {
+      "layout": "callout",
+      "kicker": "The obvious worry",
+      "accent": "accent-purple",
+      "title": "Automatic cuts will *butcher* it",
+      "note": "Every cut is a line of text you can read before it happens \u2014 and put back after.",
+      "status": "unseen"
+    },
+    {
+      "layout": "checklist",
+      "kicker": "So you know where it stops",
+      "accent": "accent-carrot",
+      "title": "What it does *not* do",
+      "items": [
+        "No video editing \u2014 this is audio only",
+        "No publishing: you still upload to your own host",
+        "Not a DAW, so no multitrack mixing or mastering",
+        "Music you bring yourself keeps its own licence"
+      ],
+      "status": "unseen"
+    },
+    {
+      "layout": "splash",
+      "accent": "accent-lime",
+      "foot": true,
+      "title": "Get the *evening* back.",
+      "status": "unseen",
+      "art": {
+        "s": "a desk lamp switched off, the room behind it empty and settled",
+        "c": "the lamp sits low and to the right, small in frame; the whole centre and upper half is bare empty backdrop so centred type sits on nothing",
+        "k": "hot fuchsia against cream"
+      }
+    }
+  ]
+}

@@ -37,9 +37,13 @@ function grainDataUri(seed = 7) {
 }
 
 const FONTS = fontCss();
-const TOKENS = readFileSync(join(ROOT, 'tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
+// The one sanctioned edit to this file during the product move: tokens.css changed
+// address. Byte-neutral because the @import line it carries is stripped whole — newline
+// included — by the same regex here and in src/assets.ts, so the ../ depth inside it
+// never reaches a rendered page.
+const TOKENS = readFileSync(join(ROOT, 'products/cast/tokens/tokens.css'), 'utf8').replace(/@import[^\n]*\n/, '');
 const SHEET = readFileSync(join(ROOT, 'src/carousel.css'), 'utf8');
-const GRAIN = grainDataUri();
+export const GRAIN = grainDataUri();
 
 type Format = { id: string; w: number; h: number };
 
@@ -51,7 +55,7 @@ export const renderPage = (body: string, fmt: Format): string =>
 <style>html,body{margin:0;background:#000}:root{--grain:${GRAIN}}</style>
 </head><body>${body}</body></html>`;
 
-/** tools/compose.mjs:143 — the shape shared by feed, fx, ref-slides and rubric-sets. */
+/** tools/compose.ts:143 — the shape shared by feed, fx, ref-slides and rubric-sets. */
 export const composePage = (inner: string, fmt: Format): string =>
   `<!doctype html><html><head><meta charset="utf-8"><style>${FONTS}</style><style>${TOKENS}</style><style>${SHEET}</style><style>${formatCss(fmt as never)}</style><style>html,body{margin:0;background:#000}</style></head><body>${inner}</body></html>`;
 

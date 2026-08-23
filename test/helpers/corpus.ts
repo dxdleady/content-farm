@@ -14,6 +14,9 @@ import { fileURLToPath } from 'node:url';
 import { RUBRICS } from './sut.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+// Spelled out rather than read off the product registry: this side of the harness is the
+// arbiter, and it must not be able to follow the thing under test to a new address.
+const DECKS = join(ROOT, 'products/cast/copy/decks');
 
 export type Case = { name: string; slide: Record<string, unknown> };
 
@@ -22,9 +25,9 @@ const HANDLE = 'mubert.com/tools/cast';
 /** Authored decks, injected exactly the way src/render.mjs injects them. */
 function deckCases(): Case[] {
   const out: Case[] = [];
-  for (const f of readdirSync(join(ROOT, 'src')).sort()) {
+  for (const f of readdirSync(DECKS).sort()) {
     if (!/^(deck-.*|content)\.json$/.test(f)) continue;
-    const deck = JSON.parse(readFileSync(join(ROOT, 'src', f), 'utf8'));
+    const deck = JSON.parse(readFileSync(join(DECKS, f), 'utf8'));
     const total = deck.slides.length;
     deck.slides.forEach((raw: Record<string, unknown>, i: number) => {
       out.push({
@@ -37,7 +40,7 @@ function deckCases(): Case[] {
 }
 
 /**
- * Rubric skeletons, transformed the way tools/compose.mjs transforms them: `art` and any
+ * Rubric skeletons, transformed the way tools/compose.ts transforms them: `art` and any
  * authored `theme` are dropped, minimal is forced on, and index/total/handle are injected.
  * The theme/accent rewriting compose does per --theme is deliberately NOT applied — this
  * corpus exercises the layouts, and the theme permutations are covered by the edge cases.
@@ -57,7 +60,7 @@ function rubricCases(): Case[] {
   return out;
 }
 
-/** The hand-built one-of-every-layout table, mirrored from tools/layout-catalogue.mjs. */
+/** The hand-built one-of-every-layout table, mirrored from tools/layout-catalogue.ts. */
 function catalogueCases(): Case[] {
   const rows = JSON.parse(readFileSync(join(ROOT, 'test/fixtures/catalogue-slides.json'), 'utf8'));
   return rows.map((row: Record<string, unknown>) => {
@@ -120,6 +123,14 @@ function edgeCases(): Case[] {
     { name: 'edge--theme-light', slide: { ...base, layout: 'claim', title: 'On *cream*', theme: 'light' } },
     { name: 'edge--not-minimal-grain', slide: { ...base, layout: 'claim', title: 'With *grain*', minimal: false } },
     { name: 'edge--foot-shown', slide: { ...base, layout: 'claim', title: 'With *handle*', foot: true } },
+    // …and the same footer with NO handle supplied, which is the only way to reach the
+    // renderer's own default. Nothing else in the repo reaches it: every one of the 32
+    // golden occurrences of the handle is an injected value, and no authored deck sets
+    // foot:true — so that default has been unprotected all along, and it disagrees with
+    // the splash default on the same slide.
+    { name: 'edge--foot-default-handle',
+      slide: { index: 1, total: 1, minimal: true, accent: 'accent-lime',
+               layout: 'claim', title: 'Default *handle*', foot: true } },
     { name: 'edge--first-and-last-tick', slide: { ...base, layout: 'claim', title: 'Tick', index: 1, total: 1 } },
 
     // a glyph key that does not exist — renders empty rather than throwing
@@ -140,6 +151,20 @@ function edgeCases(): Case[] {
       items: ['Upload', 'Clean', 'Transcript', 'Chapters', 'Music', 'Export'] } },
     { name: 'edge--lowerthird', slide: { ...base, layout: 'lowerThird', kicker: 'Now playing',
       title: 'Cut a *sentence*, not a selection' } },
+    // Same story as `definition` below: `beforeAfter` was only reached through posts, and
+    // when they were deleted the layout went uncovered. A layout's corpus case must not
+    // depend on any particular post continuing to exist.
+    { name: 'edge--beforeafter', slide: { ...base, layout: 'beforeAfter',
+      kicker: 'One tangent', before: 'Scrub the waveform until you hear it',
+      after: 'Search the transcript and select the lines' } },
+
+    // `definition` was only ever reached through the plan-picker rubric, and when that
+    // post was deleted the layout went uncovered — the corpus noticed, which is the point
+    // of asserting every layout has a case. Covered directly now, so it cannot depend on
+    // any one post continuing to exist.
+    { name: 'edge--definition', slide: { ...base, layout: 'definition',
+      kicker: 'Plainly', term: 'Loudness', ipa: '/ˈlaʊdnəs/',
+      body: 'How loud the episode is *overall* — not how loud its peaks are.' } },
     { name: 'edge--lowerthird--with-art', slide: { ...base, layout: 'lowerThird', kicker: 'Now playing',
       title: 'Over *art*', bgFile: '/fixture/art.png' } },
   ];

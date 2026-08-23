@@ -1,8 +1,8 @@
 # Design system & template gotchas
 
-Everything visual is `src/carousel.css` (styles) + `src/layouts.mjs` (per-layout
+Everything visual is `src/carousel.css` (styles) + `src/layouts.ts` (per-layout
 HTML). Both are tuned; make surgical changes and re-render a single card to
-check: `RUN_ID=wb CARD=<layout> node tools/layout-catalogue.mjs`. Add
+check: `RUN_ID=wb CARD=<layout> node tools/layout-catalogue.ts`. Add
 `--format tiktok` to check the same card on the tall canvas.
 
 ## The `:root` scale (edit once, changes everywhere)
@@ -24,7 +24,7 @@ In `src/carousel.css`:
 Zones top→bottom on every card: `logo + pagination → ( kicker ) → content (pinned
 low) → footer`.
 
-## Layouts (`layouts.mjs`)
+## Layouts (`layouts.ts`)
 
 ~21 layouts, each returns the inner HTML of one slide. Art-capable ones (can take
 a full-bleed background) are listed in `ART_CAPABLE`. Key helpers:
@@ -49,10 +49,16 @@ tight line-height (~.96).
 `cvar(x)` expects a **bare token** (`superlime`, `purpleblue`). Passing an
 ink-class like `accent-lime` yields the invalid `var(--c-accent-accent-lime)`,
 which silently drops the whole declaration → borders/fills/rules vanish. This bit
-`callout`, `comparison`, `beforeAfter`, `priceTiers`, `claim`, `quote`. For a
-value that may be either, use `fillOf(x)` (maps ink-classes → real vars, passes
-bare tokens through). For readable ink over an accent fill use `inkClassInk(cls)`
-or `inkFor(bareToken)`.
+`callout`, `comparison`, `beforeAfter`, `priceTiers`, `claim`, `quote`, and later
+`meter`, `timeline` and `lowerThird` — where it went unnoticed for longer because
+the elements it kills (the share bar, the timeline dots, the chyron rule) simply
+did not paint rather than looking wrong. For a value that may be either, use
+`fillOf(x)` (maps ink-classes → real vars, passes bare tokens through). For
+readable ink over an accent fill use `inkClassInk(cls)` or `inkFor(bareToken)`.
+
+The types now enforce this: `cvar(a: AccentToken | GroundToken)` and
+`ink(c?: InkClass)` are disjoint, so `tsc --noEmit` rejects a mix-up that used to
+be invisible until someone looked at a render.
 
 ### 3. Bottom-pinning requires a `.stack` wrapper
 `body--tb > .stack{ margin-top:auto }` pins content low. A heading placed
@@ -66,12 +72,12 @@ A full-bleed element (e.g. `.chartwrap`) needs a more specific rule
 bleed collapses.
 
 ### 5. Format overrides must be exact no-ops by default
-`src/formats.mjs` injects a `:root` block at render time; `carousel.css` reads it
+`src/formats.ts` injects a `:root` block at render time; `carousel.css` reads it
 through `var(…, <default>)`. Every default must reproduce Instagram exactly:
 `--safe-t/r/b: 0px`, `--stack-mb: 0` (content hugs the floor), `--band-top` /
 `--band-bot: 100%` (the extra vertical scrim collapses to nothing), `--t-claim:
 180px`, `--t-figure: 720px`, `--feat-row: 148px`. The gate is byte-equality:
-render `tools/layout-catalogue.mjs` before and after and `cmp` the cards.
+render `tools/layout-catalogue.ts` before and after and `cmp` the cards.
 
 ### 6. A `var()` inside an injected `:root` value dies silently
 If the referenced variable does not also resolve **at `:root`**, the whole custom
@@ -87,6 +93,32 @@ empty. The one exception is the giant figure — `:has(.figure__v)` forces it ba
 to the floor, because its unit is pinned to the bottom-right corner and centring
 the number orphans it half a frame away.
 
+## Colour contrast — measured, not judged
+
+Every `--theme color` slide floods a brand ground and puts the `*emphasis*` word in an
+accent on top of it. Which accent is `colorTheme.em[ground]` in `src/product.ts`, and it is
+chosen by **measured contrast**, not by eye — `src/validate.ts` exports `contrast()` and
+`auditContrast()`, and the audit runs from `assertBrand()` on every CLI command.
+
+The numbers for (cast), best available per ground:
+
+```
+blue67 4.31   violet65 3.71   purpleblue 3.35   superlime 3.35   mainorange 3.30
+pink 2.82     lightpink 2.63  green 2.40        carrot 2.29
+```
+
+The four below 3.0 are a ceiling of the palette: no accent token clears WCAG's large-text
+floor against them. That is a warning on every command, deliberately not an error.
+
+**Two rules that come out of this, both enforced by tests:**
+
+1. `colorTheme.em[g]` must be the highest-contrast ink class available for `g`
+   (`test/unit/product.test.ts`). A better option existing and going unused is a defect;
+   the palette's ceiling is not.
+2. An element carrying an accent class must not also be dimmed
+   (`test/unit/invariants.test.ts`). `.step__n` was `opacity:.4` on top of an accent and
+   the step numbers vanished over art. Opacity is for elements that inherit their colour.
+
 ## Themes
 
 - **light** → `theme:"light"` → `.slide--light` (cream `#EEEBEA`, dark ink). On
@@ -95,17 +127,17 @@ the number orphans it half a frame away.
 - **dark** → default (near-black `--c-background-dark`, light ink). The standard
   `.bg-scrim` darkens the type zone for light text.
 - **color** → per-slide `ground` (a rotating brand token) flooded with
-  `inkFor(ground)` picking readable ink; the accent (`GA` map in `compose.mjs`)
+  `inkFor(ground)` picking readable ink; the accent (`GA` map in `compose.ts`)
   is chosen to pop against that ground. On art slides the image is tinted to the
   ground hue and the theme/scrim is set so type reads.
 
-The wordmark (`assets/logos/cast-wordmark.svg`) is `fill="currentColor"`, so it
+The wordmark (`products/cast/logos/wordmark.svg`) is `fill="currentColor"`, so it
 follows the theme automatically — light on dark, dark on light.
 
 ## Regenerating derived assets
 
 ```bash
-python3 tools/build_css.py         # tokens/tokens.json → tokens/tokens.css
+python3 tools/build_css.py         # products/cast/tokens/tokens.json → tokens.css
 python3 tools/normalize_icons.py   # Figma exports → assets/icons-clean
 python3 tools/unify_icon_stroke.py # single stroke weight across icons
 ```

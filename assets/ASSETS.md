@@ -5,11 +5,16 @@
 - Design System — `figma.com/design/DWc917le1Z33MpoWdoXpEW` (node `393:6622`, «UI System»)
 
 ## Логотипы
+Бренд-логотипы живут у продукта, а не здесь: директория и есть бренд, поэтому префикс
+`cast-` из имён убран.
+
 | файл | источник | примечание |
 |---|---|---|
-| `logos/cast-wordmark.svg` | landing `1:1763` | 6 путей, `fill=currentColor`, viewBox 586×200 |
-| `logos/cast-logo.svg` | landing `1:1763` | сырой экспорт Figma (с подложкой) |
-| `logos/mubert-badge.svg` | landing `1:1751` | бейдж «by Mubert», градиент внутри |
+| `products/cast/logos/wordmark.svg` | landing `1:1763` | 6 путей, `fill=currentColor`, viewBox 586×200 — единственный, который читает код |
+| `products/cast/logos/wordmark-white.svg` | ↑ | тот же контур, залитый белым |
+| `products/cast/logos/avatar.svg` | ↑ | квадрат 1:1 под аву в инсте/тиктоке |
+| `products/cast/logos/logo.svg` | landing `1:1763` | сырой экспорт Figma (с подложкой) |
+| `assets/logos/mubert-badge.svg` | landing `1:1751` | бейдж «by Mubert» — общий для всех продуктов Mubert, поэтому остаётся здесь |
 
 ## Иконки — `icons-clean/` (24-grid, `currentColor`)
 `arrow-up-right` `check` `chevron-down` `chevron-up` `close` `dots` `eraser` `file`
@@ -35,6 +40,6 @@ woff2, подмножества latin / latin-ext / cyrillic / cyrillic-ext / gr
 не зависит от шрифтов, установленных в системе.
 
 ## Цвета и типографика
-Полный список — `tokens/tokens.json`. Значения цветов и шрифтов взяты из Figma-переменных
+Полный список — `products/cast/tokens/tokens.json`. Значения цветов и шрифтов взяты из Figma-переменных
 дизайн-системы. Стопы градиентов сняты попиксельно со свотчей: Figma отдаёт
 gradient-переменные пустыми.

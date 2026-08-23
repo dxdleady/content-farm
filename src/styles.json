@@ -1,12 +1,15 @@
 {
-  "$meta": "Style presets for background generation. base = shared frame, palette = colour rule (a preset may override), treatments[].lines = the artistic layer. A slide selects via \"bgStyle\". References: shared in refs/style/, per-preset in refs/style/<preset>/ (if that folder exists, only those are used).",
+  "$meta": "Style presets for background generation. base/hard = the CRAFT frame, true for every brand; a product adds to them via Product.art and supplies the two things that are actually its own — the subject sentence and the palette. The aspect line is derived from the format, not written here. treatments[].lines = the artistic layer. A slide selects via \"bgStyle\". References: shared in refs/style/, per-preset in refs/style/<preset>/ (if that folder exists, only those are used).",
   "default": "ps1",
   "base": [
-    "Vertical 4:5 poster art for (cast) — an audio/podcast editing brand. Full-bleed, edge to edge.",
     "NO readable text, letterforms, numerals, logos or watermarks anywhere in the image.",
     "Composition leaves the LOWER-LEFT third calmer and less busy so headline type can sit there. The subject sits high and right.",
     "People are INVENTED and non-identifiable — never a real, famous or recognisable person.",
     "Cast whoever the SUBJECT line describes. When it does not specify, vary age, gender, ethnicity and body type across generations instead of defaulting to one look."
+  ],
+  "hard": [
+    "No readable text, letterforms, numerals, logos or watermarks anywhere.",
+    "Any person is invented and non-identifiable — never a real or recognisable person."
   ],
   "treatments": {
     "y2k-punk": {
@@ -95,12 +98,6 @@
     "music": "speakers, resonance, rhythm, vibration",
     "people": "hosts, guests, talking, listening"
   },
-  "palette": "Palette is loud and pushed: matte black #0A0A0A grounds it, and the image commits hard to accents from #6E75FF #FE4F8D #FE7A7C #EEFF04 #23EE78 #FF3400 #995CED #555DFF. Two or three of them, at full saturation. No muddy mid-tones, no pastel wash, no beige.",
-  "hard": [
-    "Vertical 4:5, full-bleed.",
-    "No readable text, letterforms, numerals, logos or watermarks anywhere.",
-    "Any person is invented and non-identifiable — never a real or recognisable person."
-  ],
   "wildcards": {
     "$note": "Pools for prompt post-processing. Each generation deterministically picks one item per pool (seed = hash of subject + variant) so frames differ while the cache stays valid.",
     "angle": [

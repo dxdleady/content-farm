@@ -7,19 +7,38 @@ from a style reference.
 
 ## Model
 
-A post is a composition of five independent axes:
+A post is a composition of six independent axes:
 
 ```
-post = rubric × density × ref × theme × format
+post = product × rubric × density × ref × theme × format
 ```
 
 | Axis | Decides | Lives in |
 |---|---|---|
-| **rubric** | content: slides + copy | `src/plan.mjs` (`RUBRICS`), `data/rubrics.json` |
+| **product** | which brand: assets, palette, voice, copy | `src/product.ts` + `products/<id>/` |
+| **rubric** | the SHAPE a post follows — beats and slot roles, no words | `src/plan.ts` |
 | **density** | which slides get a generated background | `data/density.json` |
 | **ref** | visual style of the backgrounds | `refs/style/*` + `refs/analysis/*.json` |
-| **theme** | `light` · `dark` · `color` | `tools/compose.mjs` |
-| **format** | canvas + platform safe-areas: `ig` · `tiktok` | `src/formats.mjs` |
+| **theme** | `light` · `dark` · `color` | the product's `colorTheme` |
+| **format** | canvas + platform safe-areas: `ig` · `tiktok` | `src/formats.ts` |
+
+Every tool takes `--product <id>` (or `$PRODUCT`), defaulting to `cast`. The default
+product's tag is the empty string, so its output paths are exactly what they always were.
+
+### Adding a product
+
+1. `products/<id>/` with `tokens/tokens.json`, `logos/wordmark.svg`, `copy/rubrics.ts`.
+2. `python3 tools/build_css.py --product <id>`.
+3. An entry in `src/product.ts` and its rubrics in `src/plan.ts`'s `BY_PRODUCT`.
+4. `npm test` — `test/unit/product.test.ts` validates every registered product's assets,
+   colour vocabulary and copy, and `src/validate.ts` runs the same checks at every CLI
+   edge so a bad accent costs a message rather than a generation.
+
+What a product does NOT get is a fork of `carousel.css`. Colour and geometry reach it
+through custom properties; the 34 literal font-sizes and ~50 optical letter-spacing
+corrections in that file are tuned to Playfair and Inter, and a brand with other faces
+gets correct colour, correct geometry and *approximate* headline fitting. The last mile
+is `Product.overrideCss`. Do not try to make `carousel.css` font-agnostic.
 
 Two independent halves: **layout** (21 pure HTML/CSS cards on one grid + type
 scale, rendered by headless Chrome, works flat or over art) and **backgrounds**
@@ -33,7 +52,7 @@ needs instead lives outside npm:
 
 | Dependency | Version | Why |
 |---|---|---|
-| **Node** | **≥ 24** | Three floors stacked up: `process.loadEnvFile()` needs 20.12; the *global* `WebSocket` that `src/chrome.mjs` drives the DevTools protocol with is only unflagged from 22.4; and native TypeScript type stripping — which is how the `.ts` sources run with no build step — is default-on from 23.6. |
+| **Node** | **≥ 24** | Three floors stacked up: `process.loadEnvFile()` needs 20.12; the *global* `WebSocket` that `src/chrome.ts` drives the DevTools protocol with is only unflagged from 22.4; and native TypeScript type stripping — which is how the `.ts` sources run with no build step — is default-on from 23.6. |
 | **Google Chrome** | 112+ | headless renderer (`--headless=new`). Found at the macOS default path, or set `CHROME_BIN`. |
 | **API keys** | — | `WAVESPEED_API_KEY` (image-to-image backgrounds), `GEMINI_API_KEY` (text-to-image fallback). Without them the layout half still renders; slides fall back to CSS gradients. |
 | **Python 3** | 3.8+ | only for `tools/*.py` (icon/CSS helpers). Stdlib only — nothing to `pip install`. |
@@ -80,22 +99,22 @@ rather than failing, so a Chrome update does not produce a false red.
 
 ```bash
 # one post: rubric × density × ref × theme
-node tools/compose.mjs --rubric hot-takes --density half --ref 3 --theme dark
+node tools/compose.ts --rubric hot-takes --density half --ref 3 --theme dark
 
 # 3×4 profile-grid mockup (edit the POSTS array in the file)
-node tools/feed.mjs [--format tiktok]
+node tools/feed.ts [--format tiktok]
 
 # 10-row matrix — one rubric per row, each a different design × ref
-node tools/matrix.mjs
+node tools/matrix.ts
 
 # 2 sample slides per reference (judge refs)
-node tools/ref-slides.mjs 1 28
+node tools/ref-slides.ts 1 28
 
 # single layout card in isolation (~2s)
-RUN_ID=wb CARD=statement node tools/layout-catalogue.mjs
+RUN_ID=wb CARD=statement node tools/layout-catalogue.ts
 
 # the same post for TikTok — 1080×1920, safe-areas, 9:16 art
-node tools/compose.mjs --rubric hot-takes --density half --ref 3 --format tiktok
+node tools/compose.ts --rubric hot-takes --density half --ref 3 --format tiktok
 ```
 
 - `--rubric`: `hot-takes · inspiration · feature-drop · one-workflow ·
@@ -112,7 +131,7 @@ Each run lands in its own `out/runs/<id>/` — immutable, nothing overwritten.
 
 ## Formats
 
-`src/formats.mjs` is the registry. Both formats are **1080 wide**, so the entire
+`src/formats.ts` is the registry. Both formats are **1080 wide**, so the entire
 type scale, every measure and every grid carries over untouched — what changes is
 the vertical rhythm and the platform UI that sits on top of the image.
 
@@ -136,10 +155,32 @@ Adding a format means one entry in `FORMATS` — canvas, safe-area, grid tile ra
 an optional `framing` line appended to art prompts, and a `vars` bag of CSS
 overrides. No tool needs to change.
 
-**Cache note:** generated art is content-addressed on `model | prompt (| ratio)`.
-The ratio only enters the key for non-4:5 formats, so every Instagram image already
-in `assets/generated/` still hits — but a TikTok run of the same rubric generates
-its own art, because a 9:16 background is a different image, not a crop.
+### One post, several formats
+
+```bash
+node tools/compose.ts --rubric hot-takes --density full --ref 3 --format ig,tiktok
+```
+
+A comma list renders one run folder per format from **one** set of generated art. The
+art is produced at the tallest ratio asked for and the shorter frames crop it — which is
+free, because `.art-full` is `object-fit: cover` and every frame already crops whatever
+it is handed. The only question was which direction: tall→wide keeps the middle, while
+wide→tall crops the *sides* and at 4:5 → 9:16 loses about a third of the picture's width.
+
+This is not primarily an optimisation. Generating per format meant a post cross-posted to
+Instagram and TikTok showed **two different pictures**, from two different prompts — the
+same post in name only. Now it is the same picture, and it costs one generation instead
+of two. `deck.json` records `artRatio`, so two folders sharing it provably share images.
+
+The 9:16 framing line was rewritten for this: it used to put the subject "in the upper
+two thirds", which is exactly the band a 4:5 crop throws away. It now asks for the middle
+band and warns the model that the top and bottom edges are cropped at other ratios —
+convenient, since on TikTok those edges are also what the platform UI covers.
+
+**Cache note:** generated art is content-addressed on `model | prompt (| ratio)`, where
+the ratio is the one it was GENERATED at, not the one being rendered. It only enters the
+key when it is not 4:5, so every Instagram image already in `assets/generated/` still
+hits. A single-format Instagram run behaves exactly as it always did.
 
 ## Layout system
 
@@ -149,7 +190,7 @@ safe-area), zone step `44`, block step `56`; headline scale (144 Playfair hero /
 92 Playfair head / 180 Inter claim), body `42`, labels `24`. Zones top→bottom:
 `logo + pagination → ( kicker ) → content (pinned low) → footer`.
 
-Layouts (`src/layouts.mjs`): Hero, Claim, Giant Number, Stat Row, Pull Quote,
+Layouts (`src/layouts.ts`): Hero, Claim, Giant Number, Stat Row, Pull Quote,
 Numbered Steps, Checklist, Don't List, Tag Cloud, Feature Bento, Icon Row, Big
 Question, Price Tiers, Callout, Fill Word, Timeline, Symbol Hero, Footnote, Line
 Chart, Splash.
@@ -164,7 +205,7 @@ GEMINI_API_KEY=...      # fallback text-to-image
 ```
 
 Each background prompt = **KEEP + REPLACE + ART_DIRECTIVE** (`composePrompt()` in
-`src/plan.mjs`). KEEP is the reference's feature-map (`refs/analysis/*.json`) —
+`src/plan.ts`). KEEP is the reference's feature-map (`refs/analysis/*.json`) —
 the reusable recipe of the medium, copied verbatim. REPLACE is the per-slide
 subject / composition / colour. Stay faithful to the reference: bright, glossy,
 saturated — never forced dark or grungy; text readability comes from the scrim.
@@ -174,23 +215,68 @@ Generated images are content-addressed cached (`model | prompt + ref bytes`) in
 
 ## Structure
 
+A **product** owns its brand and its words. Everything else is shared engine.
+
 ```
-data/       product.json, campaigns.json, rubrics.json, density.json
-src/        plan.mjs (rubric skeletons + art prompts), layouts.mjs, carousel.css,
-            formats.mjs (canvas + safe-areas), chrome.mjs, providers.mjs, fx.mjs
-tokens/     tokens.json (source) → tokens.css
-assets/     fonts (Inter + Playfair, inlined), icons-clean, logos, generated (cache)
-refs/       style/ (28 references), analysis/ (feature-maps)
-tools/      compose.mjs, feed.mjs, matrix.mjs, ref-slides.mjs, fx.mjs, pack-from-ref.mjs
+products/<id>/          one folder per brand — cast/ is the incumbent
+  tokens/               tokens.json (source) → tokens.css
+  logos/                wordmark.svg (the only one code reads) + the unread variants
+  copy/posts/           one JSON per published post — the words, the axes, the review state
+  copy/decks/           the 21 deck-*.json + content.json + topics.json (the older pipeline)
+  brief/                product.json, campaigns.json, rubrics.json — for you, not for code
+
+src/        product.ts (the registry), plan.ts (rubric skeletons + art prompts),
+            layouts.ts, carousel.css, types.ts (the Slide union),
+            formats.ts (canvas + safe-areas), chrome.ts, providers.ts, bgen.ts, render.ts
+assets/     shared pools: fonts (Inter + Playfair, inlined), icons-clean, generated (cache)
+refs/       style/ (ref-01…ref-28), analysis/ (feature-maps) — a look is not a brand
+data/       density.json — the one live, product-neutral axis file
+tools/      compose.ts, studio.ts (the review dashboard), feed.ts, matrix.ts,
+            ref-slides.ts, fx.ts, pack-from-ref.ts, doctor.ts — all TypeScript,
+            run directly with no build step
 out/runs/   one folder per run — immutable
 test/       unit + html + png tiers, goldens, corpus
 .claude/    the `cast-content` skill
 ```
 
+Which side of the line a file sits on is a judgement, and two are worth stating.
+`src/carousel.css` is shared: it is the grid and the safe-area maths, not the look —
+brand colour reaches it entirely through custom properties. The reference images are
+shared too: a ref carries a *medium* (photography, render technique, light), and a
+medium belongs to no brand.
+
+## Studio — the review dashboard
+
+```bash
+npm run studio          # then open http://localhost:4321
+```
+
+A local page for the part of this work a terminal cannot help with: looking at a rendered
+post, marking the slides that do not work, fixing the words, validating, and tagging the
+post ready. Zero dependencies — `node:http` and one hand-written HTML file.
+
+Two rules it obeys, both load-bearing:
+
+- **It never writes TypeScript.** The copy lives in `products/<id>/copy/posts/*.json`,
+  one file per published post, and the studio edits those in place. Render one with
+  `node tools/compose.ts --post <id>`; its saved axes are the defaults, and any flag you
+  pass still wins.
+- **It cannot spend.** Every render it triggers passes `--no-generate`, so a cache miss is
+  reported as a price and exits 2 rather than buying. Copy edits could not miss the art
+  cache anyway — the key is built from the art prompt, not the slide text — but a
+  guarantee beats a convention when there is a card on file.
+
+**Why posts and not rubrics.** A "rubric" used to mean two things at once: the shape of a
+post AND one specific post's words — 23 352 characters of finished copy across 102 slides.
+`myth-vs-fact` was not a template you could pick for a new topic, because the topic was
+already inside it. Now a post holds the words and a rubric holds only shape, so a rubric
+can actually be chosen for a post by relevance. `rubricsFor()` is a view over the posts,
+which is how the copy left TypeScript without a single golden moving.
+
 ## Regenerate assets
 
 ```bash
-python3 tools/build_css.py           # tokens.json → tokens.css
+python3 tools/build_css.py           # tokens.json → tokens.css (add --product x)
 python3 tools/normalize_icons.py     # Figma exports → assets/icons-clean
 python3 tools/unify_icon_stroke.py   # single icon stroke weight
 ```

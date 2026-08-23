@@ -6,7 +6,11 @@ import { existsSync } from 'node:fs';
 
 import { Chrome } from '../../src/chrome.ts';
 import { renderSlide } from './sut.ts';
-import { renderPage, composePage, assetHashInputs } from './page.ts';
+import { GRAIN, assetHashInputs } from './page.ts';
+import { slidePage } from '../../src/page.ts';
+// Named, not defaulted: this harness is the arbiter, so it must not inherit whatever
+// slidePage decides the default product is on some later day.
+import { PRODUCTS, DEFAULT_PRODUCT } from '../../src/product.ts';
 import type { PngCase } from './png-cases.ts';
 
 export type Fingerprint = {
@@ -41,7 +45,12 @@ export function fingerprintDrift(a: Fingerprint, b: Fingerprint): string[] {
 
 export const pageFor = (c: PngCase): string => {
   const inner = renderSlide(c.slide as never);
-  return c.wrapper === 'render' ? renderPage(inner, c.format) : composePage(inner, c.format);
+  // Both wrappers are the SHARED one now; only the tail differs, exactly as before the
+  // extraction. The frozen copies in ./page.ts stay untouched as the arbiter that the
+  // extraction is checked against — see the wrapper tests in test/png/golden.test.ts.
+  return c.wrapper === 'render'
+    ? slidePage(inner, c.format, PRODUCTS[DEFAULT_PRODUCT], `:root{--grain:${GRAIN}}`)
+    : slidePage(inner, c.format);
 };
 
 /**
@@ -57,19 +66,12 @@ export async function shootAll(
   const shots = new Map<string, Buffer>();
   const chrome = await Chrome.launch();
   try {
-    // A fresh target per case. Reusing one page across ~30 navigations of 2MB documents
-    // wedged the capture indefinitely — Page.captureScreenshot never returned and the
-    // 20s load timeout never fired, so there was nothing to catch. Targets are cheap;
-    // correctness here is worth more than the milliseconds.
+    // shootPooled reuses a target and recycles it on a wedge. This harness is where that wedge was
+    // first diagnosed; the workaround now lives in Chrome itself, so the tools get it too.
     for (const [i, c] of cases.entries()) {
       const t0 = Date.now();
       const path = writeHtml(c.id, pageFor(c));
-      const page = await chrome.newPage(c.format.w, c.format.h);
-      try {
-        shots.set(c.id, await chrome.shoot(page, `file://${path}`, c.format.w, c.format.h));
-      } finally {
-        await chrome.close(page);
-      }
+      shots.set(c.id, await chrome.shootPooled(`file://${path}`, c.format.w, c.format.h));
       onProgress?.(c.id, i, Date.now() - t0);
     }
   } finally {

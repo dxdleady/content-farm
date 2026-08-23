@@ -1,0 +1,18 @@
+/* brand-b fixture tokens */
+@import url("../../../assets/fonts/fonts.css");
+
+:root {
+  --c-accent-ember: #FF5A1F;
+  --c-accent-sulphur: #F5D90A;
+  --c-accent-ice: #8CE7FF;
+  --c-accent-moss: #1F7A4C;
+  --c-accent-plum: #3A1150;
+  --c-background-dark: #07070A;
+  --c-background-light: #F3F0E7;
+  --c-text-main: #F7F7F5;
+  --c-text-dark: #07070A;
+  --f-display: Georgia, serif;
+  --f-ui: system-ui, sans-serif;
+}
+
+:root { --type-scale: 1; }
