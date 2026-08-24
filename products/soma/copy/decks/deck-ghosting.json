@@ -1,0 +1,62 @@
+{
+  "deck": "soma-ghosting",
+  "meta": "SOMA trial — 'I've been ghosting you' UGC slideshow, 6 slides, TikTok",
+  "handle": "soma4health.com",
+  "slides": [
+    {
+      "layout": "photo",
+      "theme": "photo",
+      "kicker": "Been quiet lately",
+      "title": "I've been *ghosting* you",
+      "lede": "Because I've been working on something.",
+      "accent": "accent-lime",
+      "bgFile": "/Users/mary_shabash/content-farm-source/products/soma/avatar/mirror-selfie.jpg",
+      "scrim": "rgba(12,10,22,.38)"
+    },
+    {
+      "layout": "photo",
+      "theme": "photo",
+      "kicker": "01 — Move",
+      "title": "Show up. Even for *20 minutes*.",
+      "lede": "Strength three times a week. Nothing heroic.",
+      "accent": "accent-lime",
+      "bgFile": "/Users/mary_shabash/content-farm-source/products/soma/avatar/gym.jpg",
+      "scrim": "rgba(12,10,22,.42)"
+    },
+    {
+      "layout": "photo",
+      "theme": "photo",
+      "kicker": "02 — Eat",
+      "title": "Food that *works* with me",
+      "lede": "Protein first. Nothing off-limits.",
+      "accent": "accent-lime",
+      "bgFile": "/Users/mary_shabash/content-farm-source/products/soma/avatar/food.jpg",
+      "scrim": "rgba(12,10,22,.42)"
+    },
+    {
+      "layout": "photo",
+      "theme": "photo",
+      "kicker": "03 — Walk",
+      "title": "Walks count. *All* of them.",
+      "lede": "10k steps, most days. No treadmill drama.",
+      "accent": "accent-lime",
+      "bgFile": "/Users/mary_shabash/content-farm-source/products/soma/avatar/walk.jpg",
+      "scrim": "rgba(12,10,22,.42)"
+    },
+    {
+      "layout": "photo",
+      "theme": "photo",
+      "kicker": "04 — Rest",
+      "title": "Rest is part of the *plan*",
+      "lede": "Sleep is when the work actually sticks.",
+      "accent": "accent-lime",
+      "bgFile": "/Users/mary_shabash/content-farm-source/products/soma/avatar/rest.jpg",
+      "scrim": "rgba(12,10,22,.42)"
+    },
+    {
+      "layout": "splash",
+      "title": "Find your next *best* day",
+      "accent": "accent-lime"
+    }
+  ]
+}
