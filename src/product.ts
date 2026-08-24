@@ -42,6 +42,23 @@ const CAST_INK: Record<InkClass, AccentToken> = {
   'accent-green': 'green',
 };
 
+const SOMA_DIR = join(ROOT, 'products/soma');
+
+/** SOMA's design order — Kinetic v7 blues first, the warm vapor accents between them. */
+const SOMA_ACCENTS = [
+  'sky', 'terracotta', 'mint', 'indigo', 'clay',
+  'periwinkle', 'sage', 'skydeep', 'mist',
+];
+
+/** The shared ink classes, painted with SOMA tokens. All five are used. */
+const SOMA_INK = {
+  'accent-pink': 'terracotta',
+  'accent-lime': 'mint',
+  'accent-purple': 'indigo',
+  'accent-green': 'sky',
+  'accent-carrot': 'clay',
+};
+
 export const PRODUCTS = {
   cast: {
     id: 'cast',
@@ -106,6 +123,57 @@ export const PRODUCTS = {
       base: [],
       hard: [],
     },
+  },
+  soma: {
+    id: 'soma',
+    name: 'SOMA',
+    handle: 'soma4health.com',
+    dir: SOMA_DIR,
+
+    tokensJson: join(SOMA_DIR, 'tokens/tokens.json'),
+    tokensCss: join(SOMA_DIR, 'tokens/tokens.css'),
+    // Its own pool, not the shared one: the brand faces are Newsreader + Manrope,
+    // and neither lives in assets/fonts.
+    fontsCss: join(SOMA_DIR, 'fonts/fonts.css'),
+    wordmark: join(SOMA_DIR, 'logos/wordmark.svg'),
+    decks: join(SOMA_DIR, 'copy/decks'),
+
+    accents: SOMA_ACCENTS,
+    ink: SOMA_INK,
+
+    colorTheme: {
+      // Alternates dark/light and cool/warm so consecutive slides contrast.
+      rotation: ['sky', 'mist', 'clay', 'mint', 'skydeep', 'indigo', 'periwinkle'],
+      // Measured, like cast's — each entry is the highest-contrast ink class available
+      // for that ground (test/unit/product.test.ts enforces it). Two grounds fall short
+      // of WCAG's 3.0 large-text floor at their best — indigo (2.14) and periwinkle
+      // (2.87) — which is a fact about this palette; the audit surfaces both as warnings.
+      em: {
+        sky: 'accent-lime',           // 3.33
+        mist: 'accent-carrot',        // 4.33
+        clay: 'accent-lime',          // 3.65
+        mint: 'accent-carrot',        // 3.65
+        skydeep: 'accent-lime',       // 5.37
+        indigo: 'accent-lime',        // 2.14 — best available
+        periwinkle: 'accent-carrot',  // 2.87 — best available
+      },
+      hue: {
+        sky: 'muted steel blue', mist: 'pale ice blue', clay: 'burnt clay red',
+        mint: 'cool mint green', skydeep: 'deep slate blue',
+        indigo: 'electric periwinkle indigo', periwinkle: 'soft periwinkle blue',
+      },
+    },
+
+    art: {
+      subject: 'SOMA — an AI health agent that reads across all your wearables (Oura, Whoop, CGM, Apple Health) and answers with one next best action',
+      palette: 'Palette is calm, airy and editorial: deep indigo-navy #0c0a16 or warm off-white #f6f7f7 grounds it, with accents from #8faef8 #5a7df5 #c6d6fd #8fd3b4 #3e6a8c #c97f55. Muted premium-wellness tones in soft natural daylight. No neon, no acid brights, no clinical blue-white, no HDR gym-ad grit.',
+      base: [],
+      hard: ['Never show a specific real wearable brand, logo or readable UI — devices stay generic.'],
+    },
+
+    // Product-private style refs: 27 real lifestyle photos (gym, food, recovery)
+    // supplied by the brand, sitting alongside the shared refs/ pool.
+    refs: join(SOMA_DIR, 'refs'),
   },
 } satisfies Record<ProductId, Product>;
 

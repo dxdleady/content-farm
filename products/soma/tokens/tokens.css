@@ -1,0 +1,91 @@
+/* soma design tokens — generated from tokens.json. Do not edit by hand. */
+@import url("../../../assets/fonts/fonts.css");
+
+:root {
+  --c-accent-sky: #3e6a8c;
+  --c-accent-terracotta: #c97f55;
+  --c-accent-mint: #8fd3b4;
+  --c-accent-indigo: #5a7df5;
+  --c-accent-clay: #a3402f;
+  --c-accent-periwinkle: #8faef8;
+  --c-accent-sage: #7ea88f;
+  --c-accent-skydeep: #2b4a63;
+  --c-accent-mist: #c6d6fd;
+  --c-text-main: #f3f4fa;
+  --c-text-second: #FFFFFFAD;
+  --c-text-inverse: #e2e5e7;
+  --c-text-dark: #101315;
+  --c-text-light: #e2e5e7;
+  --c-background-dark: #0c0a16;
+  --c-background-light: #f6f7f7;
+  --c-background-light2: #edeff0;
+  --c-background-white: #FFFFFF;
+  --c-background-surface: #14121d;
+  --c-black-10: #0000001A;
+  --c-black-20: #00000033;
+  --c-black-30: #0000004D;
+  --c-black-40: #00000066;
+  --c-black-50: #00000080;
+  --c-black-60: #00000099;
+  --c-black-70: #000000B2;
+  --c-black-80: #000000CC;
+  --c-black-90: #000000E5;
+  --c-white-10: #FFFFFF1A;
+  --c-white-20: #FFFFFF33;
+  --c-white-30: #FFFFFF4D;
+  --c-white-40: #FFFFFF66;
+  --c-white-50: #FFFFFF80;
+  --c-white-60: #FFFFFF99;
+  --c-white-70: #FFFFFFB2;
+  --c-white-80: #FFFFFFCC;
+  --c-white-90: #FFFFFFE5;
+  --c-misc-transparency: #0000004D;
+  --c-misc-transparency2: #D9D9D966;
+  --c-misc-hover-logo-overlay: #0000001A;
+
+  --g-orb: linear-gradient(135deg, #eaf1f7, #8faef8);
+  --g-dusk: linear-gradient(135deg, #5a7df5, #0c0a16);
+  --g-dawn: linear-gradient(135deg, #c97f55, #c6d6fd);
+  --g-mistmint: linear-gradient(135deg, #c6d6fd, #8fd3b4);
+
+  --f-display: Newsreader, "Iowan Old Style", Georgia, serif;
+  --f-ui: Manrope, -apple-system, "Helvetica Neue", sans-serif;
+
+  --r-pill: 999px;
+  --r-card: 24px;
+  --r-badge: 13px;
+  --r-sm: 8px;
+  --s-xs: 8px;
+  --s-sm: 16px;
+  --s-md: 24px;
+  --s-lg: 40px;
+  --s-xl: 64px;
+  --s-2xl: 80px;
+}
+
+/* Type scale. Sizes are in px at the 1440-wide web baseline; scale with --type-scale. */
+:root { --type-scale: 1; }
+.t-display-super-hero { font-family: var(--f-display); font-size: calc(92px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(-2px * var(--type-scale)); }
+.t-display-hero { font-family: var(--f-display); font-size: calc(72px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(-2px * var(--type-scale)); }
+.t-display-hero-mob { font-family: var(--f-display); font-size: calc(48px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(-2px * var(--type-scale)); }
+.t-display-super-hero-mob { font-family: var(--f-display); font-size: calc(32px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-display-feature { font-family: var(--f-display); font-size: calc(40px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-display-small { font-family: var(--f-display); font-size: calc(28px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-display-small-mob { font-family: var(--f-display); font-size: calc(24px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h1 { font-family: var(--f-ui); font-size: calc(48px * var(--type-scale)); font-weight: 500; line-height: 1.1; letter-spacing: calc(-1px * var(--type-scale)); }
+.t-heading-h2 { font-family: var(--f-ui); font-size: calc(32px * var(--type-scale)); font-weight: 500; line-height: 1.2; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h2-mob { font-family: var(--f-ui); font-size: calc(24px * var(--type-scale)); font-weight: 500; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h3 { font-family: var(--f-ui); font-size: calc(22px * var(--type-scale)); font-weight: 500; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h3-mob { font-family: var(--f-ui); font-size: calc(15px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-heading-h4 { font-family: var(--f-ui); font-size: calc(18px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-extra { font-family: var(--f-ui); font-size: calc(40px * var(--type-scale)); font-weight: 300; line-height: 1.25; letter-spacing: calc(-1px * var(--type-scale)); }
+.t-body-extra-mob { font-family: var(--f-ui); font-size: calc(26px * var(--type-scale)); font-weight: 400; line-height: 1.6; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-super { font-family: var(--f-ui); font-size: calc(18px * var(--type-scale)); font-weight: 400; line-height: 1.6; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-large { font-family: var(--f-ui); font-size: calc(16px * var(--type-scale)); font-weight: 400; line-height: 1.6; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-base { font-family: var(--f-ui); font-size: calc(14px * var(--type-scale)); font-weight: 400; line-height: 1.5; letter-spacing: calc(0px * var(--type-scale)); }
+.t-body-small { font-family: var(--f-ui); font-size: calc(12px * var(--type-scale)); font-weight: 400; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-big-button { font-family: var(--f-ui); font-size: calc(18px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-button { font-family: var(--f-ui); font-size: calc(16px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-small-button { font-family: var(--f-ui); font-size: calc(14px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(0px * var(--type-scale)); }
+.t-ui-label { font-family: var(--f-ui); font-size: calc(12px * var(--type-scale)); font-weight: 600; line-height: 1.0; letter-spacing: calc(-1px * var(--type-scale)); }
+.t-ui-title-caps { font-family: var(--f-ui); font-size: calc(10px * var(--type-scale)); font-weight: 700; line-height: 1.0; letter-spacing: calc(10px * var(--type-scale)); text-transform: uppercase; }

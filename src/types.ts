@@ -205,7 +205,7 @@ export type FormatSnapshot = Pick<Format, 'id' | 'w' | 'h' | 'ratio' | 'safe'>;
    entry with NO override keys, and a tag that is empty for the default so its
    paths never move. */
 
-export type ProductId = 'cast';
+export type ProductId = 'cast' | 'soma';
 
 /**
  * Which bare token each ink class paints with.
