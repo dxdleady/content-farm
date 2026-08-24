@@ -1,0 +1,42 @@
+{
+  "deck": "soma-5hacks",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-shake.jpg",
+      "text": "5 hacks that actually\nchanged my body.",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/eggs-toast.jpg",
+      "text": "1 — Protein first.\n\nBreakfast before coffee.\nEvery single day."
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "2 — Lift heavy,\nkeep it short.\n\n45 minutes is plenty."
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-outfit.jpg",
+      "text": "3 — Walk after meals.\n\n10 easy minutes.\nIt adds up fast."
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/rest-skin.jpg",
+      "text": "4 — Same bedtime.\n\nThe change happens\nwhile you sleep.",
+      "dim": 0.35
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/golden-mirror.jpg",
+      "heading": "5 — Stop guessing.",
+      "body": "SOMA reads your watch, your sleep, your meals — and builds each day around your body.",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}
