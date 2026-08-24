@@ -29,5 +29,24 @@ Quick sanity render:
 RUN_ID=soma CARD_GROUND=mist node tools/layout-catalogue.ts --product soma
 ```
 
+## UGC slideshow format (tools/ugc.ts)
+
+The TikTok stealth-marketing format, separate from the editorial carousel. Rules,
+per the brand's corrected example ("You're not buying a new body.", slides 6+):
+**no logo on hook slides**, white DM Sans centered on a dimmed photo, navy
+`#2a1f6d` chevron, and one CTA closer (washed photo, navy copy, app screenshot in
+a phone frame, App Store badge + app icon). Text sits inside the measured SAFE
+SPACE box: x 108–894, y 305–1617 on 1080×1920.
+
+```bash
+node tools/ugc.ts products/soma/ugc/deck-ghosting.json
+```
+
+`ugc/assets/` holds the CTA pieces; `fonts/dm/` holds self-hosted DM Sans.
+Brand faces per the founders: **The Seasons** for the wordmark/brand display
+(already baked into logos/wordmark.svg as traced outlines), **DM Sans** for text.
+The Newsreader/Manrope pool above serves the editorial carousel until that format
+is rebranded to match.
+
 Still to do before first real post: ref analyses for `refs/style/`, an overrideCss
-type refit for Newsreader/Manrope, and the first posts via `tools/studio.ts`.
+type refit for the editorial carousel, and posts via `tools/studio.ts`.

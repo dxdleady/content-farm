@@ -1,0 +1,40 @@
+{
+  "deck": "soma-ghosting-ugc",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/mirror-selfie.jpg",
+      "text": "I've been ghosting you.\n\nBecause I've been\nworking on something.",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "Show up.\nEven for 20 minutes.\n\nStrength three times a week.\nNothing heroic."
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/food.jpg",
+      "text": "Food that works with me.\n\nProtein first.\nNothing off-limits."
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk.jpg",
+      "text": "Walks count.\nAll of them.\n\n10k steps, most days.\nNo treadmill drama."
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/rest.jpg",
+      "text": "Rest is part of the plan.\n\nSleep is when the work\nactually sticks."
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mirror-selfie.jpg",
+      "heading": "That's why there is SOMA.",
+      "body": "Not another plan off the internet — a tool that builds the routine around your body and your state.",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png"
+    }
+  ]
+}
