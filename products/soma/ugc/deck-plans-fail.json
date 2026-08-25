@@ -1,0 +1,44 @@
+{
+  "deck": "soma-plans-fail",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/brown-set.jpg",
+      "text": "Nobody tells you why\nmost fitness plans fail",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "bg": "a pair of rubber dumbbells on a dark gym floor next to a printed generic workout plan on paper, warm low side light, shallow depth of field, no people",
+      "refs": [
+        "../refs/style/soma-02.jpg",
+        "../refs/style/soma-25.jpg"
+      ],
+      "text": "They were built for\nsomeone else's body",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-tea.png",
+      "text": "Generic plan,\ngeneric results\n\nYour sleep, stress and cycle\nnever made it into the math",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-checklist.png",
+      "text": "A plan should start\nfrom your data\n\nNot from a template",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/hands-hair.jpg",
+      "heading": "That's what SOMA does",
+      "body": "It reads your wearables and rebuilds the plan every morning — for your body, not the average one",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

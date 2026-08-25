@@ -1,0 +1,43 @@
+{
+  "deck": "soma-4facts",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/white-set-mirror.jpg",
+      "text": "4 facts about your body\nwhen you reach your goal",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-tea.png",
+      "text": "1 — Your energy stops\ndipping at 3pm\n\nStable days become normal",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/yogurt-berries.jpg",
+      "text": "2 — Food gets quieter\n\nThe cravings that owned you\njust fade out"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bed-phone-dawn.png",
+      "text": "3 — Sleep gets deeper\n\nYou wake up before\nthe alarm",
+      "dim": 0.35
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/cream-outfit-bedroom.jpg",
+      "text": "4 — Clothes fit different\n\nBut the confidence is\nthe real change"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/walk-headphones.jpg",
+      "heading": "Getting there is the hard part",
+      "body": "SOMA reads your sleep, meals and training — and builds the path to your goal, day by day",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

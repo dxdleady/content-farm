@@ -1,0 +1,42 @@
+{
+  "deck": "soma-what-workout",
+  "slides": [
+    {
+      "kind": "photo",
+      "bg": "a crumpled handwritten workout plan on paper lying on a dark gym floor next to a water bottle, moody warm side light, shallow depth of field",
+      "refs": [
+        "../refs/style/soma-02.jpg",
+        "../refs/style/soma-25.jpg"
+      ],
+      "text": "Struggling to pick a workout\nfor your goal body?",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/black-set-mirror.jpg",
+      "text": "Stop collecting programs\n\nSaved workouts\ndon't build anything"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "Match training to the goal\n\nStrength for shape,\nsteps for the deficit"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-home.png",
+      "text": "Or let your body decide\n\nYour recovery already knows\nwhat today should be",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/pink-set.jpg",
+      "heading": "That's SOMA's job",
+      "body": "It reads your sleep and strain, then picks today's workout for you — no more guessing",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "deck": "soma-kindachic",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/legs-coffee.jpg",
+      "text": "Kinda chic to be\nthe healthy friend",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "bg": "a chic cafe table by the window with a glass bottle of sparkling water, a lemon slice in a tumbler and sunglasses beside it, soft afternoon light, no people",
+      "refs": ["../refs/style/soma-09.jpg", "../refs/style/soma-18.jpg"],
+      "text": "Kinda chic to order\nwater first",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/shirt-texture.jpg",
+      "text": "Kinda chic to leave\nthe party by eleven",
+      "dim": 0.35
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-sunglasses.jpg",
+      "text": "Kinda chic to walk\ninstead of scroll"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/kitchen-dress.jpg",
+      "text": "Kinda chic to cook\nyour own dinner"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/eggs-plate.png",
+      "text": "Kinda chic to know\nyour protein number",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "bg": "a bright calm bedroom at night seen from the doorway — a made bed with white linen, a small warm lamp glowing on the nightstand, a book and a sleep mask on the duvet, cozy and inviting, no people",
+      "refs": ["../refs/style/soma-23.jpg", "../refs/style/soma-27.jpg"],
+      "text": "Kinda chic to be\nin bed by ten",
+      "dim": 0.35
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/glow-skin.jpg",
+      "heading": "Kinda chic to have SOMA",
+      "body": "It reads your wearables and quietly plans your day around your body — like a very good assistant",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

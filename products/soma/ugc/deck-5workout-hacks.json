@@ -1,0 +1,41 @@
+{
+  "deck": "soma-5workout-hacks",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/redlight-gym.jpg",
+      "text": "5 workout hacks\nI wish I knew earlier",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/pilates-reformer.jpg",
+      "text": "1 — Warm up with your\nfirst exercise\n\nJust lighter"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/black-set-mirror.jpg",
+      "text": "2 — Film your sets\n\nForm fixes itself\nonce you see it"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/legs-coffee.jpg",
+      "text": "3 — Rest longer\n\nTwo minutes between sets\nis not lazy"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/jump-rope.jpg",
+      "text": "4 — Stop training\nto failure\n\nLeave two reps in the tank"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/pink-set.jpg",
+      "heading": "5 — Match training to recovery",
+      "body": "SOMA reads your sleep and strain — and tells you when to push and when to back off",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

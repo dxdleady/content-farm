@@ -1,0 +1,44 @@
+{
+  "deck": "soma-5hacks-help",
+  "slides": [
+    {
+      "kind": "photo",
+      "bg": "a kitchen table set for one with a healthy plate, a water carafe and a linen napkin, bright soft morning light, homely and real, no people",
+      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],
+      "text": "5 hacks to help you\nreach your goal body",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "1 — Make water\nboring-easy\n\nA full bottle,\nalways in sight",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/granola-bark.jpg",
+      "text": "2 — Make snacks at home\n\nDecide once,\nnot every evening"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/jump-rope.jpg",
+      "text": "3 — Do the 5-minute\nversion\n\nShort beats skipped"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bed-phone-dawn.png",
+      "text": "4 — Put your phone\nto bed first\n\nAcross the room, charging",
+      "dim": 0.35
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mug-knee.jpg",
+      "heading": "5 — Get a plan that adapts",
+      "body": "SOMA rebuilds your day from how you slept, moved and ate — so the plan always fits",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

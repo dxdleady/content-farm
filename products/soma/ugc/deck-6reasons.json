@@ -1,0 +1,47 @@
+{
+  "deck": "soma-6reasons",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/black-bra-selfie.jpg",
+      "text": "6 reasons why you're\nstuck with your body",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/hoodie-jacket.jpg",
+      "text": "1 — You change programs\nevery two weeks"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bed-phone-dawn.png",
+      "text": "2 — You train hard\nbut sleep five hours",
+      "dim": 0.35
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/pastries.jpg",
+      "text": "3 — You guess\nyour portions"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/brunch-toast.jpg",
+      "text": "4 — Weekends erase\nyour weekdays"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mirror-white-3.jpg",
+      "text": "5 — You copy plans made\nfor someone else's body"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/brown-set.jpg",
+      "heading": "6 — You're guessing",
+      "body": "SOMA reads your data and shows exactly what's holding you back — then fixes the plan",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

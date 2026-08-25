@@ -1,0 +1,214 @@
+---
+name: soma-ugc
+description: >-
+  Build SOMA TikTok slideshow posts — the stealth-UGC format: text over a real
+  phone photo, no product chrome, closing on the app. Use whenever the user asks
+  to make / render / fix a SOMA slideshow, deck, TikTok post, carousel or
+  "slide show", to pick hooks from the content plan, to write captions and
+  hashtags for SOMA, to add photos to the pool, or to generate a background for a
+  slide that has no real photo. Trigger even if the user just says "догенерь
+  посты", "собери слайдшоу", "сделай пост про сон" or names a hook from the
+  research sheet without naming the system.
+---
+
+# SOMA UGC slideshows
+
+The TikTok stealth format — **1080×1920**, text over a phone photo, **no logo, no
+wordmark, no pagination**. It is a different animal from the editorial carousel
+(`tools/compose.ts`, see `cast-content`): here the post must look like a real person's
+camera roll, and SOMA appears only in the closing slide.
+
+```
+post  =  hook  ×  photos  ×  copy  ×  CTA
+         (from the      (pool first,   (one fact    (always the app:
+          content plan)  gen last)      per slide)   screenshot + App Store)
+```
+
+| Thing | Where |
+|---|---|
+| renderer | `tools/ugc.ts` — `node tools/ugc.ts products/soma/ugc/deck-<id>.json` |
+| decks (the source of truth) | `products/soma/ugc/deck-*.json` |
+| photo pool, staged | `products/soma/avatar/*.jpg` (58 files, descriptive names) |
+| photo pool, raw | `~/Desktop/My UGC avatar/*.jpeg` (52 files, UUID names) |
+| generated backgrounds, staged | `products/soma/ugc/assets/gen/*.png` |
+| app screenshots | `products/soma/ugc/assets/screens/screen-*.png` |
+| CTA assets | `products/soma/ugc/assets/` — `screen-home.png`, `appstore-badge.png`, `app-icon.png` |
+| output, one folder per post | `out/ugc/<deck>/` — `01-photo.png … NN-cta.png` + `caption.txt` |
+| hooks + hashtags | `~/Downloads/Trend and Content Research.xlsx` → sheets `Content Plan `, `Hashtags and Keywords + Hooks` |
+
+Node must be **≥24**: prefix every command with `PATH="/opt/homebrew/bin:$PATH"`
+(`/usr/local/bin/node` is v23 and first on PATH).
+
+## The format — this is the brand's own spec, not a suggestion
+
+From the founders' corrected example ("You're not buying a new body.", slides 6+):
+
+- **photo slide** — full-bleed photo, dimmed, white **DM Sans** centred in the safe box,
+  navy `#2a1f6d` chevron bottom-right. **No SOMA logo on hook slides** — that is what makes
+  it native.
+- **cta slide** — white-washed photo, navy heading, left-set body, the real app screenshot
+  in a CSS phone frame, App Store badge + app icon.
+- **safe box** x 108–894, y 305–1617 on 1080×1920 — measured from the brand's SAFE SPACE
+  template, right side wider for TikTok's action rail. The renderer enforces it.
+
+Faces: **The Seasons** = display/wordmark, **DM Sans** = all slide text (self-hosted,
+`products/soma/fonts/dm/`). Newsreader/Manrope belong to the editorial carousel only.
+
+## The deck JSON
+
+```jsonc
+{
+  "deck": "soma-5secrets",              // = the out/ugc folder name
+  "slides": [
+    { "kind": "photo",
+      "photo": "../avatar/gym-dumbbells.jpg",   // a real file — ALWAYS prefer this
+      "text": "5 secrets to actually\nreach your body goal",
+      "dim": 0.42 },                     // 0.42 hook · 0.3–0.4 busy/light photo · 0.62 app screen
+    { "kind": "photo",
+      "bg": "a tall glass of still water on a marble counter, bright daylight, no people",
+      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],  // style steer
+      "text": "5 — Water before\nevery meal", "dim": 0.4 },
+    { "kind": "cta",
+      "photo": "../avatar/blue-top-drink.jpg",
+      "heading": "5 — Personalize everything",
+      "body": "SOMA reads your watch, your sleep, your meals — and turns them into a plan built for your body",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66 }
+  ]
+}
+```
+
+- `\n` is a hard break, a blank line starts a new paragraph. Keep lines short — the type is
+  64px and breaks are yours to control, so break them by meaning.
+- `align: "low"` pushes text to the bottom of the safe box; use it on app-screen slides so
+  the copy does not sit on top of the UI's own headline.
+- `chevron: false` removes the swipe arrow (only for a last photo slide before a CTA).
+- **No trailing periods** in slide text, except full sentences in a multi-sentence beat.
+
+## Photos: the pool first, generation last
+
+**The pool is the product.** Real camera-roll photos are why the format reads as UGC; a
+deck of generated stills reads as an ad. The rule the user set:
+
+> **1–2 generated frames per post, maximum. Everything else from the pool. Reuse across
+> decks is fine as long as no photo repeats inside one deck — or in a deck posting the
+> same week.**
+
+**Balance every deck.** Not all-avatar and not all-still-life: a hook with the avatar, then
+alternate her with food / flat-lay / interior frames. A post that is five selfies is a
+thirst trap; five still lifes is a magazine. Both lose the swipe.
+
+**Check every new pool photo for third-party watermarks before using it.** `290DDBB1`
+carries "@hustl._" across the top and is unusable. Look at the frame — top and bottom
+edges — do not assume.
+
+Staging a photo: copy from the raw pool into `products/soma/avatar/` under a **descriptive**
+name (`gym-dumbbells.jpg`, `pajama-morning.jpg`), never the UUID. See
+`references/photo-pool.md` for the current inventory by type.
+
+## Generation: when, and how not to waste it
+
+Generate only when the beat has no honest frame in the pool — a scene the avatar was never
+photographed in (a made bed at night, a café table, a gym floor at dawn). Then:
+
+- `bg` + `refs` (two style refs from `products/soma/refs/style/`) → Gemini, ~9:16.
+  Cached content-addressed in `assets/generated/` on prompt + ref bytes, so **re-rendering
+  is free** and only new prompts spend.
+- Once a generated frame is good, **copy it into `assets/gen/` under a descriptive name**
+  and reference it as `photo` from then on. This is what makes reuse across decks cheap and
+  auditable — and it is where the naming went wrong once: the file called
+  `gym-corner-shake.png` actually held the eggs plate, because names were assigned by the
+  order prompts were written, not by what came back. Name from the picture, after looking
+  at it.
+- **Look at every generated frame before it ships.** Gemini's failure modes here are
+  specific and repeat: ghost double-exposure of a person, a huge human shadow on a wall
+  where the prompt said "no people", a blank white board floating on a bed, a scene so dark
+  the subject is gone. Four of the first ten were rejected for exactly these.
+- Ask for the scene, not the mood: "a made bed with white linen, a warm bedside lamp, a
+  book and a sleep mask, seen from the doorway" survives; "calm restful bedroom energy"
+  produces a dark blur.
+- `no people` in the prompt genuinely means no people — but it does not stop shadows and
+  reflections. If a human silhouette appears, regenerate with the wording changed, do not
+  ship it.
+
+## Copy: every slide owes the reader one concrete thing
+
+The hook promises; the body pays. A listicle slide that says "consistency is key" teaches
+nothing — it is the slogan trap. Give a number, a threshold, a mechanism, or a named
+action:
+
+| slogan (cut it) | fact (ship it) |
+|---|---|
+| "Consistency is key" | "1 — Consistency beats intensity / Boring workouts, repeated, are the ones that win" |
+| "Sleep matters" | "4 — Sleep is training / Recovery is where the change happens" |
+| "Track your progress" | "3 — Track something / What gets measured gets managed" |
+
+**The hook is the whole post** and it comes from the content plan, not from your
+imagination — the founders wrote 14 of them and the research sheet holds ~25 more. Read
+`references/hooks-and-copy.md` before writing slide 1.
+
+**The closing slide always points at the app.** Every deck, no exception: the CTA slide
+with the screenshot and the App Store badge, or a product screen slide followed by one.
+Stealth means SOMA is absent from the hook — not from the post.
+
+## Captions and hashtags
+
+One `caption.txt` per post folder, written after the render, while looking at it:
+
+```
+number 4 is the one everyone skips 🙃
+
+#fitness #wellness #bestversionofyou
+```
+
+- **First line is a second hook**, not a summary of slide 1 — it is the only line TikTok
+  shows before "more".
+- **Exactly 3 hashtags, and they must match the post.** From the founders' list in the
+  research sheet (`#fitness #gym #workout #routine #healthylifestyle #wellness
+  #wellnesstips #bestversionofyou #comeback #inshape #energyboost #womenshealth #healthy
+  #fitnessapp #soma`). Stealth decks never carry `#soma` or `#fitnessapp`; the three
+  product-forward decks do.
+- Voice: first person, lowercase-ish, one emoji at most. Never a press release.
+
+## The loop
+
+**topic/hook → photo plan → deck JSON → render → look at every slide → caption → the user
+approves.** Sequential, and the last step is a human act — never mark a post ready
+yourself.
+
+```bash
+# render one deck (free if the photos are files or cached)
+PATH="/opt/homebrew/bin:$PATH" node tools/ugc.ts products/soma/ugc/deck-<id>.json
+
+# every referenced file exists? run before a batch render
+node -e 'const fs=require("fs"),p=require("path");for(const f of fs.readdirSync(".").filter(x=>x.startsWith("deck-")&&x.endsWith(".json")))for(const[i,s]of JSON.parse(fs.readFileSync(f)).slides.entries())for(const k of["photo","screenshot","badge","appIcon"])if(s[k]&&!fs.existsSync(p.resolve(".",s[k])))console.log(f,i+1,k,s[k])'
+```
+
+**Then look at the PNGs — yourself, every slide.** This is the step that caught every real
+defect in this format: the broken generations, the duplicate photo across two decks, the
+mismatched gen names, the white text drowning on a light app screen. A contact sheet per
+deck (3 columns) makes it one glance instead of eleven — see `references/qa.md`.
+
+## Readability — the one thing that fails silently
+
+White DM Sans on a photo is fine until the photo is bright or busy. Three defenses, in
+order:
+
+1. **`dim`** — the veil over the photo. 0.42 on a hook, 0.3–0.4 on a calm frame, and
+   **0.62 on a full-bleed app screenshot** (dense dark UI text is the worst case).
+2. **`text-shadow`** on `.t` in `tools/ugc.ts` — a soft 28px black glow, always on. Do not
+   remove it; it is what makes the type survive a light frame.
+3. **`align: "low"`** — move the copy off the screenshot's own headline.
+
+If all three are on and it still reads badly, the photo is wrong for that beat. Change the
+photo, not the type.
+
+## Deeper references
+
+| | |
+|---|---|
+| **`references/hooks-and-copy.md`** | Where the hooks live, the 20 shipped posts and their hooks, the copy rules, and the caption library. Read before writing slide 1. |
+| **`references/photo-pool.md`** | The pool inventory by type — avatar action, food, flat-lay, interiors — the watermark list, and what each generated frame actually shows. |
+| **`references/qa.md`** | The contact-sheet script, the pre-ship checklist, and the defects this format has actually shipped. |

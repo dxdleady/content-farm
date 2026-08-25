@@ -1,0 +1,72 @@
+{
+  "deck": "soma-10ways",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/green-set-selfie.jpg",
+      "text": "10 ways to reach\nyour dream body",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/eggs-plate.png",
+      "text": "1 — Protein breakfast\nbefore anything else",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "2 — Lift three times\na week\n\nNothing heroic"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-headphones.jpg",
+      "text": "3 — Walk more than\nyou think you need"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/rest-skin.jpg",
+      "text": "4 — Same bedtime\nevery night",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "bg": "a tall glass of still water with ice on a marble kitchen counter next to a folded linen napkin and cutlery, bright soft daylight, close view, no people",
+      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],
+      "text": "5 — Water before\nevery meal",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/food.jpg",
+      "text": "6 — Cook once,\neat three times"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mirror-white-4.jpg",
+      "text": "7 — Progress photos\nover scale numbers"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/rest-glow.jpg",
+      "text": "8 — Take the rest day\n\nIt's part of the program",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/park-aerial.png",
+      "text": "9 — Give it months,\nnot weeks\n\nSlow is what lasts",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/navy-bag.jpg",
+      "heading": "10 — Stop guessing",
+      "body": "SOMA reads your wearables and turns all nine into one plan that fits your body",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

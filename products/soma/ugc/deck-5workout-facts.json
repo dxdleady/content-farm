@@ -1,0 +1,43 @@
+{
+  "deck": "soma-5workout-facts",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/white-top-selfie.jpg",
+      "text": "5 workout facts every\nbeginner should know",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/cream-outfit-bedroom.jpg",
+      "text": "1 — Muscle grows\non rest days\n\nThe gym is only the signal",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/grey-hoodie.jpg",
+      "text": "2 — Soreness isn't progress\n\nIt's just newness"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/gym-corner-shake.png",
+      "text": "3 — Three sessions a week\nis enough to change",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "text": "4 — The best program is\nthe one you repeat"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mirror-white-5.jpg",
+      "heading": "5 — Your body sets the pace",
+      "body": "SOMA reads your recovery and adjusts every session to the state you actually woke up in",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

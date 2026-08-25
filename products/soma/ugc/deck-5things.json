@@ -1,0 +1,42 @@
+{
+  "deck": "soma-5things",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/black-top-portrait.jpg",
+      "text": "5 things to know about\nreaching your goal body",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/park-aerial.png",
+      "text": "1 — It's slower than\nsocial media promised\n\nAnd that's fine",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/tomato-toast.jpg",
+      "text": "2 — The kitchen does\nhalf the work"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-dumbbells.jpg",
+      "text": "3 — Strength first,\ncardio second"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "text": "4 — Motivation fades\n\nRoutine carries you"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/cookies-tray.jpg",
+      "heading": "5 — You don't have to guess",
+      "body": "SOMA connects your wearables and turns the data into one clear plan for the day",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

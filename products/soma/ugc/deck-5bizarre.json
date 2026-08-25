@@ -1,0 +1,43 @@
+{
+  "deck": "soma-5bizarre",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/bagel-desk.jpg",
+      "text": "5 bizarre life hacks\nmy colleague taught me",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/cafe-water.png",
+      "text": "1 — A full glass of water\nbefore every coffee\n\nNo water, no coffee",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/hike-vest.jpg",
+      "text": "2 — Stairs, but only up\n\nElevator down\nIt's about showing up"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/dates-snack.jpg",
+      "text": "3 — Lunch without\nyour phone\n\nYou eat less, weirdly"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedroom-mirror.png",
+      "text": "4 — Set a bedtime alarm\n\nNot a wake-up one",
+      "dim": 0.35
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/graphic-tee.jpg",
+      "heading": "5 — Her weirdest one: SOMA",
+      "body": "An AI that reads your watch, your sleep, your meals — and quietly plans your day around your body",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

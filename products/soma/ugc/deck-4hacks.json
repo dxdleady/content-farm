@@ -1,0 +1,39 @@
+{
+  "deck": "soma-4hacks",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-towel-drink.jpg",
+      "text": "4 essential hacks\nto reach your goal body",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "bg": "two glass jars of overnight oats with berries and a spoon on a kitchen counter in cool calm evening light, close view, no people",
+      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],
+      "text": "1 — Prep breakfast\nthe night before\n\nMorning-you will eat it",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/gym-corner-shake.png",
+      "text": "2 — Train at the same time\nevery day\n\nDecide once, then repeat",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-sunglasses.jpg",
+      "text": "3 — Walk while you\ntake calls\n\nSteps without finding time"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/smoothie-selfie.jpg",
+      "heading": "4 — Stop copying plans",
+      "body": "SOMA builds yours from your watch, your sleep, your life — not someone else's",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

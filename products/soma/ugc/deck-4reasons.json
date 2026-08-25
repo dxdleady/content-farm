@@ -1,0 +1,37 @@
+{
+  "deck": "soma-4reasons",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/hands-hair.jpg",
+      "text": "4 reasons why you won't\nreach your goal body",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/shirt-texture.jpg",
+      "text": "1 — You start over\nevery Monday\n\nRestarting isn't progress",
+      "dim": 0.35
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/cookies-tray.jpg",
+      "text": "2 — You eat back\nyour workouts\n\nThe math doesn't care"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/pajama-morning.jpg",
+      "text": "3 — You treat sleep\nas optional\n\nYour body doesn't"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mirror-white-2.jpg",
+      "heading": "4 — You have no feedback",
+      "body": "SOMA turns your watch data into answers — what worked, what didn't, what to do next",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

@@ -17,6 +17,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname, resolve, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Chrome } from '../src/chrome.ts';
+import { background } from '../src/bgen.ts';
+import { PRODUCTS } from '../src/product.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const W = 1080, H = 1920;
@@ -24,7 +26,16 @@ const W = 1080, H = 1920;
 const NAVY = '#2a1f6d';
 const DM = join(ROOT, 'products/soma/fonts/dm/dm-sans.css');
 
-type PhotoSlide = { kind: 'photo'; photo: string; text: string; dim?: number; align?: 'center' | 'low'; chevron?: boolean };
+/** One of three image sources:
+ *  photo — a real file;
+ *  bg    — a subject line the SOMA art pipeline paints (style `refs` steer the look);
+ *  gen   — a persona shot: the scene is generated WITH the avatar, `identity` photos
+ *          pinning her face/hair/build so the character stays consistent. */
+type PhotoSlide = {
+  kind: 'photo'; photo?: string; bg?: string; refs?: string[];
+  gen?: string; identity?: string[];
+  text: string; dim?: number; align?: 'center' | 'low'; chevron?: boolean;
+};
 type CtaSlide = {
   kind: 'cta'; photo: string; heading: string; body: string;
   screenshot: string; badge: string; appIcon: string; wash?: number;
@@ -55,7 +66,8 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
 .safe--center { justify-content: center; }
 .safe--low { justify-content: flex-end; padding-bottom: 90px; }
 .t { color: #fff; font-size: 64px; font-weight: 500; line-height: 1.32; text-align: center;
-     text-wrap: balance; letter-spacing: .2px; }
+     text-wrap: balance; letter-spacing: .2px;
+     text-shadow: 0 2px 28px rgba(0,0,0,.55), 0 0 3px rgba(0,0,0,.35); }
 .t + .t { margin-top: 56px; }
 .chev { position: absolute; right: 62px; bottom: 122px; width: 92px; height: 92px;
         border-radius: 50%; background: ${NAVY}; display: flex; align-items: center; justify-content: center; }
@@ -78,13 +90,27 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
 </style>
 ${body}`;
 
-function photoSlide(s: PhotoSlide, base: string): string {
+function photoSlide(s: PhotoSlide, photoPath: string): string {
   const dim = s.dim ?? 0.45;
   return SHELL(`
-<img class="bg" src="file://${abs(s.photo, base)}">
+<img class="bg" src="file://${photoPath}">
 <span class="veil" style="background:rgba(14,14,16,${dim})"></span>
 <div class="safe safe--${s.align ?? 'center'}">${paras(s.text, 't')}</div>
 ${s.chevron === false ? '' : CHEVRON}`);
+}
+
+/** Resolve a photo slide's image: a supplied file, or a generated one. */
+async function photoFor(s: PhotoSlide, base: string): Promise<string> {
+  if (s.photo) return abs(s.photo, base);
+  if (!s.bg) throw new Error('photo slide needs "photo" or "bg"');
+  const file = await background(s.bg, {
+    aspect: '9:16',
+    refPaths: s.refs?.map(r => abs(r, base)) ?? null,
+    product: PRODUCTS.soma,
+  });
+  if (!file) throw new Error(`background generation failed for "${s.bg.slice(0, 60)}…"`);
+  console.log(`  ~ bg generated for "${s.bg.slice(0, 46)}…"`);
+  return file;
 }
 
 function ctaSlide(s: CtaSlide, base: string): string {
@@ -118,7 +144,7 @@ const chrome = await Chrome.launch();
 try {
   for (const [i, s] of deck.slides.entries()) {
     const name = `${String(i + 1).padStart(2, '0')}-${s.kind}`;
-    const html = s.kind === 'photo' ? photoSlide(s, base) : ctaSlide(s, base);
+    const html = s.kind === 'photo' ? photoSlide(s, await photoFor(s, base)) : ctaSlide(s, base);
     const htmlPath = join(buildDir, `${name}.html`);
     writeFileSync(htmlPath, html);
     writeFileSync(join(outDir, `${name}.png`), await chrome.shootPooled(`file://${htmlPath}`, W, H));

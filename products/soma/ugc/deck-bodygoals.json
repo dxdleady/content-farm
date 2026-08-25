@@ -1,0 +1,38 @@
+{
+  "deck": "soma-bodygoals",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/couch-tee.jpg",
+      "text": "Ever looked at body goals\non social media\nand felt behind?",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/glow-skin.jpg",
+      "text": "Those photos are\nsomeone else's genetics,\nlighting and full-time job.",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/pink-set.jpg",
+      "text": "Your body has its own\nversion of strong.\n\nIt's already in there."
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedroom-mirror.png",
+      "text": "The only comparison\nthat matters:\n\nyou, a month ago.",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/golden-mirror.jpg",
+      "heading": "That's why there is SOMA.",
+      "body": "It doesn't chase someone else's body — it builds the best version of yours, from your own data",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

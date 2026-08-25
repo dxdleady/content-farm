@@ -1,0 +1,34 @@
+{
+  "deck": "soma-12seconds",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-home.png",
+      "text": "It took SOMA 12 seconds\nto build my plan\n\nMy last trainer took\nthree sessions",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-checklist.png",
+      "text": "It built the whole day\n\nTraining, meals, recovery —\none checklist",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "text": "And it adapts\n\nRough night? The plan\nbacks off by itself"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/legs-coffee.jpg",
+      "heading": "Twelve seconds. Try it",
+      "body": "Connect your watch, set the goal — SOMA does the thinking from there",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

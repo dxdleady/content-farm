@@ -1,0 +1,42 @@
+{
+  "deck": "soma-3features",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/navy-bag.jpg",
+      "text": "My 3 favorite features\nin SOMA",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-compare.png",
+      "text": "1 — Progress compare\n\nPhotos side by side —\nproof instead of vibes",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-cooking.png",
+      "text": "2 — Cooking mode\n\nMeals built from what's\nin my kitchen",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-widgets.png",
+      "text": "3 — Widgets\n\nThe whole plan on my\nhome screen",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/walk-headphones.jpg",
+      "heading": "And it's all personal",
+      "body": "Every screen starts from your data — your sleep, your kitchen, your goal",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

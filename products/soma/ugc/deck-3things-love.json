@@ -1,0 +1,42 @@
+{
+  "deck": "soma-3things-love",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/smoothie-selfie.jpg",
+      "text": "3 things I love doing\nwith SOMA",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-home.png",
+      "text": "1 — Checking my morning\nreadiness\n\nIt reads my night and picks\nhow hard today should be",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-gymscan.png",
+      "text": "2 — Scanning my gym\n\nOne photo — and the program\nuses what's actually there",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/screens/screen-nutrition.png",
+      "text": "3 — Eating without\nmacro math\n\nIt watches my nutrition\nso I don't have to",
+      "dim": 0.62,
+      "align": "low"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/blue-top-drink.jpg",
+      "heading": "One app, whole body",
+      "body": "SOMA connects your wearables and builds each day around your sleep, training and meals",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}
