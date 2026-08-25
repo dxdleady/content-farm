@@ -1,0 +1,60 @@
+{
+  "name": "SOMA",
+  "url": "https://soma4health.com",
+  "oneLiner": "An AI fitness and nutrition coach for iPhone: two agents read the health data already on the phone and return one plan a day — the session, the food, and the reason behind both.",
+  "sourceOfTruth": "soma-landing/public/pricing.md — the machine-readable brief the marketing site publishes. Re-read it before quoting a price or a feature; it carries a 'Last updated' date and this copy will drift.",
+  "platform": "iPhone, iOS 17+. Android on the roadmap.",
+  "status": "invite-only beta; waitlist open at https://soma4health.com/#waitlist",
+  "io": {
+    "input": "the wearables and sensors the person already owns",
+    "output": "one adaptive daily plan — workout + macros — and the reasoning behind it"
+  },
+  "audience": {
+    "core": "People who already track their health on a watch or ring and still do not know what to do on a given day. They own the data; nobody turns it into a decision.",
+    "types": [
+      "Multi-device owners — Apple Watch plus Oura or Whoop, with the numbers spread across apps that do not talk to each other",
+      "Women training seriously around a real life — work, cycle, sleep debt — for whom a fixed programme breaks the first bad week",
+      "Returners — people restarting after a pause who need the plan to meet the body they have today, not the one they had",
+      "Beginners who bought the watch and never got past the rings"
+    ],
+    "lessSuitable": [
+      "people who want a human coach relationship",
+      "athletes on a periodised programme from a real coach",
+      "anyone expecting a medical or diagnostic tool",
+      "Android users, until the app ships there"
+    ]
+  },
+  "features": [
+    { "key": "daily-plan", "name": "One adaptive daily plan", "what": "workout and macros for today, rebuilt from last night's sleep and recent strain" },
+    { "key": "gym-scan", "name": "Gym scan", "what": "photograph any room; the session rebuilds around the equipment actually there" },
+    { "key": "progress-compare", "name": "Progress compare", "what": "goal photo against current photo, side by side" },
+    { "key": "recipes", "name": "Recipe generation", "what": "meals from what is in the fridge, sized to the calories and macros left today" },
+    { "key": "widgets", "name": "Home-screen widgets", "what": "water, sleep, mood, sport goal" },
+    { "key": "integrations", "name": "Wearable integrations", "what": "Apple Health as the hub, plus Apple Watch, Oura, Whoop. Garmin, Fitbit, Polar, Samsung Health, Withings, Strava in progress." }
+  ],
+  "differentiators": [
+    "Vendor-independent: reasons across devices instead of locking the person into one brand's app",
+    "No new hardware — it reads the sensors already owned",
+    "Returns a decision, not a dashboard: what to do today and why",
+    "Adapts daily: a bad night changes the session rather than breaking the plan"
+  ],
+  "plans": [
+    { "name": "Membership, yearly", "price": "$159.99/year", "note": "$13.33/mo equivalent; 3-day free trial exists on this plan only" },
+    { "name": "Membership, monthly", "price": "$19.99/month", "note": "no trial" },
+    { "name": "Waitlist", "price": "$0", "note": "The Data-Backed Reset Guide, field notes, first access at launch" }
+  ],
+  "notPurchasable": "A second tier (deeper health reports, biomarker/bloodwork integration, cycle-synced programming) is indicated at $79.99/month and is NOT on sale. Never present it as available.",
+  "voice": {
+    "is": ["plain", "specific", "first person in UGC", "calm — the product is the opposite of hustle content"],
+    "avoid": [
+      "any medical or diagnostic claim — SOMA is not a medical device, does not diagnose, treat, or replace a clinician",
+      "body-scan-from-a-photo claims: the research sheet is full of them and the app does not do it. Progress compare puts two photos side by side; it does not read body composition from an image.",
+      "weight-loss guarantees, timelines, or numbers ('lose 5kg in 4 weeks')",
+      "'replaces your trainer' as a factual claim — a comparison of speed is fine, a claim of equivalence is not",
+      "hormone, cycle or bloodwork features — that tier is not on sale",
+      "Android availability",
+      "shaming, before/after moralising, or 'nothing tastes as good as' register"
+    ]
+  },
+  "compliance": "Health claims are the risk surface of this account. If a line implies a medical outcome, cut it. Prices drift — verify against soma-landing/public/pricing.md before publishing any figure."
+}

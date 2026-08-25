@@ -1,5 +1,6 @@
 {
   "deck": "soma-4hacks",
+  "caption": "tiny decisions > big motivation\n\n#routine #healthylifestyle #fitness",
   "slides": [
     {
       "kind": "photo",
@@ -10,7 +11,10 @@
     {
       "kind": "photo",
       "bg": "two glass jars of overnight oats with berries and a spoon on a kitchen counter in cool calm evening light, close view, no people",
-      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],
+      "refs": [
+        "../refs/style/soma-18.jpg",
+        "../refs/style/soma-09.jpg"
+      ],
       "text": "1 — Prep breakfast\nthe night before\n\nMorning-you will eat it",
       "dim": 0.4
     },

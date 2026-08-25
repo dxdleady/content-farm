@@ -1,0 +1,185 @@
+{
+  "source": "Trend and Content Research.xlsx (founders) — extracted 2026-08-25",
+  "note": "The TikTok slide-show rows of the \"Content Plan\" sheet, the spoken hook bank and the approved hashtag list. The xlsx lives on the founders' machines; this is the repo copy, so a fresh clone has the hooks.",
+  "slideshows": [
+    {
+      "day": 1,
+      "piece": "4 facts about your body when you reach your body goal",
+      "hook": "4 facts about yout body",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 1,
+      "piece": "5 secrets to rech your body goal",
+      "hook": "5 secrets",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 1,
+      "piece": "4 essential hacks to reach your goal body",
+      "hook": "4 essecial hacks",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 1,
+      "piece": "5 workout hacks I wish I knew earlier",
+      "hook": "5 workout hacks I wished I knew...",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 2,
+      "piece": "5 workout facts every beginner should know",
+      "hook": "5 workout facts",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 2,
+      "piece": "5 things you need to know about working out and reaching your goal body",
+      "hook": "5 things you need to know",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 2,
+      "piece": "5 bizzarre life hacks my colleague taught me",
+      "hook": "5 bizzarre life hacks",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 2,
+      "piece": "6 Reasons why you're stuck with your body",
+      "hook": "6 reasons why",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 2,
+      "piece": "5 hacks that change your body",
+      "hook": "5 hacks that changed my body",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 2,
+      "piece": "10 ways to reach your dream body",
+      "hook": "10 ways to",
+      "positioning": "SOMA Positioned / Stealth Marketing",
+      "state": "Prepared"
+    },
+    {
+      "day": 3,
+      "piece": "4 reasons why you wan't reach your goal body",
+      "hook": "4 reasons why",
+      "positioning": "App positioned in last slide with App Store",
+      "state": "Prepared"
+    },
+    {
+      "day": 3,
+      "piece": "5 hacks to help you reach your goal body",
+      "hook": "5 hacks to help you",
+      "positioning": "App positioned in last slide with App Store",
+      "state": "Prepared"
+    },
+    {
+      "day": 3,
+      "piece": "Every looked at body goals on Social Media",
+      "hook": "Every looked at Body Goals",
+      "positioning": "App positioned in last slide with App Store",
+      "state": "Prepared"
+    },
+    {
+      "day": 3,
+      "piece": "I've been ghosting you, cause I'm working.",
+      "hook": "First mirror selife of girl, then pictures of gym, healthy food, walks, sleep, SOMA",
+      "positioning": "App strategically positioned in slide show",
+      "state": "Idea"
+    },
+    {
+      "day": 3,
+      "piece": "Kinda Chic ...",
+      "hook": "8 slides, with gym, health, and fitness \"kinda chic\" pieces",
+      "positioning": "SOMA in stealth marketing positioning",
+      "state": "Idea"
+    },
+    {
+      "day": 4,
+      "piece": "3 things I love doing with SOMA",
+      "hook": "",
+      "positioning": "",
+      "state": ""
+    },
+    {
+      "day": 4,
+      "piece": "My favorite 3 features within SOMA",
+      "hook": "",
+      "positioning": "",
+      "state": ""
+    }
+  ],
+  "hookBank": [
+    "If you've ever taken a photo of your body and deleted it in disgust, watch this.",
+    "POV: you just found the only fitness app that's actually looked at your body.",
+    "This app roasted my body harder than my trainer ever did — and then fixed it.",
+    "I'm about to show you why every fitness app you've used has been lying to you.",
+    "Personal trainers are about to be obsolete and I have proof.",
+    "Your macros calculator has never seen your body. That's the problem.",
+    "I stopped paying my trainer $300/month and this app replaced him in one photo.",
+    "The fitness industry does not want this app to exist.",
+    "This is the first app that's actually smarter than your gym coach.",
+    "[hold phone up, scanning body] Watch what happens when I let AI actually see my body instead of just typing numbers into an app.",
+    "[upload current photo + goal photo on screen] I gave this app one photo of me now and one photo of my goal. What it said back broke my brain.",
+    "[connect Apple Watch on screen] I linked my Whoop to this app and it told me something my trainer never noticed.",
+    "[pan to gym] I took one photo of my home gym and this app built my entire program around the equipment I actually have.",
+    "Watch me build my entire fitness plan in 45 seconds using just two photos.",
+    "Nobody tells you that most fitness plans fail because they were never built for YOUR body.",
+    "I was following a plan built for a 25-year-old with different genetics than me. Then I found this.",
+    "The reason your six-pack plan isn't working is probably not what you think.",
+    "I've bought every fitness app. This is the first one that didn't feel like it was guessing.",
+    "There's an AI app that can tell your body composition from a single photo and it's terrifyingly accurate.",
+    "I asked an AI what was actually wrong with my physique and I was not ready for the answer.",
+    "This app looked at my goal photo and told me something no trainer ever said out loud.",
+    "I'm going to show you the exact plan an AI built after seeing my body for 10 seconds.",
+    "I let an AI trainer see my actual body for a week instead of a human one. Here's what happened.",
+    "I tried the app that scans your body and builds your plan — before I say anything, watch what it told me.",
+    "Day 1 vs the AI's prediction of what I'd look like in 12 weeks — I need you to see this.",
+    "This app used 3 data points — my wearable, my body, my goal photo — to build a plan more accurate than any trainer I've paid.",
+    "It took SOMA 12 seconds to build a plan that took my last trainer 3 sessions to figure out.",
+    "Are you stuck in your weight loss journey?",
+    "Does your body make affect your confidence? Try this:",
+    "Sturgglinh in your fitness and health journey?",
+    "Struggling with what workout to do to reach your goal body?"
+  ],
+  "hashtags": [
+    "weightlosstransformation",
+    "healthylifestyle",
+    "wmenshealth",
+    "gym",
+    "routine",
+    "fitness",
+    "workout",
+    "bestversionofyou",
+    "lean",
+    "toned",
+    "soma",
+    "bestshapeofmylife",
+    "hormonebalance",
+    "energyboost",
+    "body",
+    "healthy",
+    "health",
+    "inshape",
+    "fit",
+    "toneup",
+    "comeback",
+    "wellness",
+    "wellnesstips",
+    "ovluation",
+    "naturalhealing"
+  ]
+}

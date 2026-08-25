@@ -1,5 +1,6 @@
 {
   "deck": "soma-10ways",
+  "caption": "save this for your next reset\n\n#healthylifestyle #routine #inshape",
   "slides": [
     {
       "kind": "photo",
@@ -32,7 +33,10 @@
     {
       "kind": "photo",
       "bg": "a tall glass of still water with ice on a marble kitchen counter next to a folded linen napkin and cutlery, bright soft daylight, close view, no people",
-      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],
+      "refs": [
+        "../refs/style/soma-18.jpg",
+        "../refs/style/soma-09.jpg"
+      ],
       "text": "5 — Water before\nevery meal",
       "dim": 0.4
     },

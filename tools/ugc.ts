@@ -1,6 +1,11 @@
 // UGC slideshow renderer — the SOMA stealth-marketing format, not the editorial carousel.
 //
-//   node tools/ugc.ts <deck.json> [outDir]
+//   node tools/ugc.ts <deck.json> [outDir] [--pool <id>]
+//
+// --pool swaps the CHARACTER without touching a deck. Every `../avatar/<name>.jpg` in a
+// deck is a SLOT — "the gym hook", "the plate of eggs" — and a pool is one person's
+// answer to those slots: products/soma/ugc/pools/<id>/pool.json maps slot -> her file.
+// Without the flag the decks render against products/soma/avatar/ as authored.
 //
 // A different animal from src/render.ts on purpose: no product chrome (no wordmark, no
 // pagination), no layout system — TikTok-native "text over a phone photo" slides, built
@@ -13,7 +18,7 @@
 //
 // The safe box (108..894 x, 305..1617 y on a 1080x1920 canvas) is measured from the
 // brand's SAFE SPACE template, right side wider for TikTok's action rail.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname, resolve, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Chrome } from '../src/chrome.ts';
@@ -40,9 +45,41 @@ type CtaSlide = {
   kind: 'cta'; photo: string; heading: string; body: string;
   screenshot: string; badge: string; appIcon: string; wash?: number;
 };
-type UgcDeck = { deck: string; slides: Array<PhotoSlide | CtaSlide> };
+type UgcDeck = { deck: string; caption?: string; slides: Array<PhotoSlide | CtaSlide> };
 
 const abs = (p: string, base: string): string => (isAbsolute(p) ? p : resolve(base, p));
+
+/* ------------------------------------------------------------------ pools */
+
+/** A pool answers the deck's avatar SLOTS with one person's photos.
+ *  `pools/<id>/pool.json` is `{ "<slot file name>": "<file in this pool>" }`. */
+type Pool = { id: string; dir: string; slots: Record<string, string> };
+
+const POOLS = join(ROOT, 'products/soma/ugc/pools');
+/** A deck path is a slot when it points into the authored avatar folder. */
+const SLOT_RE = /(^|\/)avatar\/([^/]+)$/;
+
+function loadPool(id: string): Pool {
+  const dir = join(POOLS, id);
+  const file = join(dir, 'pool.json');
+  if (!existsSync(file)) {
+    throw new Error(`no pool "${id}" — expected ${file}. Run: node tools/ugc-pool.ts --new ${id}`);
+  }
+  return { id, dir, slots: JSON.parse(readFileSync(file, 'utf8')) as Record<string, string> };
+}
+
+/** Slots this pool cannot answer, so one render reports every gap instead of the first. */
+function poolGaps(deck: UgcDeck, pool: Pool): string[] {
+  const missing = new Set<string>();
+  for (const s of deck.slides) {
+    const slot = s.photo?.match(SLOT_RE)?.[2];
+    if (!slot) continue;
+    const mapped = pool.slots[slot];
+    if (!mapped) missing.add(`${slot} — unmapped`);
+    else if (!existsSync(join(pool.dir, mapped))) missing.add(`${slot} -> ${mapped} — file not in pool`);
+  }
+  return [...missing];
+}
 
 const esc = (s: string): string => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
@@ -99,9 +136,15 @@ function photoSlide(s: PhotoSlide, photoPath: string): string {
 ${s.chevron === false ? '' : CHEVRON}`);
 }
 
+/** A deck path, redirected through the active pool when it names an avatar slot. */
+function photoPath(p: string, base: string, pool: Pool | null): string {
+  const slot = pool && p.match(SLOT_RE)?.[2];
+  return slot && pool.slots[slot] ? join(pool.dir, pool.slots[slot]) : abs(p, base);
+}
+
 /** Resolve a photo slide's image: a supplied file, or a generated one. */
-async function photoFor(s: PhotoSlide, base: string): Promise<string> {
-  if (s.photo) return abs(s.photo, base);
+async function photoFor(s: PhotoSlide, base: string, pool: Pool | null): Promise<string> {
+  if (s.photo) return photoPath(s.photo, base, pool);
   if (!s.bg) throw new Error('photo slide needs "photo" or "bg"');
   const file = await background(s.bg, {
     aspect: '9:16',
@@ -113,9 +156,9 @@ async function photoFor(s: PhotoSlide, base: string): Promise<string> {
   return file;
 }
 
-function ctaSlide(s: CtaSlide, base: string): string {
+function ctaSlide(s: CtaSlide, base: string, pool: Pool | null): string {
   return SHELL(`
-<img class="bg" src="file://${abs(s.photo, base)}">
+<img class="bg" src="file://${photoPath(s.photo, base, pool)}">
 <span class="veil" style="background:rgba(255,255,255,${s.wash ?? 0.62})"></span>
 <div class="cta">
   <h1 class="cta-head">${esc(s.heading)}</h1>
@@ -129,14 +172,32 @@ function ctaSlide(s: CtaSlide, base: string): string {
 }
 
 /* ------------------------------------------------------------------ main */
-const [deckPath, outArg] = process.argv.slice(2);
-if (!deckPath) { console.error('usage: node tools/ugc.ts <deck.json> [outDir]'); process.exit(1); }
+const argv = process.argv.slice(2);
+const poolFlag = argv.indexOf('--pool');
+const poolId = poolFlag === -1 ? null : argv[poolFlag + 1];
+if (poolFlag !== -1) argv.splice(poolFlag, 2);
+const [deckPath, outArg] = argv;
+if (!deckPath) {
+  console.error('usage: node tools/ugc.ts <deck.json> [outDir] [--pool <id>]');
+  process.exit(1);
+}
 
 const deckFile = resolve(deckPath);
 const base = dirname(deckFile);
 const deck = JSON.parse(readFileSync(deckFile, 'utf8')) as UgcDeck;
 
-const outDir = resolve(outArg ?? join(ROOT, 'out/ugc', deck.deck));
+const pool = poolId ? loadPool(poolId) : null;
+if (pool) {
+  const gaps = poolGaps(deck, pool);
+  if (gaps.length) {
+    console.error(`pool "${pool.id}" cannot render ${deck.deck} — ${gaps.length} slot(s) open:`);
+    for (const g of gaps) console.error(`  ${g}`);
+    console.error(`\nFill them in ${join(pool.dir, 'pool.json')}, then re-run.`);
+    process.exit(2);
+  }
+}
+
+const outDir = resolve(outArg ?? join(ROOT, 'out/ugc', pool ? `${pool.id}-${deck.deck}` : deck.deck));
 const buildDir = join(outDir, '.html');
 mkdirSync(buildDir, { recursive: true });
 
@@ -144,7 +205,9 @@ const chrome = await Chrome.launch();
 try {
   for (const [i, s] of deck.slides.entries()) {
     const name = `${String(i + 1).padStart(2, '0')}-${s.kind}`;
-    const html = s.kind === 'photo' ? photoSlide(s, await photoFor(s, base)) : ctaSlide(s, base);
+    const html = s.kind === 'photo'
+      ? photoSlide(s, await photoFor(s, base, pool))
+      : ctaSlide(s, base, pool);
     const htmlPath = join(buildDir, `${name}.html`);
     writeFileSync(htmlPath, html);
     writeFileSync(join(outDir, `${name}.png`), await chrome.shootPooled(`file://${htmlPath}`, W, H));
@@ -153,4 +216,10 @@ try {
 } finally {
   chrome.kill();
 }
+
+// The caption is authored WITH the deck, so it lives in the deck and is written out
+// beside the slides — a post folder is then the whole thing, ready to upload.
+if (deck.caption) writeFileSync(join(outDir, 'caption.txt'), `${deck.caption.trim()}\n`);
+else console.warn('  ! no "caption" in the deck — the post is not publishable yet');
+
 console.log(`\n${deck.slides.length} slides -> ${outDir}  (${W}x${H})`);

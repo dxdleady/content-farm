@@ -1,5 +1,6 @@
 {
   "deck": "soma-kindachic",
+  "caption": "healthy is the new luxury, I do not make the rules\n\n#wellness #healthylifestyle #routine",
   "slides": [
     {
       "kind": "photo",
@@ -10,7 +11,10 @@
     {
       "kind": "photo",
       "bg": "a chic cafe table by the window with a glass bottle of sparkling water, a lemon slice in a tumbler and sunglasses beside it, soft afternoon light, no people",
-      "refs": ["../refs/style/soma-09.jpg", "../refs/style/soma-18.jpg"],
+      "refs": [
+        "../refs/style/soma-09.jpg",
+        "../refs/style/soma-18.jpg"
+      ],
       "text": "Kinda chic to order\nwater first",
       "dim": 0.4
     },
@@ -39,7 +43,10 @@
     {
       "kind": "photo",
       "bg": "a bright calm bedroom at night seen from the doorway — a made bed with white linen, a small warm lamp glowing on the nightstand, a book and a sleep mask on the duvet, cozy and inviting, no people",
-      "refs": ["../refs/style/soma-23.jpg", "../refs/style/soma-27.jpg"],
+      "refs": [
+        "../refs/style/soma-23.jpg",
+        "../refs/style/soma-27.jpg"
+      ],
       "text": "Kinda chic to be\nin bed by ten",
       "dim": 0.35
     },

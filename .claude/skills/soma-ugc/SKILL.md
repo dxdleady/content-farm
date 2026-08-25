@@ -26,15 +26,22 @@ post  =  hook  ×  photos  ×  copy  ×  CTA
 
 | Thing | Where |
 |---|---|
-| renderer | `tools/ugc.ts` — `node tools/ugc.ts products/soma/ugc/deck-<id>.json` |
-| decks (the source of truth) | `products/soma/ugc/deck-*.json` |
+| renderer | `tools/ugc.ts` — `node tools/ugc.ts products/soma/ugc/deck-<id>.json [--pool <id>]` |
+| decks (the source of truth — slides AND caption) | `products/soma/ugc/deck-*.json` |
 | photo pool, staged | `products/soma/avatar/*.jpg` (58 files, descriptive names) |
-| photo pool, raw | `~/Desktop/My UGC avatar/*.jpeg` (52 files, UUID names) |
+| photo pool, raw (Mary's machine only) | `~/Desktop/My UGC avatar/*.jpeg` (52 files, UUID names) |
+| other people's pools | `products/soma/ugc/pools/<id>/` + `pool.json` |
 | generated backgrounds, staged | `products/soma/ugc/assets/gen/*.png` |
 | app screenshots | `products/soma/ugc/assets/screens/screen-*.png` |
 | CTA assets | `products/soma/ugc/assets/` — `screen-home.png`, `appstore-badge.png`, `app-icon.png` |
 | output, one folder per post | `out/ugc/<deck>/` — `01-photo.png … NN-cta.png` + `caption.txt` |
-| hooks + hashtags | `~/Downloads/Trend and Content Research.xlsx` → sheets `Content Plan `, `Hashtags and Keywords + Hooks` |
+| hooks, hook bank, hashtags | `products/soma/brief/content-plan.json` (extracted from the founders' xlsx) |
+| product facts, and what may not be claimed | `products/soma/brief/product.json` — read `voice.avoid` before writing |
+| the human onboarding path | `products/soma/ugc/README.md` |
+
+Two review/scaffolding tools sit beside the renderer: `tools/ugc-sheets.ts` (a contact
+sheet per post — `--all` for every render) and `tools/ugc-pool.ts` (`--slots` / `--new`
+/ `--check`, for standing up someone else's photo pool).
 
 Node must be **≥24**: prefix every command with `PATH="/opt/homebrew/bin:$PATH"`
 (`/usr/local/bin/node` is v23 and first on PATH).
@@ -108,6 +115,25 @@ Staging a photo: copy from the raw pool into `products/soma/avatar/` under a **d
 name (`gym-dumbbells.jpg`, `pajama-morning.jpg`), never the UUID. See
 `references/photo-pool.md` for the current inventory by type.
 
+### Those names are slots, and another person can answer them
+
+`../avatar/gym-dumbbells.jpg` in a deck means *"her, mid-workout, clean frame"* — a **slot**.
+A **pool** (`products/soma/ugc/pools/<id>/pool.json`) maps every slot to one person's own
+file, so a second founder renders the same 20 posts as her own character without touching a
+deck:
+
+```bash
+node tools/ugc-pool.ts --slots           # the shot list: every slot and where it is used
+node tools/ugc-pool.ts --new sarah       # pools/sarah/ + a pool.json with every slot blank
+node tools/ugc-pool.ts --check sarah     # what is open, and which decks already render
+node tools/ugc.ts products/soma/ugc/deck-5secrets.json --pool sarah   # -> out/ugc/sarah-soma-5secrets/
+```
+
+The renderer refuses a deck with unfilled slots and lists them, rather than rendering a
+hole. Only `../avatar/` paths are redirected — generated frames, app screens and CTA
+furniture are shared by everyone. When someone brings an AI-generated character, the slot
+list **is** the shot list, and the same watermark and one-consistent-face rules apply.
+
 ## Generation: when, and how not to waste it
 
 Generate only when the beat has no honest frame in the pool — a scene the avatar was never
@@ -155,7 +181,10 @@ Stealth means SOMA is absent from the hook — not from the post.
 
 ## Captions and hashtags
 
-One `caption.txt` per post folder, written after the render, while looking at it:
+The caption lives in the deck as `"caption"`, beside the slides it belongs to — it is
+authored text, and `out/` is disposable. The renderer writes it out as `caption.txt` next
+to the PNGs, and warns when a deck has none. Write it after the render, while looking at
+it:
 
 ```
 number 4 is the one everyone skips 🙃
