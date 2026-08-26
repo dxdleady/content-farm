@@ -171,8 +171,11 @@ most saturated on TikTok, and a single generic day post loses. The same day, cut
 different way each time, makes the account read as a person.
 
 One spine, six anchors: **06:40** waking · **07:20** breakfast · **09:00** training ·
-**13:20** walk · **19:30** dinner · **22:30** bed. Times go in the copy as plain text
-(`13:20 — Walk after lunch`), the way `1 — Protein first` already works.
+**13:20** walk · **19:30** dinner · **22:30** bed. The moment goes in its own field —
+`"time": "13:20"` — rendered small and wide-tracked above the copy with a hairline under
+it. Keep it out of the sentence: a time inside the text competes with the line, and on its
+own it becomes the spine the series is read by. It is also independent of the phone's
+status-bar clock, which we do not control.
 
 `deck-routine-{day,morning,night,badnight,busy,week,noface,sunday}` — the whole day by
 timestamp; the first hour; the evening shutdown; five hours' sleep and what the plan does

@@ -11,25 +11,29 @@
     {
       "kind": "photo",
       "photo": "assets/gen/dinner-lamp.png",
-      "text": "20:00 — Dinner early enough\nto stop thinking about it\n\nProtein, carbs, done",
-      "dim": 0.4
+      "text": "Dinner early enough\nto stop thinking about it\n\nProtein, carbs, done",
+      "dim": 0.4,
+      "time": "20:00"
     },
     {
       "kind": "photo",
       "photo": "../avatar/legs-coffee.jpg",
-      "text": "21:00 — Legs up,\nlights down\n\nBoring is the point"
+      "text": "Legs up,\nlights down\n\nBoring is the point",
+      "time": "21:00"
     },
     {
       "kind": "photo",
       "photo": "assets/gen/bag-by-door.png",
-      "text": "22:00 — Bag packed\n\nMorning-me decides nothing",
-      "dim": 0.42
+      "text": "Bag packed\n\nMorning-me decides nothing",
+      "dim": 0.42,
+      "time": "22:00"
     },
     {
       "kind": "photo",
       "photo": "assets/gen/bedside-lamp.png",
-      "text": "22:30 — Same time\nas last night\n\nThe streak is the whole trick",
-      "dim": 0.3
+      "text": "Same time\nas last night\n\nThe streak is the whole trick",
+      "dim": 0.3,
+      "time": "22:30"
     },
     {
       "kind": "cta",

@@ -43,6 +43,11 @@ type PhotoSlide = {
    *  A full-bleed screenshot is dense UI the white type has to survive; in a frame it
    *  reads as "her phone, on the table" and the text gets its own dark ground back. */
   screen?: string;
+  /** A moment, set above the copy — "06:40". The routine series is read at a
+   *  glance, and a time in the text competes with the sentence; on its own it
+   *  becomes the spine. Independent of the phone's status bar, which we do not
+   *  control. */
+  time?: string;
   text: string; dim?: number; align?: 'center' | 'low'; chevron?: boolean;
 };
 type CtaSlide = {
@@ -110,6 +115,11 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
      text-wrap: balance; letter-spacing: .2px;
      text-shadow: 0 2px 28px rgba(0,0,0,.55), 0 0 3px rgba(0,0,0,.35); }
 .t + .t { margin-top: 56px; }
+/* the moment: small, wide-tracked, with a hairline under it — a label, not a badge */
+.time { align-self: center; margin-bottom: 44px; padding-bottom: 14px;
+        color: #fff; font-size: 40px; font-weight: 600; letter-spacing: 6px;
+        border-bottom: 2px solid rgba(255,255,255,.55);
+        text-shadow: 0 2px 24px rgba(0,0,0,.6); }
 .chev { position: absolute; right: 62px; bottom: 122px; width: 92px; height: 92px;
         border-radius: 50%; background: ${NAVY}; display: flex; align-items: center; justify-content: center; }
 .chev svg { width: 44px; height: 44px; margin-left: 4px; }
@@ -142,7 +152,7 @@ function photoSlide(s: PhotoSlide, bgFile: string, base: string, pool: Pool | nu
   return SHELL(`
 <img class="bg" src="file://${bgFile}">
 <span class="veil" style="background:rgba(14,14,16,${dim})"></span>
-<div class="safe safe--${box}">${paras(s.text, 't')}</div>
+<div class="safe safe--${box}">${s.time ? `<span class="time">${esc(s.time)}</span>` : ''}${paras(s.text, 't')}</div>
 ${s.screen ? `<div class="phone phone--scene"><img src="file://${photoPath(s.screen, base, pool)}"></div>` : ''}
 ${s.chevron === false ? '' : CHEVRON}`);
 }
