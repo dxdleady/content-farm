@@ -32,7 +32,7 @@ post  =  hook  ×  photos  ×  copy  ×  CTA
 | photo pool, raw (Mary's machine only) | `~/Desktop/My UGC avatar/*.jpeg` (52 files, UUID names) |
 | other people's pools | `products/soma/ugc/pools/<id>/` + `pool.json` |
 | generated backgrounds, staged | `products/soma/ugc/assets/gen/*.png` |
-| app screenshots | `products/soma/ugc/assets/screens/screen-*.png` |
+| app screenshots | `products/soma/ugc/assets/screens/screen-*.png` — what to shoot next and how: `screens/SHOTLIST.md` + the ready-to-run `screens/MarketingScreenshotUITests.swift` |
 | CTA assets | `products/soma/ugc/assets/` — `screen-home.png`, `appstore-badge.png`, `app-icon.png` |
 | output, one folder per post | `out/ugc/<deck>/` — `01-photo.png … NN-cta.png` + `caption.txt` |
 | hooks, hook bank, hashtags | `products/soma/brief/content-plan.json` (extracted from the founders' xlsx) |
@@ -178,6 +178,14 @@ One spine, six anchors: **06:40** waking · **07:20** breakfast · **09:00** tra
 timestamp; the first hour; the evening shutdown; five hours' sleep and what the plan does
 about it; the day everything moved; seven days in seven slides; a day told entirely in
 objects; the Sunday reset.
+
+**App screens are the bottleneck, not the copy.** The app has a full UI-test fixture
+system — ten named scenarios, sleep source, nutrition state, subscription tier, any
+onboarding question by name — so almost any state can be shot on demand
+(`screens/SHOTLIST.md`). Two things it does NOT give you for free: the status-bar clock
+(`xcrun simctl status_bar booted override --time 06:45` — a slide saying 6:45 must not
+carry a 19:15 clock) and any dedicated evening or sleep screen. Ask for the shot before
+writing a slide around a screen we do not have.
 
 **The beat grammar is time → what I did → why.** Every beat owes the viewer something they
 can copy without the app (protein first, walk after lunch, same bedtime) **and** something
