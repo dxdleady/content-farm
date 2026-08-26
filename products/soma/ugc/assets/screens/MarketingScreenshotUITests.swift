@@ -46,10 +46,24 @@ final class MarketingScreenshotUITests: XCTestCase {
 
     // MARK: - Plumbing
 
+    private let homeAnchors = ["Lower body strength", "Moderate", "Rest", "Push Hard", "Light Movement"]
+
+    /// Every launch gets two defaults a case can override:
+    ///
+    /// - `UITEST_CLOCK_HOUR` -- `simctl status_bar --time` repaints the
+    ///   status bar only, so without this a 06:45 bar carries a "Good
+    ///   afternoon" greeting: the exact staged-looking contradiction these
+    ///   shots exist to remove.
+    /// - `UITEST_SUBSCRIPTION=premium_annual` -- the fixture's default
+    ///   `referral_bonus_until: 2099-01-01` renders as a "26,426 DAYS"
+    ///   gold plaque, which reads as debug garbage in a marketing frame.
+    ///   A paid entitlement shows "PRO" instead.
     private func launch(_ env: [String: String], args: [String] = ["--ui-test-fixtures"]) -> XCUIApplication {
         runningApp?.terminate()
         let app = XCUIApplication()
         app.launchArguments = args
+        app.launchEnvironment["UITEST_CLOCK_HOUR"] = "6"
+        app.launchEnvironment["UITEST_SUBSCRIPTION"] = "premium_annual"
         for (k, v) in env { app.launchEnvironment[k] = v }
         app.launch()
         runningApp = app
@@ -75,16 +89,60 @@ final class MarketingScreenshotUITests: XCTestCase {
         print("… none of \(anchors) appeared in \(Int(timeout))s; shooting whatever is on screen")
     }
 
-    /// Taps a button if it is there. Returns whether it was.
+    /// Taps whatever carries `label`, preferring a HITTABLE match.
+    ///
+    /// `firstMatch` is the trap here: Home stays in the hierarchy behind a
+    /// presented sheet, so `buttons["Why this?"]` resolved to Home's own
+    /// disclosure, found it unhittable, and coordinate-tapped through to
+    /// nothing -- leaving a shot identical to the one before it. Same
+    /// story for "Edit widgets". So: collect every candidate, tap the
+    /// first hittable one, and only fall back to a coordinate tap when
+    /// nothing on screen is hittable at all.
     @discardableResult
     private func tapIfPresent(_ app: XCUIApplication, _ label: String, timeout: TimeInterval = 6) -> Bool {
-        let b = app.buttons[label].firstMatch
-        guard b.waitForExistence(timeout: timeout) else {
-            print("… no button '\(label)' — skipping that shot")
-            return false
+        func candidates() -> [XCUIElement] {
+            let queries = [
+                app.buttons.matching(NSPredicate(format: "identifier == %@", label)),
+                app.buttons.matching(NSPredicate(format: "label == %@", label)),
+                app.buttons.matching(NSPredicate(format: "label CONTAINS %@", label)),
+                app.staticTexts.matching(NSPredicate(format: "label == %@", label)),
+            ]
+            return queries.flatMap { $0.allElementsBoundByIndex }
         }
-        b.tap()
-        return true
+        let deadline = Date().addingTimeInterval(timeout)
+        var lastResort: XCUIElement?
+        while Date() < deadline {
+            let found = candidates()
+            if let hittable = found.first(where: { $0.exists && $0.isHittable }) {
+                hittable.tap()
+                return true
+            }
+            lastResort = lastResort ?? found.first(where: { $0.exists })
+            usleep(300_000)
+        }
+        if let element = lastResort, element.exists, element.frame.width > 0, element.frame.height > 0 {
+            print("… '\(label)' never became hittable — tapping its centre")
+            element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            return true
+        }
+        print("… no button '\(label)' — skipping that shot")
+        return false
+    }
+
+    /// The "Why this?" disclosure on the workout detail reports an
+    /// accessibility frame ~220 pt BELOW where it actually draws, so
+    /// XCUITest calls it unhittable and a tap on its reported centre lands
+    /// on the card underneath. (Worth a bug of its own: VoiceOver has the
+    /// same wrong target.) Sweep the window where it visually is instead,
+    /// and let the trigger's own open-state label confirm the hit.
+    private func openWhyThis(_ app: XCUIApplication) -> Bool {
+        if let hittable = app.buttons.matching(NSPredicate(format: "label == 'Why this?'"))
+            .allElementsBoundByIndex.first(where: { $0.exists && $0.isHittable }) {
+            hittable.tap()
+            if app.buttons["Hide details"].waitForExistence(timeout: 3) { return true }
+        }
+        print("… 'Why this?' on the workout detail took no tap — see the report")
+        return false
     }
 
     // MARK: - 1. Setup: the 22-step survey, one launch per question
@@ -111,33 +169,45 @@ final class MarketingScreenshotUITests: XCTestCase {
         settle(welcome, anchors: ["Find your next best day"])
         shoot(welcome, "onboarding-01-welcome")
 
-        // PostSetup steps are reachable by name; paywall is Superwall-rendered.
-        for step in ["loading", "consent", "planSummary", "bodyPhotos", "tryFree", "trialReminder", "paywall"] {
+        for step in ["loading", "consent", "planSummary", "bodyPhotos", "tryFree", "trialReminder"] {
             let app = launch(["UITEST_POSTSETUP": step], args: ["--ui-test-onboarding-demo-resume"])
             _ = app.otherElements.firstMatch.waitForExistence(timeout: 12)
+            sleep(2)
             shoot(app, "postsetup-\(step)")
+        }
+
+    }
+
+    /// Superwall is remote and needs the real network AND an unentitled
+    /// user: the onboarding_paywall campaign's audience is "unsubscribed
+    /// users", so launch()'s premium_annual default makes the SDK skip
+    /// presentation and run the feature closure straight through to Home.
+    ///
+    /// Even with `free` this often will not present, because the campaign
+    /// also carries an occurrence limit and the fixture user id is a
+    /// constant -- once any run on this machine has seen it, later runs
+    /// are skipped by design. The repo's own
+    /// `OnboardingPaywallMatrixUITests/test_paywall_free` captures the
+    /// same screen and is where the shipped shot came from; run that on a
+    /// user who has not seen it rather than retrying this.
+    func test_shots_13_paywall() {
+        let app = launch([
+            "UITEST_POSTSETUP": "paywall",
+            "UITEST_SUBSCRIPTION": "free",
+            "UITEST_NO_REFERRAL_BONUS": "1",
+        ], args: ["--ui-test-onboarding-demo-resume"])
+        if app.buttons["Restore"].waitForExistence(timeout: 30) {
+            sleep(3)
+            shoot(app, "postsetup-paywall")
+        } else {
+            print("… Superwall never presented — no network, or the campaign is paused")
+            shoot(app, "postsetup-paywall-missing")
         }
     }
 
     // MARK: - 3. The daily home, every state that changes what it says
 
-    func test_shots_03_homeStates() {
-        let cases: [(name: String, env: [String: String])] = [
-            ("home-moderate",        ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "healthkit"]),
-            ("home-restday",         ["UITEST_SCENARIO": "activeGoalDay28Rest"]),
-            ("home-day6",            ["UITEST_SCENARIO": "activeGoalDay6"]),
-            ("home-eta-slipped",     ["UITEST_SCENARIO": "activeGoalWeek4Slipped"]),
-            ("home-at-eta",          ["UITEST_SCENARIO": "activeGoalAtEta"]),
-            ("home-no-goal",         ["UITEST_SCENARIO": "catalogOpen"]),
-            ("home-trial-banner",    ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SUBSCRIPTION": "trial"]),
-            ("home-paid",            ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SUBSCRIPTION": "premium_annual"]),
-            ("home-detected-workout",["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_DETECTED_WORKOUT": "1"]),
-            ("home-sleep-oura",      ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura"]),
-            ("home-sleep-whoop",     ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "whoop"]),
-            ("home-sleep-empty",     ["UITEST_SCENARIO": "activeGoalWeek2"]),
-            ("home-nutrition-perfect",["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "perfect"]),
-            ("home-nutrition-over",  ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "over"]),
-        ]
+    private func shootHome(_ cases: [(name: String, env: [String: String])]) {
         for c in cases {
             let app = launch(c.env)
             settle(app, anchors: ["Lower body strength", "Moderate", "Rest", "Push Hard", "Light Movement"])
@@ -149,58 +219,267 @@ final class MarketingScreenshotUITests: XCTestCase {
         }
     }
 
+    /// Split in two: 14 launches in one xcodebuild invocation is what kills
+    /// SpringBoard on a 16 GB host (see scripts/test.sh), and a SIGKILLed
+    /// app relaunches WITHOUT the fixture args -- shooting an empty,
+    /// signed-out app that still looks plausible.
+    func test_shots_03a_homeStates() {
+        shootHome([
+            ("home-moderate",        ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "healthkit"]),
+            ("home-restday",         ["UITEST_SCENARIO": "activeGoalDay28Rest"]),
+            ("home-day6",            ["UITEST_SCENARIO": "activeGoalDay6"]),
+            ("home-eta-slipped",     ["UITEST_SCENARIO": "activeGoalWeek4Slipped"]),
+            ("home-at-eta",          ["UITEST_SCENARIO": "activeGoalAtEta"]),
+            ("home-no-goal",         ["UITEST_SCENARIO": "catalogOpen"]),
+            ("home-trial-banner",    ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SUBSCRIPTION": "trial", "UITEST_NO_REFERRAL_BONUS": "1"]),
+        ])
+    }
+
+    func test_shots_03b_homeStates() {
+        shootHome([
+            ("home-paid",            ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SUBSCRIPTION": "premium_annual"]),
+            ("home-detected-workout",["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_DETECTED_WORKOUT": "1"]),
+            ("home-sleep-oura",      ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura"]),
+            ("home-sleep-whoop",     ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "whoop"]),
+            ("home-sleep-empty",     ["UITEST_SCENARIO": "activeGoalWeek2"]),
+            ("home-nutrition-perfect",["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "perfect"]),
+            ("home-nutrition-over",  ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "over"]),
+        ])
+    }
+
     // MARK: - 4. Workout: the plan, the why, the payoff
 
     func test_shots_04_workout() {
-        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura"])
+        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura", "UITEST_CLOCK_HOUR": "9"])
         settle(app, anchors: ["Lower body strength", "Moderate"])
         shoot(app, "workout-01-home-card")
 
         if tapIfPresent(app, "Start workout") || tapIfPresent(app, "Check workout details") {
             _ = app.scrollViews.firstMatch.waitForExistence(timeout: 20)
+            sleep(2)
             shoot(app, "workout-02-detail-top")
-            if tapIfPresent(app, "Why this?") { shoot(app, "workout-03-why-expanded") }
+            // SomaDisclosure swaps its own trigger label on open, so that
+            // is the assertion that it actually opened -- a coordinate tap
+            // that lands on nothing silently leaves the shot identical to
+            // the one above.
+            sleep(4)
+            if openWhyThis(app) {
+                sleep(1)
+                shoot(app, "workout-03-why-expanded")
+            }
             app.swipeUp(); shoot(app, "workout-04-plan-blocks")
             app.swipeUp(); shoot(app, "workout-05-plan-more")
+            // The payoff screen: CompletedWorkoutView.
+            if tapIfPresent(app, "Complete workout", timeout: 8) {
+                sleep(4)
+                shoot(app, "workout-06-complete")
+                app.swipeUp(); shoot(app, "workout-07-complete-lower")
+                // Back to Home: the fixture's week already carries logs on
+                // the two preceding days, so today's completion is the only
+                // thing standing between the streak tile and a real number.
+                // The back control is a bare chevron with no label, so go
+                // by position rather than by text.
+                // The detail is a sheet, so neither the edge-swipe pop nor
+                // buttons[boundBy: 0] reaches its bare chevron -- tap where
+                // it draws, then fall back to dragging the sheet down.
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.10, dy: 0.121)).tap()
+                sleep(3)
+                if !app.staticTexts["Soma's pick"].waitForExistence(timeout: 5) {
+                    app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.08))
+                        .press(forDuration: 0.1,
+                               thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.95)))
+                    sleep(3)
+                }
+                shoot(app, "workout-08-home-after")
+                app.swipeUp()
+                sleep(1)
+                shoot(app, "workout-09-streak")
+            }
         }
     }
 
     // MARK: - 5. Nutrition: targets, logging, the fridge recipe, cook mode
 
     func test_shots_05_nutrition() {
-        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "perfect"])
+        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "perfect", "UITEST_CLOCK_HOUR": "13"])
         settle(app, anchors: ["Lower body strength", "Moderate"])
 
         guard tapIfPresent(app, "Nutrition") else { return }
+        sleep(2)
         _ = app.scrollViews.firstMatch.waitForExistence(timeout: 12)
         shoot(app, "food-01-targets")
         app.swipeUp(); shoot(app, "food-02-logged")
 
         if tapIfPresent(app, "What can I make?") {
+            sleep(2)
             shoot(app, "food-03-fridge-form")
-            app.swipeUp(); shoot(app, "food-04-recipe")
+            let field = app.textViews.firstMatch.exists ? app.textViews.firstMatch : app.textFields.firstMatch
+            if field.waitForExistence(timeout: 6) {
+                field.tap()
+                field.typeText("salmon fillet, basmati rice, spinach, garlic, lemon")
+                shoot(app, "food-04-fridge-filled")
+            }
+            if tapIfPresent(app, "Get a meal idea", timeout: 8) {
+                sleep(6)
+                shoot(app, "food-05-recipe")
+                app.swipeUp(); shoot(app, "food-06-recipe-steps")
+                if tapIfPresent(app, "Start cooking", timeout: 8) {
+                    sleep(2)
+                    shoot(app, "food-07-cook-step")
+                }
+            }
+        }
+    }
+
+    /// Same flow as 05 but with the day still open. The `perfect` fixture
+    /// leaves 0 g of carbs and fat, so the recipe card's "sized to what's
+    /// left today" reads as a contradiction there; `under` does not.
+    func test_shots_11_nutritionUnder() {
+        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_NUTRITION_STATE": "under", "UITEST_CLOCK_HOUR": "13"])
+        settle(app, anchors: homeAnchors)
+        guard tapIfPresent(app, "Nutrition") else { return }
+        sleep(2)
+        shoot(app, "foodu-01-targets")
+        if tapIfPresent(app, "What can I make?") {
+            sleep(2)
+            let field = app.textViews.firstMatch.exists ? app.textViews.firstMatch : app.textFields.firstMatch
+            if field.waitForExistence(timeout: 6) {
+                field.tap()
+                field.typeText("salmon fillet, basmati rice, spinach, garlic, lemon")
+            }
+            if tapIfPresent(app, "Get a meal idea", timeout: 8) {
+                sleep(6)
+                shoot(app, "foodu-02-recipe")
+            }
         }
     }
 
     // MARK: - 6. Gym scan, progress, dashboard, widgets
 
+    /// One launch per destination. HealthDashboardView has no Close button
+    /// (it is a swipe-down sheet), so trying to walk from one sheet to the
+    /// next inside a single launch just shoots the same sheet three times.
+    ///
+    /// Dock buttons carry no visible text -- DashboardDockView stamps an
+    /// `.accessibilityLabel` on each, so those strings are the selectors:
+    /// "Health dashboard", "Scan the gym", "Sport goal", "Nutrition",
+    /// "Log workout", plus the "dock-more-button" identifier.
     func test_shots_06_scanProgressAndSettings() {
-        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura"])
-        settle(app, anchors: ["Lower body strength", "Moderate"])
+        let env = ["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura", "UITEST_CLOCK_HOUR": "22"]
 
-        if tapIfPresent(app, "Scan gym") {
+        let dash = launch(env)
+        settle(dash, anchors: homeAnchors)
+        if tapIfPresent(dash, "Health dashboard") {
+            _ = dash.scrollViews.firstMatch.waitForExistence(timeout: 15)
+            sleep(2)
+            shoot(dash, "dashboard-01-overview")
+            if tapIfPresent(dash, "Sleep") { sleep(1); shoot(dash, "dashboard-02-sleep") }
+            if tapIfPresent(dash, "Body") { sleep(1); shoot(dash, "dashboard-03-body") }
+        }
+
+        let more = launch(env)
+        settle(more, anchors: homeAnchors)
+        if tapIfPresent(more, "dock-more-button") {
+            sleep(1)
+            shoot(more, "settings-01-more-actions")
+        }
+
+        let widgets = launch(env)
+        settle(widgets, anchors: homeAnchors)
+        if tapIfPresent(widgets, "Edit widgets") { sleep(2); shoot(widgets, "settings-02-edit-widgets") }
+
+        let history = launch(env)
+        settle(history, anchors: homeAnchors)
+        if tapIfPresent(history, "History") { sleep(2); shoot(history, "settings-03-history-calendar") }
+
+        let goals = launch(env)
+        settle(goals, anchors: homeAnchors)
+        if tapIfPresent(goals, "Sport goal") {
+            _ = goals.scrollViews.firstMatch.waitForExistence(timeout: 15)
+            sleep(2)
+            shoot(goals, "goal-01-hub")
+            goals.swipeUp(); shoot(goals, "goal-02-hub-lower")
+        }
+    }
+
+    /// P1 #6 asks for water · sleep · streak · nutrition · affirmation in
+    /// one frame. Every other case sets at most one of the sleep-source and
+    /// nutrition knobs, so those frames always carry an empty tile or two.
+    func test_shots_12_widgetsPopulated() {
+        let app = launch([
+            "UITEST_SCENARIO": "activeGoalWeek2",
+            "UITEST_SLEEP_SOURCE": "oura",
+            "UITEST_NUTRITION_STATE": "under",
+        ])
+        settle(app, anchors: homeAnchors)
+        sleep(3)
+        shoot(app, "hero-01-top")
+        app.swipeUp(); sleep(1); shoot(app, "hero-02-widgets")
+        app.swipeUp(); sleep(1); shoot(app, "hero-03-lower")
+    }
+
+    /// The reasoning disclosure -- P1 shot #3. Captured on Home's
+    /// readiness card rather than the workout detail's copy of the same
+    /// component, because the detail one does not respond to taps at all
+    /// (see openWhyThis).
+    func test_shots_10_whyThisOnHome() {
+        let app = launch(["UITEST_SCENARIO": "activeGoalWeek2", "UITEST_SLEEP_SOURCE": "oura"])
+        settle(app, anchors: homeAnchors)
+        sleep(3)
+        shoot(app, "why-01-closed")
+        if tapIfPresent(app, "Why this?") {
+            let opened = app.buttons["Hide"].waitForExistence(timeout: 4)
+                || app.buttons["Hide details"].waitForExistence(timeout: 1)
+            print(opened ? "… Home's 'Why this?' opened" : "… Home's 'Why this?' did NOT open")
+            sleep(1)
+            shoot(app, "why-02-expanded")
+        }
+    }
+
+    /// Its own group so the status bar can sit at lunchtime while the
+    /// dashboard group above sits at night.
+    ///
+    /// activeGoalWeek2's plan is already added to today, which puts the
+    /// scan action in its "today's workout is set" alert state -- the
+    /// no-plan-yet scenario is the one where scanning is actually offered.
+    func test_shots_09_scanGym() {
+        // Both activeGoal* scenarios ship a plan that is already added to
+        // today, so the dock's scan action answers with its "today's
+        // workout is set" alert. catalogOpen is the only fixture with no
+        // committed plan, so it is the only one that opens the scan flow.
+        let app = launch(["UITEST_SCENARIO": "catalogOpen", "UITEST_CLOCK_HOUR": "13"])
+        settle(app, anchors: homeAnchors)
+        shoot(app, "scan-00-home")
+        if tapIfPresent(app, "Scan the gym") {
+            sleep(3)
             shoot(app, "scan-01-pick-photo")
-            if !tapIfPresent(app, "Close") { _ = tapIfPresent(app, "Cancel") }
+            app.swipeUp(); shoot(app, "scan-02-lower")
         }
-        if tapIfPresent(app, "Dashboard") {
-            _ = app.scrollViews.firstMatch.waitForExistence(timeout: 12)
-            shoot(app, "dashboard-01-overview")
-            _ = tapIfPresent(app, "Sleep"); shoot(app, "dashboard-02-sleep")
-            if !tapIfPresent(app, "Close") { _ = tapIfPresent(app, "Done") }
+    }
+
+    /// Connect Device is where AppState resumes a signed-in, unfinished
+    /// onboarding -- no UITEST_POSTSETUP, so nothing steers past it.
+    func test_shots_08_connectDevices() {
+        let app = launch([:], args: ["--ui-test-onboarding-demo-resume"])
+        settle(app, anchors: ["Connect your devices."])
+        sleep(2)
+        shoot(app, "setup-01-connect-devices")
+        if tapIfPresent(app, "Continue", timeout: 8) {
+            sleep(2)
+            shoot(app, "setup-02-notifications")
         }
-        if tapIfPresent(app, "dock-more-button") {
-            shoot(app, "settings-01-more-actions")
-            if tapIfPresent(app, "Edit widgets") { shoot(app, "settings-02-edit-widgets") }
+    }
+
+    /// The ETA-slipped goal hub -- the "the plan admitted it slipped" shot.
+    func test_shots_07_goalSlipped() {
+        let app = launch(["UITEST_SCENARIO": "activeGoalWeek4Slipped", "UITEST_CLOCK_HOUR": "22"])
+        settle(app, anchors: homeAnchors)
+        shoot(app, "slipped-01-home")
+        if tapIfPresent(app, "Sport goal") {
+            _ = app.scrollViews.firstMatch.waitForExistence(timeout: 15)
+            sleep(2)
+            shoot(app, "slipped-02-hub")
+            app.swipeUp(); shoot(app, "slipped-03-hub-lower")
         }
     }
 }

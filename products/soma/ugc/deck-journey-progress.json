@@ -1,0 +1,49 @@
+{
+  "deck": "soma-journey-progress",
+  "caption": "six weeks in. the scale barely moved and every number that matters did\n\n#fitnessapp #progress #soma",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/mirror-white-4.jpg",
+      "text": "Six weeks in\n\nThe scale barely moved",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedroom-mirror.png",
+      "screen": "assets/screens/screen-compare.png",
+      "text": "But the photos moved\n\nSame light, same corner,\nsix weeks apart",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "screen": "assets/screens/screen-dashboard-sleep.png",
+      "time": "22:15",
+      "text": "And so did the nights\n\nThe number I never\nused to look at",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/legs-coffee.jpg",
+      "screen": "assets/screens/screen-history-calendar.png",
+      "text": "A month you can see\n\nNot a streak I had to keep",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/glow-skin.jpg",
+      "text": "Nothing dramatic\nhappened\n\nThat's why it worked"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/green-set-selfie.jpg",
+      "heading": "Progress you can actually check",
+      "body": "SOMA keeps the photos, the nights and the sessions side by side — so you can see the change instead of guessing at it",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

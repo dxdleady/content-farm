@@ -11,7 +11,7 @@
     {
       "kind": "photo",
       "photo": "assets/gen/dawn-room.png",
-      "screen": "assets/screens/screen-home.png",
+      "screen": "assets/screens/screen-home-restday.png",
       "text": "It saw the night\nbefore I opened my eyes",
       "dim": 0.28
     },
@@ -37,7 +37,7 @@
       "photo": "../avatar/rest-glow.jpg",
       "heading": "A bad night is data, not a failure",
       "body": "SOMA reads how you actually slept and rebuilds the day around it — pushing when you can, backing off when you can't",
-      "screenshot": "assets/screen-home.png",
+      "screenshot": "assets/screens/screen-home-morning.png",
       "badge": "assets/appstore-badge.png",
       "appIcon": "assets/app-icon.png",
       "wash": 0.66

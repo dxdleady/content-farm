@@ -1,0 +1,46 @@
+{
+  "deck": "soma-journey-firstweek",
+  "caption": "week one is mostly the app learning you. it says so instead of pretending\n\n#fitnessapp #soma #routine",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/white-top-selfie.jpg",
+      "text": "What the first week\nactually looks like",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "screen": "assets/screens/screen-home-day6.png",
+      "text": "Day 1 — it admits\nit doesn't know you yet\n\nAnd starts conservative",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "Day 3 — the sessions\nstart matching my sleep\n\nHard nights, lighter days"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/tomato-toast.jpg",
+      "text": "Day 5 — I stopped\nnegotiating with breakfast\n\nThe number was just there"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "screen": "assets/screens/screen-streak.png",
+      "text": "Day 7 — three days\nin a row\n\nThe first thing that felt easy",
+      "dim": 0.3
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mirror-white-3.jpg",
+      "heading": "Week one is calibration",
+      "body": "SOMA starts careful, learns from your nights and sessions, and gets sharper every day you use it",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

@@ -36,7 +36,7 @@
       "photo": "../avatar/hands-hair.jpg",
       "heading": "That's what SOMA does",
       "body": "It reads your wearables and rebuilds the plan every morning — for your body, not the average one",
-      "screenshot": "assets/screen-home.png",
+      "screenshot": "assets/screens/screen-home-morning.png",
       "badge": "assets/appstore-badge.png",
       "appIcon": "assets/app-icon.png",
       "wash": 0.66

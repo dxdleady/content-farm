@@ -1,0 +1,50 @@
+{
+  "deck": "soma-journey-setup",
+  "caption": "the whole setup is answering questions about yourself, which is the part every other app skips\n\n#fitnessapp #soma #healthylifestyle",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/couch-tee.jpg",
+      "text": "Setting it up took\nabout ten minutes",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-tea.png",
+      "screen": "assets/screens/screen-survey-09-goal.png",
+      "text": "It asked what I actually want\n\nNot which body\nI want to copy",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/kitchen-dress.jpg",
+      "screen": "assets/screens/screen-survey-19-kitchenequipment.png",
+      "text": "And what's in my kitchen\n\nSo the recipes are ones\nI can actually cook",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "screen": "assets/screens/screen-connect-devices.png",
+      "text": "Then it read my watch\n\nSleep, strain, steps —\nnothing to type in",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "screen": "assets/screens/screen-plan-generating.png",
+      "text": "Ninety seconds later\nI had a plan",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/smoothie-selfie.jpg",
+      "heading": "Ten minutes, then it runs itself",
+      "body": "SOMA asks about your life once, connects what you already wear, and builds the first day from there",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

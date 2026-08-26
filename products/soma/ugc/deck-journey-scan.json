@@ -1,0 +1,46 @@
+{
+  "deck": "soma-journey-scan",
+  "caption": "hotel gym with three machines and it still built me a real session\n\n#fitnessapp #gym #soma",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/navy-bag.jpg",
+      "text": "A hotel gym with\nthree machines",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/gym-corner-shake.png",
+      "screen": "assets/screens/screen-scan-gym.png",
+      "text": "I took one photo\nof the room",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-shake.jpg",
+      "text": "It read what was there\n\nNot what a template\nassumed I'd have"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/redlight-gym.jpg",
+      "screen": "assets/screens/screen-workout-plan.png",
+      "text": "And rebuilt the session\naround it",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "text": "Same forty minutes\n\nDifferent equipment,\nsame day of the plan"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/pink-set.jpg",
+      "heading": "Train wherever you actually are",
+      "body": "Photograph any room and SOMA rebuilds today's session around the equipment that is really there",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

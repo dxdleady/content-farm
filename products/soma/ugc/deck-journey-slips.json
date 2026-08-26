@@ -1,0 +1,46 @@
+{
+  "deck": "soma-journey-slips",
+  "caption": "it moved my goal nine days and told me exactly why. no app has ever been that honest with me\n\n#fitnessapp #soma #fitness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/hands-hair.jpg",
+      "text": "I missed two sessions\nand slept badly for three nights",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-afternoon.png",
+      "screen": "assets/screens/screen-eta-slipped.png",
+      "text": "It moved my goal\nby nine days\n\nAnd said which days did it",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "screen": "assets/screens/screen-home-restday.png",
+      "text": "No guilt trip\n\n\"Recovery is low today —\ntake the day off\"",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-sunglasses.jpg",
+      "text": "So I walked instead\n\nAnd the week stopped\nbeing a write-off"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "text": "A plan you can miss\n\nis the only kind\nthat survives a real life"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/brown-set.jpg",
+      "heading": "It tells you the truth about the date",
+      "body": "SOMA moves the timeline when life does, names what moved it, and rebuilds the week from where you actually are",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

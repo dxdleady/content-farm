@@ -4,32 +4,47 @@
     {
       "kind": "photo",
       "bg": "a quiet gym corner after a morning workout — a protein shake in a clear cup and a folded beige towel on a wooden bench, dumbbells resting on the rubber floor, treadmills softly blurred behind, warm daylight",
-      "refs": ["../refs/style/soma-02.jpg", "../refs/style/soma-26.jpg"],
+      "refs": [
+        "../refs/style/soma-02.jpg",
+        "../refs/style/soma-26.jpg"
+      ],
       "text": "5 hacks that actually\nchanged my body",
       "dim": 0.42
     },
     {
       "kind": "photo",
       "bg": "soft-boiled eggs on sourdough toast on a ceramic plate, morning light across a linen tablecloth, a glass of water beside, shot from above",
-      "refs": ["../refs/style/soma-18.jpg", "../refs/style/soma-09.jpg"],
+      "refs": [
+        "../refs/style/soma-18.jpg",
+        "../refs/style/soma-09.jpg"
+      ],
       "text": "1 — Protein first\n\nBreakfast before coffee\nEvery single day"
     },
     {
       "kind": "photo",
       "bg": "a pair of rubber dumbbells resting on a dark gym floor beside a bench, low warm side light, shallow depth of field, seen from standing height",
-      "refs": ["../refs/style/soma-02.jpg", "../refs/style/soma-25.jpg"],
+      "refs": [
+        "../refs/style/soma-02.jpg",
+        "../refs/style/soma-25.jpg"
+      ],
       "text": "2 — Lift heavy,\nkeep it short\n\n45 minutes is plenty"
     },
     {
       "kind": "photo",
       "bg": "a tree-lined park path in soft morning light, long shadows across the gravel, seen from walking height, no people",
-      "refs": ["../refs/style/soma-08.jpg", "../refs/style/soma-24.jpg"],
+      "refs": [
+        "../refs/style/soma-08.jpg",
+        "../refs/style/soma-24.jpg"
+      ],
       "text": "3 — Walk after meals\n\n10 easy minutes\nIt adds up fast"
     },
     {
       "kind": "photo",
       "bg": "rumpled white bed linen and a soft pillow in warm dawn light through sheer curtains, calm and quiet, close view",
-      "refs": ["../refs/style/soma-23.jpg", "../refs/style/soma-27.jpg"],
+      "refs": [
+        "../refs/style/soma-23.jpg",
+        "../refs/style/soma-27.jpg"
+      ],
       "text": "4 — Same bedtime\n\nThe change happens\nwhile you sleep",
       "dim": 0.35
     },
@@ -38,7 +53,7 @@
       "photo": "../avatar/cream-outfit-bedroom.jpg",
       "heading": "5 — Stop guessing",
       "body": "SOMA reads your watch, your sleep, your meals — and builds each day around your body",
-      "screenshot": "assets/screen-home.png",
+      "screenshot": "assets/screens/screen-home-morning.png",
       "badge": "assets/appstore-badge.png",
       "appIcon": "assets/app-icon.png",
       "wash": 0.66

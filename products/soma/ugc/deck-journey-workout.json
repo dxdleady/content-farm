@@ -1,0 +1,52 @@
+{
+  "deck": "soma-journey-workout",
+  "caption": "I haven't picked my own workout in two months and I'm stronger for it\n\n#fitnessapp #workout #soma",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/hoodie-jacket.jpg",
+      "text": "I don't choose\nmy workouts anymore",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-why-expanded.png",
+      "time": "6:45",
+      "text": "It tells me why\n\n\"HRV below your baseline —\na moderate day fits best\"",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "screen": "assets/screens/screen-workout-plan.png",
+      "time": "8:45",
+      "text": "The session is already there\n\nBlocks, reps, and how hard\neach one should feel",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "time": "9:10",
+      "text": "Forty minutes\n\nI just do what it says"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "screen": "assets/screens/screen-workout-complete.png",
+      "time": "9:55",
+      "text": "And it closes the loop\n\n\"A solid night tonight pushes\ntomorrow into a harder day\"",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/pink-set.jpg",
+      "heading": "The decision is the hard part",
+      "body": "SOMA reads your recovery, picks the session, and tells you what it based it on",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

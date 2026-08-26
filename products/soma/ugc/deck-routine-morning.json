@@ -23,7 +23,7 @@
     {
       "kind": "photo",
       "photo": "../avatar/mug-knee.jpg",
-      "screen": "assets/screens/screen-home.png",
+      "screen": "assets/screens/screen-home-morning.png",
       "text": "Then one card\n\nHow I slept decides\nhow hard today gets",
       "dim": 0.5
     },
@@ -38,7 +38,7 @@
       "photo": "../avatar/kitchen-dress.jpg",
       "heading": "Twenty minutes, decided for you",
       "body": "SOMA turns last night into today's plan before you have finished your first glass of water",
-      "screenshot": "assets/screen-home.png",
+      "screenshot": "assets/screens/screen-home-morning.png",
       "badge": "assets/appstore-badge.png",
       "appIcon": "assets/app-icon.png",
       "wash": 0.66

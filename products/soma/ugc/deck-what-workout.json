@@ -34,7 +34,7 @@
       "photo": "../avatar/pink-set.jpg",
       "heading": "That's SOMA's job",
       "body": "It reads your sleep and strain, then picks today's workout for you — no more guessing",
-      "screenshot": "assets/screen-home.png",
+      "screenshot": "assets/screens/screen-home-morning.png",
       "badge": "assets/appstore-badge.png",
       "appIcon": "assets/app-icon.png",
       "wash": 0.66

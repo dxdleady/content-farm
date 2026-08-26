@@ -1,0 +1,54 @@
+{
+  "deck": "soma-journey-food",
+  "caption": "I stopped planning dinner. it plans dinner.\n\n#fitnessapp #mealprep #soma",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/kitchen-dress.jpg",
+      "text": "I haven't planned\na dinner in weeks",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/bagel-desk.jpg",
+      "screen": "assets/screens/screen-nutrition-morning.png",
+      "time": "8:00",
+      "text": "It knows what's left\nfor today\n\nCalories and protein,\nnot a diet",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/tomato-toast.jpg",
+      "screen": "assets/screens/screen-nutrition-logged.png",
+      "time": "13:00",
+      "text": "I log by describing it\n\n\"Salmon, rice, greens\"\nand it does the maths",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dinner-lamp.png",
+      "screen": "assets/screens/screen-recipe-result.png",
+      "time": "19:00",
+      "text": "Dinner comes from\nwhat's in the fridge\n\nSized to what's left today",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/granola-bark.jpg",
+      "screen": "assets/screens/screen-cook-step.png",
+      "time": "19:20",
+      "text": "One step at a time\n\nNo scrolling back up\nwith wet hands",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/blue-top-drink.jpg",
+      "heading": "Food without the arithmetic",
+      "body": "SOMA sets the day's targets, logs what you ate from a sentence, and cooks dinner out of what you already have",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

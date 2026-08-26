@@ -11,7 +11,7 @@
     {
       "kind": "photo",
       "photo": "../avatar/mug-knee.jpg",
-      "screen": "assets/screens/screen-home.png",
+      "screen": "assets/screens/screen-home-morning.png",
       "text": "I read one card\n\nIt looked at my night\nand picked today for me",
       "dim": 0.5,
       "time": "6:45"
@@ -47,7 +47,7 @@
       "photo": "../avatar/blue-top-drink.jpg",
       "heading": "Six decisions, none of them mine",
       "body": "SOMA reads your watch, your sleep and your meals — and hands you the day already made",
-      "screenshot": "assets/screen-home.png",
+      "screenshot": "assets/screens/screen-home-morning.png",
       "badge": "assets/appstore-badge.png",
       "appIcon": "assets/app-icon.png",
       "wash": 0.66
