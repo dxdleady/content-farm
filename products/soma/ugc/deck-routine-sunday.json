@@ -1,0 +1,46 @@
+{
+  "deck": "soma-routine-sunday",
+  "caption": "sunday is the cheapest hour I spend all week\n\n#sundayreset #mealprep #routine",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/kitchen-dress.jpg",
+      "text": "Sunday decides\nwhat Tuesday looks like",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/tomato-toast.jpg",
+      "screen": "assets/screens/screen-cooking.png",
+      "text": "It reads what's\nin the fridge\n\nAnd tells me what to cook",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/granola-bark.jpg",
+      "text": "Snacks made at home\n\nSo 4pm isn't a decision"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "text": "Kit washed, bag packed\n\nMonday morning has\nnothing left to argue with",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/sofa-evening.png",
+      "text": "Then I stop\n\nThe reset is not\nanother workout",
+      "dim": 0.3
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/couch-tee.jpg",
+      "heading": "One hour buys the whole week",
+      "body": "SOMA plans the week from your own data — the meals, the sessions and the days you are meant to do nothing",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

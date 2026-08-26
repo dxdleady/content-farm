@@ -1,0 +1,49 @@
+{
+  "deck": "soma-routine-week",
+  "caption": "seven days, seven decisions I didn't have to make\n\n#routine #consistency #wellness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/mirror-selfie.jpg",
+      "text": "7 days, 7 decisions\nI didn't make",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "Mon — Lift heavy\n\nSlept well, so it asked\nfor the hard one"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/park-aerial.png",
+      "text": "Tue — Walk only\n\nYesterday was enough",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/pilates-reformer.jpg",
+      "text": "Thu — Forty minutes,\nlower body\n\nBecause I moved Wednesday"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dinner-lamp.png",
+      "text": "Fri — Eat more, sleep more\n\nThe week's numbers said so",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/legs-coffee.jpg",
+      "text": "Sun — Nothing at all\n\nWritten into the plan,\nnot stolen from it"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mirror-white-4.jpg",
+      "heading": "A week that plans itself",
+      "body": "SOMA reads every night and every session, then decides what the next day should be — hard, easy or nothing",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

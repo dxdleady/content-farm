@@ -1,0 +1,46 @@
+{
+  "deck": "soma-routine-noface",
+  "caption": "a day that looks like nothing and changes everything 🤍\n\n#slowliving #routine #wellness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "A day that looks\nlike nothing",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "text": "A glass of water\nbefore the coffee",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/eggs-plate.png",
+      "text": "A plate you didn't\nhave to think about",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "text": "A bag packed\nthe night before",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/sofa-evening.png",
+      "text": "A lamp on\nand the screen off",
+      "dim": 0.3
+    },
+    {
+      "kind": "cta",
+      "photo": "assets/gen/bedside-lamp.png",
+      "heading": "Nothing happens, then everything does",
+      "body": "SOMA makes the small decisions — the meal, the session, the bedtime — so the boring day is the one that works",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.72
+    }
+  ]
+}

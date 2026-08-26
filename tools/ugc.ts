@@ -39,6 +39,10 @@ const DM = join(ROOT, 'products/soma/fonts/dm/dm-sans.css');
 type PhotoSlide = {
   kind: 'photo'; photo?: string; bg?: string; refs?: string[];
   gen?: string; identity?: string[];
+  /** An app screen shown as a PHONE standing in the scene, not as the slide itself.
+   *  A full-bleed screenshot is dense UI the white type has to survive; in a frame it
+   *  reads as "her phone, on the table" and the text gets its own dark ground back. */
+  screen?: string;
   text: string; dim?: number; align?: 'center' | 'low'; chevron?: boolean;
 };
 type CtaSlide = {
@@ -120,6 +124,10 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
          border-radius: 66px; border: 13px solid #8f8ac2; box-shadow: 0 40px 90px rgba(20,12,60,.28);
          overflow: hidden; background: #fff; }
 .phone img { width: 100%; display: block; }
+/* the same frame, standing in a photo slide: smaller, low, tilted like a propped phone */
+.phone--scene { position: absolute; left: 330px; top: 940px; width: 420px;
+                transform: rotate(-2.5deg); box-shadow: 0 50px 110px rgba(0,0,0,.55); }
+.safe--phone { bottom: 1010px; justify-content: flex-end; }
 .cta-foot { position: absolute; left: 0; right: 0; bottom: 96px;
             display: flex; flex-direction: column; align-items: center; gap: 36px; }
 .badge { height: 104px; }
@@ -127,12 +135,15 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
 </style>
 ${body}`;
 
-function photoSlide(s: PhotoSlide, photoPath: string): string {
+function photoSlide(s: PhotoSlide, bgFile: string, base: string, pool: Pool | null): string {
   const dim = s.dim ?? 0.45;
+  // With a phone in the scene the copy sits above it, so the two never collide.
+  const box = s.screen ? 'phone' : (s.align ?? 'center');
   return SHELL(`
-<img class="bg" src="file://${photoPath}">
+<img class="bg" src="file://${bgFile}">
 <span class="veil" style="background:rgba(14,14,16,${dim})"></span>
-<div class="safe safe--${s.align ?? 'center'}">${paras(s.text, 't')}</div>
+<div class="safe safe--${box}">${paras(s.text, 't')}</div>
+${s.screen ? `<div class="phone phone--scene"><img src="file://${photoPath(s.screen, base, pool)}"></div>` : ''}
 ${s.chevron === false ? '' : CHEVRON}`);
 }
 
@@ -206,7 +217,7 @@ try {
   for (const [i, s] of deck.slides.entries()) {
     const name = `${String(i + 1).padStart(2, '0')}-${s.kind}`;
     const html = s.kind === 'photo'
-      ? photoSlide(s, await photoFor(s, base, pool))
+      ? photoSlide(s, await photoFor(s, base, pool), base, pool)
       : ctaSlide(s, base, pool);
     const htmlPath = join(buildDir, `${name}.html`);
     writeFileSync(htmlPath, html);

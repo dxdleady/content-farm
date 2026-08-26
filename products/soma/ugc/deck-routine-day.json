@@ -1,0 +1,51 @@
+{
+  "deck": "soma-routine-day",
+  "caption": "the whole day is about six decisions and I make almost none of them 🤍\n\n#routine #healthylifestyle #wellness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/pajama-morning.jpg",
+      "text": "6:40, and my day\nis already decided",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-home.png",
+      "text": "6:45 — I read one card\n\nIt looked at my night\nand picked today for me",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/eggs-plate.png",
+      "text": "7:20 — Protein first\n\nBefore coffee, every day",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "text": "9:00 — Forty minutes\n\nNot the two hours\nI would have forced"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-headphones.jpg",
+      "text": "13:20 — Walk after lunch\n\nThe cheapest thing\non the whole list"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "text": "22:30 — Same bedtime\n\nThis is the part\nthat decides tomorrow",
+      "dim": 0.3
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/blue-top-drink.jpg",
+      "heading": "Six decisions, none of them mine",
+      "body": "SOMA reads your watch, your sleep and your meals — and hands you the day already made",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

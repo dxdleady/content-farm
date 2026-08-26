@@ -1,0 +1,45 @@
+{
+  "deck": "soma-routine-night",
+  "caption": "tomorrow is mostly decided by 10:30 tonight\n\n#nightroutine #sleep #wellness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/sofa-evening.png",
+      "text": "My tomorrow starts\nat 22:30 tonight",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dinner-lamp.png",
+      "text": "20:00 — Dinner early enough\nto stop thinking about it\n\nProtein, carbs, done",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/legs-coffee.jpg",
+      "text": "21:00 — Legs up,\nlights down\n\nBoring is the point"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "text": "22:00 — Bag packed\n\nMorning-me decides nothing",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "text": "22:30 — Same time\nas last night\n\nThe streak is the whole trick",
+      "dim": 0.3
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/rest-glow.jpg",
+      "heading": "Sleep is the session you never skip",
+      "body": "SOMA reads last night from your watch and turns it into tomorrow's plan — so a good night actually pays off",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

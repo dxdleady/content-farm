@@ -1,0 +1,45 @@
+{
+  "deck": "soma-routine-busy",
+  "caption": "the day everything moved and the plan moved with it\n\n#routine #busylife #fitness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-afternoon.png",
+      "text": "The day everything\nwent sideways",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "text": "Gym bag by the door\nat 8am\n\nStill there at 8pm",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/bagel-desk.jpg",
+      "text": "Lunch at the desk\n\nProtein first, still counts"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/jump-rope.jpg",
+      "screen": "assets/screens/screen-checklist.png",
+      "text": "Twenty minutes at home\ninstead of forty at the gym",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-headphones.jpg",
+      "text": "Walked the calls\n\nSix thousand steps\nI would have skipped"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/navy-bag.jpg",
+      "heading": "The plan bends before it breaks",
+      "body": "SOMA rebuilds the session around the time and the equipment you actually have today",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

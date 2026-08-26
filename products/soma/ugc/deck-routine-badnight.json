@@ -1,0 +1,46 @@
+{
+  "deck": "soma-routine-badnight",
+  "caption": "the day I stopped punishing myself for a bad night\n\n#recovery #routine #wellness",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bed-phone-dawn.png",
+      "text": "I slept five hours\n\nMy app cancelled\nmy workout",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "screen": "assets/screens/screen-home.png",
+      "text": "It saw the night\nbefore I opened my eyes",
+      "dim": 0.28
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "text": "Old me: coffee, pre-workout,\npush through it\n\nAnd a flat week after",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/walk-sunglasses.jpg",
+      "text": "Today: a twenty-minute walk\ninstead of a heavy session"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dinner-lamp.png",
+      "text": "More food, earlier night\n\nThe plan moved\nand the week survived",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/rest-glow.jpg",
+      "heading": "A bad night is data, not a failure",
+      "body": "SOMA reads how you actually slept and rebuilds the day around it — pushing when you can, backing off when you can't",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

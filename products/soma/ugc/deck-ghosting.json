@@ -25,8 +25,9 @@
     },
     {
       "kind": "photo",
-      "photo": "../avatar/rest.jpg",
-      "text": "Rest is part of the plan.\n\nSleep is when the work\nactually sticks."
+      "photo": "assets/gen/bedside-lamp.png",
+      "text": "Rest is part of the plan.\n\nSleep is when the work\nactually sticks.",
+      "dim": 0.3
     },
     {
       "kind": "cta",

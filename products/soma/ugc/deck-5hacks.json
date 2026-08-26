@@ -10,7 +10,7 @@
     },
     {
       "kind": "photo",
-      "photo": "../avatar/eggs-toast.jpg",
+      "photo": "../avatar/egg-toast-plate.jpg",
       "text": "1 — Protein first\n\nBreakfast before coffee\nEvery single day"
     },
     {
@@ -20,18 +20,18 @@
     },
     {
       "kind": "photo",
-      "photo": "../avatar/walk-outfit.jpg",
+      "photo": "../avatar/mirror-white-5.jpg",
       "text": "3 — Walk after meals\n\n10 easy minutes\nIt adds up fast"
     },
     {
       "kind": "photo",
-      "photo": "../avatar/rest-skin.jpg",
+      "photo": "../avatar/rest-glow.jpg",
       "text": "4 — Same bedtime\n\nThe change happens\nwhile you sleep",
       "dim": 0.35
     },
     {
       "kind": "cta",
-      "photo": "../avatar/golden-mirror.jpg",
+      "photo": "../avatar/cream-outfit-bedroom.jpg",
       "heading": "5 — Stop guessing",
       "body": "SOMA reads your watch, your sleep, your meals — and builds each day around your body",
       "screenshot": "assets/screen-home.png",

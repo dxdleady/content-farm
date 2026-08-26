@@ -89,8 +89,12 @@ Faces: **The Seasons** = display/wordmark, **DM Sans** = all slide text (self-ho
 
 - `\n` is a hard break, a blank line starts a new paragraph. Keep lines short — the type is
   64px and breaks are yours to control, so break them by meaning.
-- `align: "low"` pushes text to the bottom of the safe box; use it on app-screen slides so
-  the copy does not sit on top of the UI's own headline.
+- `screen: "assets/screens/screen-home.png"` puts an app screenshot in a **phone frame
+  standing in the scene**, with the copy above it. Prefer this to a full-bleed screenshot
+  every time: dense UI is the worst ground white type ever has to survive, and a phone on
+  a table reads as hers rather than as an ad. Use `dim` ~0.5 on those slides.
+- `align: "low"` pushes text to the bottom of the safe box; use it on a full-bleed
+  app-screen slide so the copy does not sit on the UI's own headline.
 - `chevron: false` removes the swipe arrow (only for a last photo slide before a CTA).
 - **No trailing periods** in slide text, except full sentences in a multi-sentence beat.
 
@@ -158,6 +162,28 @@ photographed in (a made bed at night, a café table, a gym floor at dawn). Then:
 - `no people` in the prompt genuinely means no people — but it does not stop shadows and
   reflections. If a human silhouette appears, regenerate with the wording changed, do not
   ship it.
+
+## The routine series — the second register
+
+Wave 1 was twenty listicles. Wave 2 is eight posts about a day with SOMA, and it works
+because it is a **series with one spine, not one "day in my life"** — that format is the
+most saturated on TikTok, and a single generic day post loses. The same day, cut a
+different way each time, makes the account read as a person.
+
+One spine, six anchors: **06:40** waking · **07:20** breakfast · **09:00** training ·
+**13:20** walk · **19:30** dinner · **22:30** bed. Times go in the copy as plain text
+(`13:20 — Walk after lunch`), the way `1 — Protein first` already works.
+
+`deck-routine-{day,morning,night,badnight,busy,week,noface,sunday}` — the whole day by
+timestamp; the first hour; the evening shutdown; five hours' sleep and what the plan does
+about it; the day everything moved; seven days in seven slides; a day told entirely in
+objects; the Sunday reset.
+
+**The beat grammar is time → what I did → why.** Every beat owes the viewer something they
+can copy without the app (protein first, walk after lunch, same bedtime) **and** something
+only SOMA did (it moved the session, it cut the target, it told me to stop). That double
+payload is what keeps the format stealth and still persuasive. `routine-badnight` is the
+strongest of the eight because it shows the mechanism instead of promising an outcome.
 
 ## Copy: every slide owes the reader one concrete thing
 

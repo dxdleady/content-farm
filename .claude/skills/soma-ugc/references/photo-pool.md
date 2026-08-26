@@ -34,11 +34,32 @@ Pick across types when building a deck — that is what "balance" means.
 **Flat-lay / texture / detail** — `watch-matcha-flatlay` (watch + laptop + bottle on a mat;
 the "track something" frame), `mug-knee`, `legs-coffee`, `shirt-texture`.
 
-**Generated (`assets/gen/`)** — `eggs-plate` (eggs + toast + raspberries, top-down),
-`gym-corner-shake` (dark gym floor, shake on a bench), `park-aerial` (tree-lined path from
-above), `desk-tea` (desk through a round mirror), `bedroom-mirror` (leaning mirror, robe on
-a hook), `bed-phone-dawn` (person on white bed with phone — reads as a real selfie),
-`cafe-water` (bottle + lemon water on a café table).
+**Generated (`assets/gen/`)** — daytime: `eggs-plate` (eggs + toast + raspberries,
+top-down), `gym-corner-shake` (dark gym floor, shake on a bench), `park-aerial` (tree-lined
+path from above), `desk-tea` (desk through a round mirror), `bedroom-mirror` (leaning
+mirror, robe on a hook), `bed-phone-dawn` (person on white bed with phone — reads as a real
+selfie), `cafe-water` (bottle + lemon water on a café table), `water-first` (glass of water
+by a kettle, first light), `bathroom-morning` (toothbrush cup, towel, plant),
+`bag-by-door` (packed gym bag and shoes in a hallway), `desk-afternoon` (bottle, laptop,
+notebook in low sun). Evening and night — the part the photo pool has none of:
+`dinner-lamp` (plate under a warm pendant, dark room), `sofa-evening` (blanket, book, one
+lamp), `dawn-room` (dark bedroom, a blade of light through the curtains),
+`bedside-lamp` (lamp and glass on a nightstand, everything else black).
+
+### The pool has no night of its own
+
+Every dark frame in the decks is generated. The avatar was never photographed in the
+evening, so a routine post that runs to bedtime **must** end on `assets/gen/`. Text sits
+beautifully on these — `dim` 0.28–0.3 is usually enough, since the frame is already dark.
+
+### Aliases are gone — a name is one picture now
+
+The pool once held 58 filenames for 49 pictures: nine were byte-identical copies under a
+second name, and `rest.jpg` was not a rest frame at all but the cookies tray — which is how
+a slide reading "Sleep is when the work actually sticks" shipped showing a tray of
+biscuits. The aliases were collapsed onto the name that describes the picture and every
+deck rewritten. If you add a photo, **check it is not already in the pool under another
+name** before you stage it.
 
 ## Rejected, and why — do not re-add
 

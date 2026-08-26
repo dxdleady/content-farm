@@ -1,0 +1,47 @@
+{
+  "deck": "soma-routine-morning",
+  "caption": "nothing here is impressive, that's the whole point\n\n#morningroutine #routine #healthylifestyle",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "The first twenty minutes\ndecide the whole day",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "text": "Water before coffee\n\nEvery single morning,\nno exceptions",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bathroom-morning.png",
+      "text": "Curtains open,\nphone stays down\n\nLight first, screen second",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-home.png",
+      "text": "Then one card\n\nHow I slept decides\nhow hard today gets",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/eggs-plate.png",
+      "text": "Protein before anything sweet\n\nThe 11am crash\nstarts at breakfast",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/kitchen-dress.jpg",
+      "heading": "Twenty minutes, decided for you",
+      "body": "SOMA turns last night into today's plan before you have finished your first glass of water",
+      "screenshot": "assets/screen-home.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}
