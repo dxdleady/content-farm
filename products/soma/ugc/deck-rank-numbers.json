@@ -1,0 +1,45 @@
+{
+  "deck": "soma-rank-numbers",
+  "caption": "ranking the numbers on your watch, least to most useful. fight me about number 2.\n\n#applewatch #hrv #wearabletech",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "Ranking the numbers\non your watch",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/jump-rope.jpg",
+      "text": "5 — Active calories\n\nA guess dressed as a number"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/park-aerial.png",
+      "text": "4 — Steps\n\nHonest, but it can't tell\na commute from training",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "text": "3 — Resting heart rate\n\nSlow, boring, quietly the\nmost honest one here"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "screen": "assets/screens/screen-dashboard-sleep.png",
+      "text": "2 — Sleep\n\nThe input everything else\nis downstream of",
+      "dim": 0.3
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/glow-skin.jpg",
+      "heading": "1 — The one that changes your day",
+      "body": "None of them alone. SOMA reads them together and returns the only number that matters: what to do today",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

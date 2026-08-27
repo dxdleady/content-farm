@@ -1,0 +1,48 @@
+{
+  "deck": "soma-nothing-synced",
+  "caption": "what a good app does on the night nothing synced\n\n#wearabletech #routine #fitnessapp",
+  "slides": [
+    {
+      "kind": "photo",
+      "bg": "a phone and a small fitness ring left on a wooden nightstand in a dark bedroom, a dim lamp behind them, deep shadow all around, still-life photograph, the room is empty, nobody is present, no person, no hands",
+      "refs": ["../refs/style/soma-23.jpg", "../refs/style/soma-27.jpg"],
+      "text": "The night the ring\ndidn't charge",
+      "dim": 0.35
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "No sleep data.\nNo score. Nothing to read.",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-sleep-empty.png",
+      "text": "Most apps go blank\nand wait for you",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/pajama-morning.jpg",
+      "text": "This one asks one question\n\nHow long, roughly?"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "screen": "assets/screens/screen-home-morning.png",
+      "text": "And the day still\ngets a plan",
+      "dim": 0.45
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/cream-outfit-bedroom.jpg",
+      "heading": "A plan that survives a flat battery",
+      "body": "SOMA uses what it has — and asks for the rest in one tap instead of giving you an empty screen",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

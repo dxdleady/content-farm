@@ -1,0 +1,47 @@
+{
+  "deck": "soma-filing-cabinet",
+  "caption": "apple health is a filing cabinet. it keeps everything and decides nothing.\n\n#applehealth #healthdata #wearabletech",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-afternoon.png",
+      "text": "Apple Health is\na filing cabinet",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/bagel-desk.jpg",
+      "text": "It keeps everything\n\nAnd decides nothing"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "Which is fine —\nthat is its job\n\nFiling is not analysis",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "screen": "assets/screens/screen-connect-devices.png",
+      "text": "The cabinet stays\n\nSomething else reads it",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-why-expanded.png",
+      "text": "And says something\nyou can act on",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/kitchen-dress.jpg",
+      "heading": "You had the data. You needed a reader.",
+      "body": "SOMA sits on top of Apple Health and turns the archive into a plan for today",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

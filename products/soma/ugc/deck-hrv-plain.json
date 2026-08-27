@@ -1,0 +1,48 @@
+{
+  "deck": "soma-hrv-plain",
+  "caption": "HRV without the lecture. save it for the next time your app throws the acronym at you.\n\n#hrv #recovery #wearabletech",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "text": "HRV, without\nthe lecture",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/rest-glow.jpg",
+      "text": "Your heart doesn't tick\nlike a clock\n\nThe gaps between beats vary",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "More variation usually means\nyour body is handling things\n\nLess usually means\nit's working harder",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-dashboard-sleep.png",
+      "text": "Which is why the number\nis personal\n\nYours only means something\nagainst your own baseline",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "screen": "assets/screens/screen-why-expanded.png",
+      "text": "And why it belongs\nin a sentence,\nnot on a gauge",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/black-top-portrait.jpg",
+      "heading": "The acronym, translated",
+      "body": "SOMA reads HRV against your own baseline and says what it means for today's session — in words",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "deck": "soma-no-new-tracker",
+  "caption": "the next tracker is not the thing that's missing\n\n#wearabletech #applewatch #oura",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "You don't need\nanother tracker",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-afternoon.png",
+      "text": "The ring measured well\n\nThe watch measured well",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/hoodie-jacket.jpg",
+      "text": "The band would also\nmeasure well\n\nMeasuring was never the gap"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "screen": "assets/screens/screen-connect-devices.png",
+      "text": "Nothing new to buy\n\nIt reads what's\nalready on your wrist",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-shake.jpg",
+      "text": "The gap was always\nthe sentence after the number"
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/green-set-selfie.jpg",
+      "heading": "No new hardware",
+      "body": "SOMA works with the sensors you already own — Apple Health, Apple Watch, Oura, Whoop",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

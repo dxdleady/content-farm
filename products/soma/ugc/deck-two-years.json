@@ -1,0 +1,47 @@
+{
+  "deck": "soma-two-years",
+  "caption": "your watch has been writing this down the whole time\n\n#applewatch #wearabletech #healthdata",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "Your watch has been\nrecording this for two years",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "Every night you slept\n\nEvery one you didn't",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "Every session, and how hard\nyour heart found it"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-afternoon.png",
+      "screen": "assets/screens/screen-dashboard-overview.png",
+      "text": "It is all still in there",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-home-morning.png",
+      "text": "The question was never\nwhether you had the data",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/white-top-selfie.jpg",
+      "heading": "Two years of data, one useful sentence",
+      "body": "SOMA reads what your watch already recorded and turns it into today's session and today's food",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

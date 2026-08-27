@@ -1,0 +1,46 @@
+{
+  "deck": "soma-number-not-plan",
+  "caption": "a number is a fact. a plan is a decision. those are different jobs.\n\n#recovery #wearabletech #routine",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bedside-lamp.png",
+      "text": "A number is not a plan",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "61 out of 100\n\nGood luck with that",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/hoodie-jacket.jpg",
+      "text": "A number tells you\nwhere you are\n\nA plan tells you what to do next"
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-home-morning.png",
+      "text": "Forty minutes.\nModerate. Here's why.",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/gym-corner-shake.png",
+      "text": "You can argue with that\n\nYou cannot argue\nwith a score out of 100",
+      "dim": 0.42
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/pink-set.jpg",
+      "heading": "Decisions, not dashboards",
+      "body": "SOMA turns the same numbers your devices collect into one instruction for the day",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

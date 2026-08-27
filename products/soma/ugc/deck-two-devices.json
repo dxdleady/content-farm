@@ -1,0 +1,47 @@
+{
+  "deck": "soma-two-devices",
+  "caption": "genuine question — does anyone else wear two things that disagree every morning?\n\n#oura #whoop #applewatch",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "Anyone else wearing\ntwo things that disagree?",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "The ring says recovered\n\nThe watch says strained",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-sleep-oura.png",
+      "text": "Both are measuring\nreal things\n\nNeither is deciding anything",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/grey-hoodie.jpg",
+      "text": "So you pick the one\nthat agrees with your mood\n\nWhich is not a system"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "screen": "assets/screens/screen-why-expanded.png",
+      "text": "Or you let something\nread both and commit",
+      "dim": 0.45
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/navy-bag.jpg",
+      "heading": "Two devices, one answer",
+      "body": "SOMA takes Apple Health, Oura and Whoop together and returns a single call for today",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

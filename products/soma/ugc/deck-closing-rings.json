@@ -1,0 +1,47 @@
+{
+  "deck": "soma-closing-rings",
+  "caption": "closing rings is attendance. it isn't a plan.\n\n#applewatch #fitnessmotivation #routine",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/jump-rope.jpg",
+      "text": "Closing rings is not\na training plan",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/park-aerial.png",
+      "text": "A ring closes the same way\nfor a hard session\nand a long supermarket trip",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym.jpg",
+      "text": "It measures attendance\n\nIt does not know\nwhat you were doing there"
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "screen": "assets/screens/screen-workout-plan.png",
+      "text": "A plan names the session\n\nBlocks, reps, and how hard\neach one should feel",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/gym-bench-rest.jpg",
+      "screen": "assets/screens/screen-workout-complete.png",
+      "text": "And it closes\nfor a reason",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/mirror-white-3.jpg",
+      "heading": "Attendance, or a programme",
+      "body": "SOMA turns the same wrist data into a named session for today, not three circles to fill",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

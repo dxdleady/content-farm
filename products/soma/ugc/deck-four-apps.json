@@ -1,0 +1,48 @@
+{
+  "deck": "soma-four-apps",
+  "caption": "four apps, four pieces of the story, never the picture\n\n#applehealth #oura #wearabletech",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/bagel-desk.jpg",
+      "text": "Four apps.\nFour pieces of the story.",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-afternoon.png",
+      "text": "The ring has the night\n\nThe watch has the workout",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "The food app has lunch\n\nApple Health has all of it\nand an opinion about none of it",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/water-first.png",
+      "screen": "assets/screens/screen-connect-devices.png",
+      "text": "One place they all report to",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-home-morning.png",
+      "text": "And one answer\ninstead of four dashboards",
+      "dim": 0.5
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/smoothie-selfie.jpg",
+      "heading": "The picture, not the pieces",
+      "body": "SOMA connects the devices you already wear and reasons across them — no new hardware, no fifth app to check",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "deck": "soma-loop-score",
+  "caption": "the score was never the hard part\n\n#oura #whoop #recovery",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "../avatar/watch-matcha-flatlay.jpg",
+      "text": "The score is\nthe easy part",
+      "dim": 0.32
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/dawn-room.png",
+      "text": "Your ring says you slept badly\n\nYou already knew that",
+      "dim": 0.3
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/desk-tea.png",
+      "text": "Then nothing\n\nNo plan. No what-do-I-do-with-this.\nJust a number and a whole day",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "../avatar/mug-knee.jpg",
+      "screen": "assets/screens/screen-why-expanded.png",
+      "text": "This is what closing\nthe loop looks like",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "photo": "assets/gen/bag-by-door.png",
+      "text": "Same night. Same number.\n\nDifferent instruction",
+      "dim": 0.42
+    },
+    {
+      "kind": "cta",
+      "photo": "../avatar/blue-top-drink.jpg",
+      "heading": "A score is a fact. A plan is a decision.",
+      "body": "SOMA reads the same night your ring does, then says what today should be and why",
+      "screenshot": "assets/screens/screen-home-morning.png",
+      "badge": "assets/appstore-badge.png",
+      "appIcon": "assets/app-icon.png",
+      "wash": 0.66
+    }
+  ]
+}
