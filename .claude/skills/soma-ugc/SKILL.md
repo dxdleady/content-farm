@@ -196,6 +196,23 @@ only SOMA did (it moved the session, it cut the target, it told me to stop). Tha
 payload is what keeps the format stealth and still persuasive. `routine-badnight` is the
 strongest of the eight because it shows the mechanism instead of promising an outcome.
 
+## The avatar may not testify
+
+The character in the photos does not exist and has never used SOMA. Since October 2024,
+**16 CFR Part 465** makes it a violation to run a testimonial that misrepresents that the
+person exists or that they used the product — the FTC's own announcement names
+"AI-generated fake reviews" as the case in point, at up to $53,088 a violation. The first
+36 posts are written as her personal experience and should be read as a debt to pay down,
+not a pattern to copy.
+
+Three registers stay open, and they carry everything: **demonstration** (the screen is the
+evidence), **education** (something true about training or wearables, product as the tool),
+and **observation in second person** ("your watch has been recording this for two years").
+Closed: first-person outcome claims, before/after framing, anything where she vouches for a
+result. A named founder or a real customer may testify; she may not.
+
+Full reasoning and the sixty replacement hooks: `references/hook-bank.md`.
+
 ## Copy: every slide owes the reader one concrete thing
 
 The hook promises; the body pays. A listicle slide that says "consistency is key" teaches
@@ -275,6 +292,7 @@ photo, not the type.
 
 | | |
 |---|---|
+| **`references/hook-bank.md`** | **Read before writing any new post.** Sixty researched hooks by territory, the eight formulas with what they actually did, TikTok's demotion rules, and the FTC problem with first-person claims from an avatar who does not exist. |
 | **`references/hooks-and-copy.md`** | Where the hooks live, the 20 shipped posts and their hooks, the copy rules, and the caption library. Read before writing slide 1. |
 | **`references/photo-pool.md`** | The pool inventory by type — avatar action, food, flat-lay, interiors — the watermark list, and what each generated frame actually shows. |
 | **`references/qa.md`** | The contact-sheet script, the pre-ship checklist, and the defects this format has actually shipped. |
