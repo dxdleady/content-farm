@@ -121,3 +121,21 @@ seven-post full-journey series that does not exist yet:
 | `journey-scan` — a photo of the gym to a plan | the four gym-scan states |
 | `journey-progress` — what changed | goal-vs-current, dashboard, metric detail |
 | `journey-slips` — when the week goes wrong | rest day, ETA slipped, re-plan |
+
+## Custom goal ("Your own plan") shots — captured 2026-08-31
+
+Group 14 in `MarketingScreenshotUITests.swift` (fixtures `customCoachFlow`,
+`customGoalWeek2`, `customGoalItemized`). Staged as:
+
+| file | shows | note |
+|---|---|---|
+| `screen-goal-form-filled.png` | the form with a typed plan, coach "Elena", schedule 8w/3× | the chips row is deliberately absent (free text matches no program) — never ship a frame with the curated program names, they are not cleared for marketing |
+| `screen-goal-form-schedule.png` | form bottom: schedule, "Track a measurable", Start the block + the honest footnote | |
+| `screen-goal-form-ruler.png` | measurable on: Approach jump / cm / baseline ruler | |
+| `screen-goal-conflict.png` | the amber safety warning ("depth jumps … injury you've noted") | driven by the "depth jump" sentinel in UITestSupport's create-goal stub |
+| `screen-goal-hub-custom.png` | Goal hub: COACH ALEX, phases, re-check date, Sessions 3 of 16, Share | hub fits one screen — no "-lower" variant exists |
+| `screen-goal-coach-block.png` | daily plan with COACH BLOCK — BUILT WITH ALEX, "as written by your coach" rows | |
+| `screen-goal-home-custom.png` | Home with "Coach Alex's task · week 2 of 8" under the day card | |
+
+All post-creation surfaces carry "Coach Alex" — fine for coach-story decks,
+contradicts self-plan stories (5x5/5K decks use form/calendar shots instead).

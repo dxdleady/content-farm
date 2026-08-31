@@ -482,4 +482,118 @@ final class MarketingScreenshotUITests: XCTestCase {
             app.swipeUp(); shoot(app, "slipped-03-hub-lower")
         }
     }
+
+    // MARK: - 14. Custom goal — "Your own plan": the form, the safety
+    // conflict, the running goal's hub, and the coach block in the daily
+    // plan. Navigation mirrors UITests/SportGoalJourneyTests (J23).
+    // NOTE for marketing use: never ship a frame where the curated program
+    // chips row is legible — third-party program names are not cleared for
+    // ads. The generic typed plan below keeps these frames safe.
+
+    private func openCustomGoalForm(_ app: XCUIApplication) -> Bool {
+        if tapIfPresent(app, "dock-more-button") { tapIfPresent(app, "Goals") }
+        settle(app, anchors: ["What do you train for?"])
+        tapIfPresent(app, "Volleyball")
+        guard tapIfPresent(app, "Your own plan", timeout: 10) else { return false }
+        return app.descendants(matching: .any)["workoutTextField"].waitForExistence(timeout: 10)
+    }
+
+    /// Fills the two text fields and lands with the keyboard dismissed: the
+    /// coach-name field is single-line, so its Return key retires the
+    /// keyboard. NEVER app.swipeDown() here — the flow lives in a sheet and
+    /// a window-level swipe-down dismisses the whole thing (that is exactly
+    /// how the first run of these shots produced six pictures of Home).
+    private func fillCustomGoalForm(_ app: XCUIApplication, workoutText: String) {
+        let workout = app.descendants(matching: .any)["workoutTextField"]
+        workout.tap()
+        workout.typeText(workoutText)
+        let coach = app.descendants(matching: .any)["coachNameField"]
+        if coach.waitForExistence(timeout: 5) {
+            coach.tap()
+            coach.typeText("Elena\n")
+        }
+        sleep(1)
+    }
+
+    func test_shots_14a_customGoalForm() {
+        let app = launch(["UITEST_SCENARIO": "customCoachFlow"])
+        settle(app, anchors: homeAnchors)
+        guard openCustomGoalForm(app) else { return }
+        // No empty-form shot on purpose: with nothing typed the curated
+        // program chips row shows third-party program names, which are not
+        // cleared for marketing frames.
+        fillCustomGoalForm(app, workoutText: "Tue / Thu / Sat — jump rope 10 min, split squats 4x8 each side, banded lateral walks, core circuit, hill sprints 6x40m")
+        shoot(app, "goal-form-filled")
+        app.swipeUp(); sleep(1)
+        shoot(app, "goal-form-schedule")
+        // The baseline ruler only exists once "Track a measurable" is on.
+        let toggle = app.switches.firstMatch
+        if toggle.waitForExistence(timeout: 5) {
+            toggle.tap()
+            let name = app.textFields.matching(
+                NSPredicate(format: "placeholderValue CONTAINS 'measuring'")).firstMatch
+            if name.waitForExistence(timeout: 5) {
+                name.tap()
+                name.typeText("Approach jump")
+                let unit = app.textFields.matching(
+                    NSPredicate(format: "placeholderValue CONTAINS 'Unit'")).firstMatch
+                if unit.waitForExistence(timeout: 3) {
+                    unit.tap()
+                    unit.typeText("cm\n")
+                }
+            }
+            sleep(1)
+            app.swipeUp(); sleep(1)
+            // Drag the baseline ruler off its default 20 toward the deck's
+            // "41 cm" — the exact landing value gets read off the shot and
+            // the deck copy matched to it, not the other way round.
+            let strip = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.73))
+            strip.press(forDuration: 0.2,
+                        thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.12, dy: 0.73)))
+            sleep(1)
+            shoot(app, "goal-form-ruler")
+        }
+    }
+
+    func test_shots_14b_customGoalConflict() {
+        let app = launch(["UITEST_SCENARIO": "customCoachFlow"])
+        settle(app, anchors: homeAnchors)
+        guard openCustomGoalForm(app) else { return }
+        // "depth jump" is the fixture's conflict sentinel (UITestSupport's
+        // create-goal stub) — mirrors the real endpoint's injury keyword pass.
+        fillCustomGoalForm(app, workoutText: "Plyometric block — depth jumps 5x5, pogo hops 3x20, weighted step-downs")
+        app.swipeUp(); sleep(1)
+        if tapIfPresent(app, "Start the block", timeout: 8) {
+            settle(app, anchors: ["conflicts with an injury", "mentions"], timeout: 10)
+            sleep(1)
+            shoot(app, "goal-conflict")
+        }
+    }
+
+    func test_shots_14c_customGoalHub() {
+        let app = launch(["UITEST_SCENARIO": "customGoalWeek2"])
+        settle(app, anchors: homeAnchors)
+        shoot(app, "goal-home-custom")
+        if tapIfPresent(app, "Sport goal") {
+            _ = app.scrollViews.firstMatch.waitForExistence(timeout: 15)
+            sleep(2)
+            shoot(app, "goal-hub-custom")
+            app.swipeUp(); sleep(1)
+            shoot(app, "goal-hub-custom-lower")
+        }
+    }
+
+    func test_shots_14d_customGoalCoachBlock() {
+        let app = launch(["UITEST_SCENARIO": "customGoalItemized"])
+        settle(app, anchors: homeAnchors)
+        // The detail opens from the card's own CTA, same as test 04.
+        guard tapIfPresent(app, "Start workout") || tapIfPresent(app, "Check workout details") else { return }
+        _ = app.scrollViews.firstMatch.waitForExistence(timeout: 20)
+        sleep(3)
+        shoot(app, "goal-plan-top")
+        app.swipeUp(); sleep(1)
+        shoot(app, "goal-coach-block")
+        app.swipeUp(); sleep(1)
+        shoot(app, "goal-coach-block-lower")
+    }
 }
