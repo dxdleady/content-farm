@@ -4,7 +4,7 @@
   "slides": [
     { "kind": "photo",
       "photo": "../avatar/grey-hoodie.jpg",
-      "text": "The three inputs behind\ntoday's session",
+      "text": "The *three inputs* behind\ntoday's session",
       "dim": 0.42 },
     { "kind": "photo",
       "photo": "assets/gen/water-first.png",

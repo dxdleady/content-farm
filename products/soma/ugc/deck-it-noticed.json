@@ -4,7 +4,7 @@
   "slides": [
     { "kind": "photo",
       "photo": "../avatar/walk.jpg",
-      "text": "It noticed I trained\n\nand asked if it counted",
+      "text": "It noticed I trained\n\nand *asked* if it counted",
       "dim": 0.42 },
     { "kind": "photo",
       "photo": "../avatar/hoodie-jacket.jpg",

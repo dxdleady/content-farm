@@ -4,7 +4,7 @@
   "slides": [
     { "kind": "photo",
       "photo": "../avatar/pajama-morning.jpg",
-      "text": "The night\nthe ring died",
+      "text": "The night\nthe ring *died*",
       "dim": 0.42 },
     { "kind": "photo",
       "photo": "assets/gen/dawn-room.png",

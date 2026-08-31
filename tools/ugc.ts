@@ -92,9 +92,13 @@ function poolGaps(deck: UgcDeck, pool: Pool): string[] {
 
 const esc = (s: string): string => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
-/** Blank-line separated paragraphs; single newlines are hard breaks. */
+/** Blank-line separated paragraphs; single newlines are hard breaks.
+ *  `*word*` renders as the accent highlight (periwinkle, heavier) — for the
+ *  one trigger word a hook hangs on, not for decorating body copy. */
 const paras = (text: string, cls: string): string => text.trim().split(/\n\s*\n/)
-  .map(p => `<p class="${cls}">${esc(p.trim()).replace(/\n/g, '<br>')}</p>`).join('');
+  .map(p => `<p class="${cls}">${esc(p.trim())
+    .replace(/\*([^*\n]+)\*/g, '<em class="hl">$1</em>')
+    .replace(/\n/g, '<br>')}</p>`).join('');
 
 const CHEVRON = `<div class="chev"><svg viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#FFFFE8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
 
@@ -115,6 +119,7 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
      text-wrap: balance; letter-spacing: .2px;
      text-shadow: 0 2px 28px rgba(0,0,0,.55), 0 0 3px rgba(0,0,0,.35); }
 .t + .t { margin-top: 56px; }
+.t em.hl { font-style: normal; font-weight: 700; color: #8faef8; }
 /* the moment: small, wide-tracked, with a hairline under it — a label, not a badge */
 .time { align-self: center; margin-bottom: 44px; padding-bottom: 14px;
         color: #fff; font-size: 40px; font-weight: 600; letter-spacing: 6px;

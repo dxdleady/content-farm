@@ -4,7 +4,7 @@
   "slides": [
     { "kind": "photo",
       "photo": "../avatar/navy-bag.jpg",
-      "text": "It read the plan\nand pushed back",
+      "text": "It read the plan\nand *pushed back*",
       "dim": 0.42 },
     { "kind": "photo",
       "photo": "../avatar/mirror-white-2.jpg",

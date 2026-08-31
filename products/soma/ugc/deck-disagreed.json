@@ -4,7 +4,7 @@
   "slides": [
     { "kind": "photo",
       "photo": "../avatar/pilates-reformer.jpg",
-      "text": "The day I disagreed with it\nand trained anyway",
+      "text": "The day I *disagreed* with it\nand trained anyway",
       "dim": 0.42 },
     { "kind": "photo",
       "photo": "assets/gen/bag-by-door.png",

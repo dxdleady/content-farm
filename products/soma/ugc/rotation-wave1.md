@@ -50,6 +50,30 @@ frames.
 | 30 | · | soma-4reasons |
 | 31 | · | soma-5hacks-gen |
 
+## Wave 1.5 extension — combos + remaining features (days 32–46)
+
+Five more decks, same constraints, solved against the day-26–31 tail:
+K = feature-combo decks, D = nutrition, F = daily system. Hooks carry the
+`*word*` accent highlight (periwinkle, `tools/ugc.ts`).
+
+| day | pillar | deck |
+|---|---|---|
+| 32 | K | soma-combo-cooked |
+| 33 | · | soma-loop-score |
+| 34 | D | soma-meal-sentence |
+| 35 | · | soma-10ways |
+| 36 | · | soma-12seconds |
+| 37 | K | soma-combo-gym-day |
+| 38 | · | soma-4facts |
+| 39 | F | soma-streak-break |
+| 40 | · | soma-what-workout |
+| 41 | · | soma-5hacks-help |
+| 42 | · | soma-routine-noface |
+| 43 | F | soma-widgets-touch |
+| 44 | · | soma-6reasons |
+| 45 | · | soma-journey-scan |
+| 46 | · | soma-journey-setup |
+
 ## Program-naming policy (pillar B auto-fill decks)
 
 Per the 2026-08-31 competitive/legal research: workout routines are not
@@ -64,9 +88,11 @@ legal review clears:
   skips it);
 - revisit and possibly re-cut with names after legal review.
 
-## Wave 2 backlog (8 decks, not authored yet)
+## Wave 2 backlog (not authored yet)
 
-D nutrition ×3 (fridge→dinner, one-sentence meal log, 4pm problem) ·
-E progress ×2 (photo compare demo, streak-you-may-break) · F daily ×1
-(widgets) · B leftovers ×2 (vertical-jump auto-fill, 4-week-cycle
-auto-fill — pending the same naming policy).
+D nutrition ×1 (the 4pm problem — bank #30) · E progress ×1 (photo-compare
+demo — CAUTION: TikTok bans before/after body photos; frame as "two photos,
+same light, no verdict" or skip) · B leftovers ×2 (vertical-jump and
+4-week-cycle auto-fills — same naming policy). Covered since the first
+draft of this file: fridge→dinner (combo-cooked), one-sentence meal log
+(meal-sentence), widgets (widgets-touch), streak (streak-break).
