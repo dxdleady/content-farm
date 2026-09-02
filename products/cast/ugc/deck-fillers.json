@@ -1,0 +1,40 @@
+{
+  "deck": "cast-fillers",
+  "caption": "you stopped hearing them about four episodes ago\n\n#podcasttips #podcastediting #speaking #contentcreator",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "characters/nia/mic-desk.png",
+      "text": "Your last episode has\nhundreds of filler words in it",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/headphones-listen.png",
+      "text": "um, uh, like, you know\n\nYou stopped hearing them.\nYour listeners didn’t",
+      "dim": 0.38
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/laptop-edit.png",
+      "text": "Cutting them by hand is\nan afternoon per episode",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/desk-night.png",
+      "text": "Or one pass, and they’re gone",
+      "dim": 0.34
+    },
+    {
+      "kind": "cta",
+      "photo": "characters/nia/bedroom-mirror.png",
+      "heading": "The pauses too",
+      "body": "Filler-word and silence removal run over the transcript in one pass — you keep the takes, not the dead air",
+      "screenshot": "assets/screens/fillers-panel.png",
+      "badge": "../logos/wordmark.svg",
+      "appIcon": "../logos/avatar.svg",
+      "wash": 0.66
+    }
+  ]
+}

@@ -54,7 +54,13 @@ type CtaSlide = {
   kind: 'cta'; photo: string; heading: string; body: string;
   screenshot: string; badge: string; appIcon: string; wash?: number;
 };
-type UgcDeck = { deck: string; caption?: string; slides: Array<PhotoSlide | CtaSlide> };
+/** A slide with no photograph at all: a flat brand ground, the wordmark, a line.
+ *  For a manifesto's closing frame, where a photo would only dilute the statement. */
+type CardSlide = {
+  kind: 'card'; ground?: string; ink?: string;
+  logo?: boolean; text: string; sub?: string; chevron?: boolean;
+};
+type UgcDeck = { deck: string; caption?: string; slides: Array<PhotoSlide | CtaSlide | CardSlide> };
 
 const abs = (p: string, base: string): string => (isAbsolute(p) ? p : resolve(base, p));
 
@@ -147,6 +153,15 @@ body { font-family: "DM Sans", -apple-system, sans-serif; position: relative; ba
             display: flex; flex-direction: column; align-items: center; gap: 36px; }
 .badge { height: 104px; }
 .appicon { width: 122px; height: 122px; border-radius: 28px; box-shadow: 0 18px 40px rgba(20,12,60,.25); }
+/* --- card: flat ground, wordmark, statement. No photo, no veil. --- */
+.card { position: absolute; inset: 0; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; padding: 0 150px; }
+.card .mark { width: 420px; margin-bottom: 96px; }
+.card .mark svg { width: 100%; height: auto; display: block; }
+.card h1 { font-size: 76px; font-weight: 600; line-height: 1.24; text-align: center;
+           text-wrap: balance; letter-spacing: .2px; }
+.card .sub { margin-top: 56px; font-size: 40px; font-weight: 500; line-height: 1.4;
+             text-align: center; opacity: .72; text-wrap: balance; }
 </style>
 ${body}`;
 
@@ -180,6 +195,23 @@ async function photoFor(s: PhotoSlide, base: string, pool: Pool | null): Promise
   if (!file) throw new Error(`background generation failed for "${s.bg.slice(0, 60)}…"`);
   console.log(`  ~ bg generated for "${s.bg.slice(0, 46)}…"`);
   return file;
+}
+
+/** The wordmark is a currentColor SVG, so it inherits the card's ink. */
+const WORDMARK = join(ROOT, 'products/soma/logos/wordmark.svg');
+
+function cardSlide(s: CardSlide): string {
+  const ground = s.ground ?? '#0c0a16';
+  const ink = s.ink ?? '#FFFFE8';
+  const mark = s.logo === false ? '' :
+    `<div class="mark">${readFileSync(WORDMARK, 'utf8')}</div>`;
+  return SHELL(`
+<div class="card" style="background:${ground};color:${ink}">
+  ${mark}
+  <h1>${esc(s.text).replace(/\n/g, '<br>')}</h1>
+  ${s.sub ? `<p class="sub">${esc(s.sub).replace(/\n/g, '<br>')}</p>` : ''}
+</div>
+${s.chevron ? CHEVRON : ''}`);
 }
 
 function ctaSlide(s: CtaSlide, base: string, pool: Pool | null): string {
@@ -231,8 +263,8 @@ const chrome = await Chrome.launch();
 try {
   for (const [i, s] of deck.slides.entries()) {
     const name = `${String(i + 1).padStart(2, '0')}-${s.kind}`;
-    const html = s.kind === 'photo'
-      ? photoSlide(s, await photoFor(s, base, pool), base, pool)
+    const html = s.kind === 'photo' ? photoSlide(s, await photoFor(s, base, pool), base, pool)
+      : s.kind === 'card' ? cardSlide(s)
       : ctaSlide(s, base, pool);
     const htmlPath = join(buildDir, `${name}.html`);
     writeFileSync(htmlPath, html);

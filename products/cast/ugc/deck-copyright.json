@@ -1,0 +1,40 @@
+{
+  "deck": "cast-copyright",
+  "caption": "the claim always lands months after you publish — and the takedown is the part that costs you\n\n#podcasting #podcasttips #royaltyfreemusic #contentcreator",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "characters/nia/mic-desk.png",
+      "text": "Another copyright claim\non your episode?",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/laptop-edit.png",
+      "text": "Most “royalty-free” music\nis licensed to you\n\nBut somebody else still owns it",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/desk-night.png",
+      "text": "Which is why the claim lands\nmonths after you publish",
+      "dim": 0.34
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/headphones-listen.png",
+      "text": "Cast generates the music instead\n\nMubert owns the samples outright",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "characters/nia/cafe-phone.png",
+      "heading": "Music that can’t be claimed",
+      "body": "Cast writes the intro, outro and bed for your episode — generative, editable, and cleared for commercial use",
+      "screenshot": "assets/screens/music-generate.png",
+      "badge": "../logos/wordmark.svg",
+      "appIcon": "../logos/avatar.svg",
+      "wash": 0.66
+    }
+  ]
+}

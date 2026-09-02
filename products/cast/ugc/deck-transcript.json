@@ -1,0 +1,40 @@
+{
+  "deck": "cast-transcript",
+  "caption": "editing audio by reading it instead of staring at a waveform\n\n#podcastediting #podcaster #audioediting #creatortools",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "characters/nia/laptop-edit.png",
+      "text": "I cut a 40-minute episode\nwithout touching a waveform",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/mic-desk.png",
+      "text": "You edit the transcript",
+      "dim": 0.38
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/desk-night.png",
+      "text": "Delete a sentence you don’t like\n\nThe audio goes with it",
+      "dim": 0.36
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/cafe-phone.png",
+      "text": "No timeline, no zooming in\non a blue squiggle",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "characters/nia/earbuds-street.png",
+      "heading": "Read it, don’t scrub it",
+      "body": "Cast turns your recording into a transcript you edit like a document — and exports finished audio",
+      "screenshot": "assets/screens/transcript-edits.png",
+      "badge": "../logos/wordmark.svg",
+      "appIcon": "../logos/avatar.svg",
+      "wash": 0.66
+    }
+  ]
+}

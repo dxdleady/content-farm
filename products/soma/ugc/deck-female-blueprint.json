@@ -1,0 +1,64 @@
+{
+  "deck": "soma-female-blueprint",
+  "caption": "Bryan Johnson turned his body into a lab and proved health can be measured and managed like a project. Everything we learned from it is about a male body.\n\nThere's no female version. No open protocol that accounts for cycles, hormones, menopause and real female biochemistry. Lots of advice — almost no data.\n\nSo I'm building SOMA: running a longevity protocol in public, with labs and numbers, and showing what works for a woman's body and what doesn't.\n\nFollow for baseline labs next week.\n\n#longevity #womenshealth #healthspan",
+  "slides": [
+    {
+      "kind": "photo",
+      "bg": "a single empty examination chair in a dark clinical room, sensor cables and electrode pads coiled on the seat, one cold blue light source from the left and a faint warm lamp on the right, deep shadow, still-life photograph, the room is empty, nobody is present, no person, no face, no hands",
+      "refs": ["../refs/style/soma-23.jpg", "../refs/style/soma-25.jpg"],
+      "text": "Bryan Johnson spends about\n$2M a year to *not age*\n\nNobody's doing it for women",
+      "dim": 0.38
+    },
+    {
+      "kind": "photo",
+      "bg": "A still-life product photograph, shot straight down onto a white table from directly above. On the table: two weekly pill organisers filled with capsules, a blood collection tube with a purple cap, a smartwatch lying flat, and a neat stack of printed lab report pages. Bright even studio light. Nothing else is in the frame — no person, no face, no eyes, no hands, no body, no reflection of a person. Objects only.",
+      "refs": ["../refs/style/soma-09.jpg", "../refs/style/soma-18.jpg"],
+      "text": "30 doctors.\n100+ pills a day.\nEvery organ measured.\n\nAll on *one body* — a man's",
+      "dim": 0.5
+    },
+    {
+      "kind": "photo",
+      "bg": "a black and white archival photograph of a 1970s clinical research ward, a row of empty hospital beds and a metal equipment trolley, grainy film, high contrast, documentary style, the room is empty, nobody is present, no people",
+      "refs": ["../refs/style/soma-25.jpg", "../refs/style/soma-23.jpg"],
+      "text": "Until *1993* women were mostly\nleft out of clinical trials in the US\n\nThe cycle \"messed up the data\"",
+      "dim": 0.42
+    },
+    {
+      "kind": "photo",
+      "bg": "a close overhead photograph of a printed laboratory results sheet on a desk, columns of numbers and a reference range column, a pen resting beside it, soft daylight from a window, shallow depth of field, still-life photograph, no people, no hands",
+      "refs": ["../refs/style/soma-09.jpg", "../refs/style/soma-18.jpg"],
+      "text": "So most protocols, doses and\n\"normal ranges\" are still built for men\n\nYour cycle, iron, thyroid,\nperimenopause — usually\n*not even in the spreadsheet*",
+      "dim": 0.55
+    },
+    {
+      "kind": "photo",
+      "bg": "a woman seen from behind in silhouette standing in a dark room facing a wall of blank glowing screens, only her shoulders and hair visible against the light, cinematic, one light source, moody, her face is not visible",
+      "refs": ["../refs/style/soma-25.jpg", "../refs/style/soma-27.jpg"],
+      "text": "There is no *female Bryan Johnson*\n\nDoctors write about women's health.\nInfluencers sell supplements.\n\nNobody is running a full protocol\nout loud — with real numbers",
+      "dim": 0.45
+    },
+    {
+      "kind": "photo",
+      "bg": "A flat graphic artwork on a pale cream paper ground: three smooth curved lines rising and falling across the frame, two in muted grey and one in warm terracotta, with four faint vertical bands behind them dividing the width into quarters. Printed editorial texture. Abstract shapes only — no text, no numbers, no labels, no people, no face, no silhouette, no shadow of a person.",
+      "refs": ["../refs/style/soma-09.jpg", "../refs/style/soma-18.jpg"],
+      "text": "Imagine data like this\n\nHow biomarkers shift across a cycle.\nWhat actually works in perimenopause.\nWhich tests to take, and how to read\nthem as a woman.",
+      "dim": 0.55
+    },
+    {
+      "kind": "photo",
+      "_TODO": "REPLACE with a real photo of Mariia — this slide is the founder speaking, so it may not be the AI avatar. Swap `bg` for `photo: \"../avatar/founder.jpg\"` before posting.",
+      "bg": "a desk by a window in natural light with a printed lab report, a continuous glucose monitor box, a notebook of handwritten numbers and a glass of water, calm and unstyled, still-life photograph, no people, no hands, no faces",
+      "refs": ["../refs/style/soma-09.jpg", "../refs/style/soma-18.jpg"],
+      "text": "That's why I'm starting *SOMA*\n\nA longevity project built around\nthe female body.\n\nOpen protocol. Real labs.\nHonest results — including what fails.",
+      "dim": 0.5
+    },
+    {
+      "kind": "card",
+      "ground": "#0c0a16",
+      "ink": "#FFFFE8",
+      "text": "The female body\nas a project",
+      "sub": "Part 0 — baseline labs — next week\n\nFollow to watch it from the inside,\nor do it with me",
+      "chevron": false
+    }
+  ]
+}

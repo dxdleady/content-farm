@@ -185,6 +185,55 @@ function editPrompt({ subject, framing, colorName, color }: SoloSpec): string {
 export const EDIT_MODELS: string[] = Object.keys(MODELS);
 
 /**
+ * A frame of a recurring character. The inverse of SoloSpec: there the reference
+ * fixes the LOOK and the subject changes; here the reference fixes the PERSON and
+ * everything around them changes. Same Gemini call, opposite instruction — the
+ * refs already travel as inlineData, so this needs no new transport and no
+ * WAVESPEED_API_KEY (that key only selects an alternative edit model).
+ */
+export type CharacterSpec = {
+  /** Where she is and what is around her. */
+  scene: string;
+  /** Shot size and angle -- vary this hard or every frame reads as the same selfie. */
+  framing: string;
+  /** What she is wearing, so a pool doesn't look like one afternoon. */
+  wardrobe?: string;
+  /** Time of day / light. */
+  light?: string;
+};
+
+/**
+ * Identity first, in the imperative, before anything else can dilute it. The
+ * failure mode this guards against is a "same vibe, different woman" pool --
+ * which is worse than an obviously generated one, because it only becomes
+ * visible once the frames sit side by side in a deck.
+ */
+function characterPrompt({ scene, framing, wardrobe, light }: CharacterSpec): string {
+  return [
+    'THE ATTACHED IMAGE IS THE PERSON. Reproduce HER, exactly:',
+    'the same face, bone structure, eye shape and colour, eyebrows, nose, mouth,',
+    'skin tone and texture, hairline and hairstyle. She must be recognisably the',
+    'same individual — someone should place two of these frames side by side and',
+    'have no doubt it is one person. Do not beautify, restyle, age, slim or',
+    'otherwise "improve" her. Keep her apparent age.',
+    '',
+    'Everything else changes:',
+    `· SCENE: ${scene}`,
+    `· FRAMING: ${framing}`,
+    ...(wardrobe ? [`· WARDROBE: ${wardrobe}`] : []),
+    ...(light ? [`· LIGHT: ${light}`] : []),
+    '',
+    'Shoot it like a real phone photo: available light, slight handheld imperfection,',
+    'natural skin with pores and flyaway hair, no studio lighting, no beauty retouch,',
+    'no bokeh-heavy portrait mode. It must read as a frame from someone\'s camera roll,',
+    'not as an advertisement or a render.',
+    '',
+    'CRITICAL: no text of any kind in the output — no words, letters, numerals, signage,',
+    'labels, logos or watermarks, not even on clothing, screens or objects in the scene.',
+  ].join('\n');
+}
+
+/**
  * Solo-ref prompt. One reference image is the whole art direction; the text only
  * names the three axes we deliberately move off it. Mixing several references
  * averages them into mush, so this keeps the ratio at one image to one output.
@@ -245,14 +294,29 @@ export type BackgroundOptions = {
   model?: string | null; size?: string;
   /** Whose voice the prompt speaks in. Defaults to the incumbent. */
   product?: Product;
+  /**
+   * Recurring-character mode: refPaths carries her portrait, and the prompt
+   * holds the person while moving the scene. Bypasses the style/preset stack
+   * entirely -- a character pool has no art direction to inherit.
+   */
+  character?: CharacterSpec | null;
+  /**
+   * Send `subject` verbatim: no style refs, no style-lock, no wildcards. For the
+   * one frame that establishes a character, where the style stack is actively
+   * harmful -- attaching refs/style/ made the model composite a landscape ref
+   * into the portrait as a hard diagonal seam, twice running.
+   */
+  plain?: boolean;
 };
 
-export async function background(subject: string, { aspect = '4:5', force = false, preset = S.default, colors = null, refPaths = null, variant = 0, solo = null, model = null, size = '512*640', product = PRODUCTS[DEFAULT_PRODUCT] }: BackgroundOptions = {}): Promise<string | null> {
+export async function background(subject: string, { aspect = '4:5', force = false, preset = S.default, colors = null, refPaths = null, variant = 0, solo = null, model = null, size = '512*640', product = PRODUCTS[DEFAULT_PRODUCT], character = null, plain = false }: BackgroundOptions = {}): Promise<string | null> {
   const art = product.art;
-  if (!subject && !solo) return null;
+  if (!subject && !solo && !character) return null;
 
   // Preferred path: an edit model, with the reference as the real input image.
-  const editModel = model ?? (solo && refPaths?.length && process.env.WAVESPEED_API_KEY
+  // Character mode stays on Gemini deliberately: the edit models are tuned for
+  // style transfer, which is the one thing a character frame must NOT do.
+  const editModel = character ? null : model ?? (solo && refPaths?.length && process.env.WAVESPEED_API_KEY
     ? (process.env.EDIT_MODEL || 'qwen-edit') : null);
   if (editModel && refPaths?.length) {
     const text = editPrompt(solo!);
@@ -268,9 +332,13 @@ export async function background(subject: string, { aspect = '4:5', force = fals
       console.warn(`  ! ${editModel} failed: ${(e as Error).message.slice(0, 140)} — falling back to ${MODEL}`);
     }
   }
-  const refList = refPaths ? refPaths.map(refFile) : refs(preset, `${subject}|${variant}`);
-  const text = solo ? soloPrompt(solo, art, aspect) : promptFor(subject, refList.length, preset, colors, variant, art, aspect);
-  const out = solo
+  const refList = (plain || refPaths) ? (refPaths ?? []).map(refFile) : refs(preset, `${subject}|${variant}`);
+  const text = plain
+    ? subject
+    : character
+    ? characterPrompt(character)
+    : solo ? soloPrompt(solo, art, aspect) : promptFor(subject, refList.length, preset, colors, variant, art, aspect);
+  const out = (solo || character)
     ? join(CACHE, `bg-${createHash('sha256').update(`${MODEL}|${aspect}|${text}|${refList.map(r => r.hash).join(',')}`).digest('hex').slice(0, 16)}.png`)
     : cachePath(subject, aspect, refList, preset, colors, variant, art);
   if (!force && existsSync(out)) return out;

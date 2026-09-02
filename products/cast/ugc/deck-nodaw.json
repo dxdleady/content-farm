@@ -1,0 +1,40 @@
+{
+  "deck": "cast-nodaw",
+  "caption": "the whole chain in one place, none of it a DAW\n\n#podcasting #podcastlaunch #audio #creatortools",
+  "slides": [
+    {
+      "kind": "photo",
+      "photo": "characters/nia/earbuds-street.png",
+      "text": "You don’t need a DAW\nto publish a podcast",
+      "dim": 0.44
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/mic-desk.png",
+      "text": "Record it. Upload it.",
+      "dim": 0.38
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/laptop-edit.png",
+      "text": "Clean the voice\nCut the silence\nFix the levels",
+      "dim": 0.4
+    },
+    {
+      "kind": "photo",
+      "photo": "characters/nia/cafe-phone.png",
+      "text": "Chapters, music, export\n\nSame window",
+      "dim": 0.4
+    },
+    {
+      "kind": "cta",
+      "photo": "characters/nia/desk-night.png",
+      "heading": "Raw recording to publish-ready",
+      "body": "Cast is the whole finishing chain for spoken word — no plugins, no session files, no audio engineering",
+      "screenshot": "assets/screens/editor-main.png",
+      "badge": "../logos/wordmark.svg",
+      "appIcon": "../logos/avatar.svg",
+      "wash": 0.66
+    }
+  ]
+}
